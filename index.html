@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Borane Clusters | Interactive Models + e− Counting</title>
-  <meta name="description" content="Expandable cluster tabs with interactive 3D models, classification, and electron counting." />
+  <title>Borane Clusters | HKU Chemistry</title>
+  <meta name="description" content="A modern editorial-style learning website in a single HTML file." />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -33,11 +33,11 @@
       --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
       --font-serif: "DM Serif Display", ui-serif, Georgia, "Times New Roman", Times, serif;
 
-      --nav-h: 190px;
-      --logo-h: 130px;
-      --logo-shift-left: 18px;
+      --nav-h: 210px;
+      --logo-h: 160px;
+      --logo-shift-left: 34px;
 
-      /* thin white line (BMW-like) */
+      /* BMW-like white line */
       --bwm-line-opacity: .42;
 
       color-scheme: dark;
@@ -66,19 +66,22 @@
 
     .wrap{max-width:1200px;margin:0 auto;padding:0 22px}
 
-    /* HEADER */
+    /* ===== HEADER ===== */
     header.nav{position:relative; z-index:50;}
+
     .nav-in{
       height: var(--nav-h);
       display:grid;
-      grid-template-columns: auto 1fr auto;
+      grid-template-columns: auto 1fr; /* logo | centered cluster */
       align-items:center;
       gap: 16px;
     }
+
     .brand{
       display:flex;
       align-items:center;
       justify-content:flex-start;
+      min-width: 240px;
       transform: translateX(calc(var(--logo-shift-left) * -1));
     }
     .brand-logo-img{
@@ -88,8 +91,16 @@
       object-fit: contain;
       filter: drop-shadow(0 12px 28px rgba(0,0,0,.38));
     }
+
+    .navCluster{
+      justify-self: center;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap: 22px;
+    }
+
     nav.nav-links{
-      justify-self:center;
       display:flex;
       align-items:center;
       justify-content:center;
@@ -122,6 +133,7 @@
       box-shadow: 0 14px 30px rgba(229,106,92,.22);
       font-weight:800;
       white-space:nowrap;
+      min-width: 140px;
     }
     .cta:hover{filter:brightness(1.03)}
     .cta:active{transform:translateY(1px)}
@@ -136,7 +148,7 @@
     }
 
     .nav-rule{
-      margin-top: -12px;
+      margin-top: -14px;
       height: 1px;
       background: linear-gradient(
         90deg,
@@ -184,19 +196,20 @@
 
     /* HERO */
     .hero{
-      padding: 18px 0 24px;
+      padding: 24px 0 34px;
       display:grid;
-      grid-template-columns: 1.15fr .85fr;
-      gap:28px;
+      grid-template-columns: 1.1fr .9fr;
+      gap:38px;
       align-items:center;
     }
+
     .kicker{
       display:flex; align-items:center; gap:10px;
       color:rgba(255,255,255,.78);
       letter-spacing:.08em;
       text-transform:uppercase;
       font-size:12px;
-      margin-bottom:16px;
+      margin-bottom:18px;
     }
     .kicker .dot{
       width:10px;height:10px;border-radius:999px;
@@ -204,33 +217,36 @@
       box-shadow: 0 0 0 7px rgba(229,106,92,.14);
       border: 1px solid rgba(255,255,255,.12);
     }
+
     h1{
       margin:0;
       font-family: var(--font-serif);
-      font-size: clamp(42px, 5.4vw, 72px);
+      font-size: clamp(46px, 5.8vw, 78px);
       line-height:.95;
       letter-spacing:-0.03em;
     }
     .h1-accent{color: var(--accent); display:block; margin-top:6px;}
+
     .sub{
-      margin:14px 0 14px;
+      margin:16px 0 16px;
       font-family: var(--font-serif);
       font-style: italic;
       color: rgba(255,255,255,.74);
-      font-size: clamp(17px, 2.0vw, 22px);
+      font-size: clamp(18px, 2.1vw, 22px);
       letter-spacing: -0.01em;
     }
     .desc{
       color:var(--muted);
-      max-width:65ch;
+      max-width:62ch;
       font-size:16px;
       line-height:1.65;
-      margin:0 0 18px;
+      margin:0 0 26px;
     }
     .hero-actions{
-      display:flex; gap:12px; align-items:center; flex-wrap:wrap;
-      margin-bottom: 6px;
+      display:flex; gap:14px; align-items:center; flex-wrap:wrap;
+      margin-bottom:30px;
     }
+
     .btn{
       padding:12px 16px;
       border-radius: 12px;
@@ -246,8 +262,27 @@
       border-color: rgba(255,255,255,.16);
     }
 
+    .stats{
+      display:flex; gap:38px; flex-wrap:wrap;
+      color:var(--muted2);
+      margin-top:6px;
+    }
+    .stat b{
+      display:block;
+      color:var(--accent);
+      font-size:28px;
+      line-height:1.05;
+      letter-spacing:-0.02em;
+    }
+    .stat span{
+      font-size:12px;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+    }
+
+    /* ORBIT VISUAL */
     .orb{
-      width:min(520px, 100%);
+      width:min(540px, 100%);
       aspect-ratio: 1 / 1;
       margin-left:auto;
       border-radius: 999px;
@@ -266,11 +301,24 @@
       filter: blur(18px);
       opacity:.9;
     }
-    .ring{ position:absolute; inset:8%; border-radius:999px; border:1px solid rgba(255,255,255,.10); }
+    .ring{
+      position:absolute; inset:8%;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      box-shadow: inset 0 0 0 1px rgba(0,0,0,.12);
+    }
     .ring2{ inset:18%; opacity:.7 }
+    .tilt{
+      position:absolute; left:50%; top:50%;
+      width:44%; height:44%;
+      transform: translate(-50%,-50%) rotate(14deg);
+      border-radius: 22px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.02);
+    }
     .core{
       position:absolute; left:50%; top:50%;
-      width:86px; height:86px; transform:translate(-50%,-50%);
+      width:88px; height:88px; transform:translate(-50%,-50%);
       border-radius:999px;
       background:
         radial-gradient(circle at 30% 30%, rgba(255,255,255,.25), transparent 45%),
@@ -278,15 +326,48 @@
       filter: drop-shadow(0 16px 30px rgba(229,106,92,.20));
       border: 1px solid rgba(255,255,255,.10);
     }
+    .p{position:absolute;width:10px;height:10px;border-radius:999px;opacity:.92}
+    .p.w{background:rgba(255,255,255,.85)}
+    .p.y{background:rgba(245,208,116,.92)}
+    .p.r{background:rgba(229,106,92,.85)}
+    .p1{left:22%;top:30%}.p2{left:70%;top:24%}.p3{left:78%;top:64%}
+    .p4{left:28%;top:72%}.p5{left:50%;top:18%}.p6{left:18%;top:55%}
+    .p7{left:62%;top:78%}.p8{left:82%;top:44%}
+
+    .scroll-hint{
+      margin-top: 28px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      justify-content:center;
+      color: rgba(255,255,255,.55);
+      font-size: 12px;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+    }
+    .chev{
+      width: 10px; height: 10px;
+      border-right: 2px solid rgba(229,106,92,.75);
+      border-bottom: 2px solid rgba(229,106,92,.75);
+      transform: rotate(45deg);
+      margin-top: -4px;
+      animation: bob 1.3s ease-in-out infinite;
+    }
+    @keyframes bob{
+      0%,100%{ transform: translateY(0) rotate(45deg); opacity:.65}
+      50%{ transform: translateY(6px) rotate(45deg); opacity:1}
+    }
 
     /* SECTIONS */
+    section{scroll-margin-top: 24px;}
+
     .section{
-      padding:24px 0 70px;
+      padding:34px 0 80px;
       border-top:1px solid rgba(255,255,255,.06);
     }
     .section-head{
       display:flex; align-items:end; justify-content:space-between; gap:16px;
-      margin-bottom: 14px;
+      margin-bottom: 16px;
     }
     .section-head h2{
       margin:0;
@@ -296,209 +377,192 @@
     }
     .section-head p{
       margin:0;
-      max-width: 70ch;
+      max-width: 64ch;
       color: var(--muted);
       line-height: 1.6;
       font-size: 14px;
     }
 
-    /* ACCORDION */
-    .accordion{
-      display:flex;
-      flex-direction:column;
-      gap: 14px;
-      margin-top: 16px;
-    }
-    details.cluster{
-      border:1px solid var(--stroke);
-      background: rgba(7,18,40,.50);
-      border-radius: 18px;
-      box-shadow: var(--shadow2);
-      overflow:hidden;
-    }
-    details.cluster[open]{
-      border-color: rgba(255,255,255,.16);
-      background: rgba(7,18,40,.58);
-    }
-
-    summary.clusterSum{
-      list-style:none;
-      cursor:pointer;
-      padding:16px 16px;
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:14px;
-      user-select:none;
-    }
-    summary.clusterSum::-webkit-details-marker{display:none}
-    .sumLeft{
-      display:flex;
-      flex-direction:column;
-      gap: 4px;
-      min-width:0;
-    }
-    .sumTitle{
-      font-family: var(--font-serif);
-      font-size: 26px;
-      letter-spacing:-0.01em;
-      line-height:1.1;
-      margin:0;
-    }
-    .sumMeta{
-      color: rgba(255,255,255,.68);
-      font-size: 13px;
-      line-height:1.3;
-      display:flex;
-      gap:10px;
-      flex-wrap:wrap;
-    }
-    .tag{
-      display:inline-flex;
-      align-items:center;
-      gap: 8px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.05);
-      padding: 6px 10px;
-      border-radius: 999px;
-      font-size: 12px;
-      color: rgba(255,255,255,.78);
-      letter-spacing:.06em;
-      text-transform:uppercase;
-    }
-    .sumRight{
-      display:flex;
-      align-items:center;
-      gap: 10px;
-      flex-shrink:0;
-    }
-    .caret{
-      width: 12px; height: 12px;
-      border-right: 2px solid rgba(229,106,92,.85);
-      border-bottom: 2px solid rgba(229,106,92,.85);
-      transform: rotate(45deg);
-      transition: transform .18s ease;
-      margin-right: 4px;
-    }
-    details[open] .caret{ transform: rotate(225deg); }
-
-    .clusterBody{
-      padding: 0 16px 16px 16px;
-    }
-
-    .viewerGrid{
+    .grid{
       display:grid;
-      grid-template-columns: 1.35fr .65fr;
-      gap: 16px;
-      margin-top: 8px;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap:18px;
+      margin-top: 18px;
     }
-
-    .viewerStage{
+    .card{
+      border:1px solid var(--stroke);
+      background: rgba(7,18,40,.55);
+      border-radius: 18px;
+      padding:18px;
+      box-shadow: var(--shadow2);
+      min-height: 240px;
       position:relative;
-      height: 420px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,.10);
-      background:
-        radial-gradient(900px 520px at 70% 26%, rgba(124,92,255,.12), transparent 60%),
-        radial-gradient(800px 540px at 22% 82%, rgba(229,106,92,.10), transparent 62%),
-        linear-gradient(180deg, rgba(4,10,26,.40), rgba(4,10,26,.20));
       overflow:hidden;
     }
-    .viewerMount{
-      position:absolute;
-      inset:0;
-    }
-    .viewerMount canvas{width:100%;height:100%;display:block}
-
-    .overlay{
-      position:absolute;
-      left: 12px;
-      top: 12px;
-      z-index: 5;
+    .card::after{
+      content:"";
+      position:absolute; inset:auto -40% -60% -40%;
+      height: 220px;
+      background: radial-gradient(circle at 50% 50%, rgba(124,92,255,.20), transparent 60%);
+      filter: blur(18px);
+      opacity:.75;
       pointer-events:none;
-      max-width: min(540px, 84%);
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(0,0,0,.22);
-      backdrop-filter: blur(10px);
-      padding: 10px 12px;
     }
-    .overlay .ovTitle{
-      margin:0;
+    .badge{
+      float:right;
+      font-size:12px;
+      color:rgba(255,255,255,.75);
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.06);
+    }
+    .card h3{
+      margin:10px 0 6px;
       font-family: var(--font-serif);
-      font-size: 22px;
       letter-spacing:-0.01em;
-      color: rgba(229,106,92,.92);
-      line-height: 1.05;
+      font-size:28px;
+      position:relative;
+      z-index:1;
     }
-    .overlay .ovSub{
-      margin: 6px 0 0;
-      font-size: 13px;
-      color: rgba(255,255,255,.82);
-      line-height:1.3;
-      font-family: var(--font-sans);
+    .card p{
+      margin:0 0 14px;
+      color:var(--muted);
+      line-height:1.6;
+      font-size:14px;
+      position:relative;
+      z-index:1;
+    }
+    .meta{
+      display:flex; gap:14px; flex-wrap:wrap;
+      color:rgba(255,255,255,.65);
+      font-size:12px;
+      position:relative;
+      z-index:1;
+    }
+    .arrow{
+      width:10px;height:10px;
+      border-right:2px solid currentColor;
+      border-top:2px solid currentColor;
+      transform: rotate(45deg);
+      margin-top:2px;
     }
 
-    .side{
+    .concepts{
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap:18px;
+      margin-top:18px;
+    }
+    .panel{
       border:1px solid var(--stroke);
       background: rgba(7,18,40,.45);
       border-radius: 18px;
-      padding: 16px;
+      padding:18px;
       box-shadow: var(--shadow2);
-      min-height: 260px;
     }
-    .side h3{
-      margin:0 0 10px;
+    .panel h3{
+      margin:0 0 8px;
       font-family: var(--font-serif);
-      font-size: 22px;
+      font-size: 26px;
       letter-spacing:-0.01em;
     }
-    .box{
+    .panel ul{
+      margin: 10px 0 0;
+      padding: 0 0 0 18px;
+      color: var(--muted);
+      line-height: 1.75;
+      font-size: 14px;
+    }
+    .pill-row{
+      display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;
+    }
+    .pill{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.05);
+      padding:8px 10px;
+      border-radius:999px;
+      color: rgba(255,255,255,.80);
+      font-size:12px;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+
+    .quiz{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:18px;
+      margin-top:18px;
+    }
+    .q{
+      border:1px solid var(--stroke);
+      background: rgba(7,18,40,.45);
+      border-radius: 18px;
+      padding:18px;
+      box-shadow: var(--shadow2);
+    }
+    .q h3{
+      margin:0 0 12px;
+      font-family: var(--font-serif);
+      font-size: 24px;
+    }
+    .q .opt{
+      display:block;
+      width:100%;
+      text-align:left;
+      padding:12px 12px;
+      border-radius: 14px;
       border:1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.04);
-      border-radius: 16px;
-      padding: 12px 12px;
-      font-size: 14px;
-      line-height: 1.85;
-      color: rgba(255,255,255,.88);
-    }
-    .row{
-      display:flex;
-      justify-content:space-between;
-      gap: 14px;
-      max-width: 460px;
-    }
-    .rhs{font-weight:800;color:rgba(255,255,255,.92);white-space:nowrap}
-    .lhs{white-space:nowrap}
-    .sep{height:10px}
-    .hintLine{
-      margin-top: 10px;
-      color: rgba(255,255,255,.60);
-      font-size: 12px;
-      line-height:1.45;
-    }
-    .kbd{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      padding: 1px 6px;
-      border-radius: 9px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
       color: rgba(255,255,255,.86);
-      font-size: 11px;
-      transform: translateY(-1px);
+      cursor:pointer;
+      margin:10px 0;
+    }
+    .q .opt:hover{background: rgba(255,255,255,.06)}
+    .q .opt[aria-pressed="true"]{
+      border-color: rgba(229,106,92,.45);
+      background: rgba(229,106,92,.14);
+    }
+    .q .result{
+      margin-top:10px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.55;
     }
 
-    .toolsRow{
-      display:flex;
-      gap: 10px;
-      flex-wrap:wrap;
-      margin-top: 12px;
+    .resources{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap:18px;
+      margin-top:18px;
+    }
+    .res{
+      border:1px solid var(--stroke);
+      background: rgba(7,18,40,.45);
+      border-radius: 18px;
+      padding:18px;
+      box-shadow: var(--shadow2);
+      min-height: 160px;
+    }
+    .res h3{
+      margin:0 0 8px;
+      font-family: var(--font-serif);
+      font-size: 24px;
+    }
+    .res p{
+      margin:0;
+      color: var(--muted);
+      line-height:1.6;
+      font-size: 14px;
+    }
+    .res a{
+      margin-top: 14px;
+      display:inline-flex;
+      gap:10px;
       align-items:center;
+      color: rgba(255,255,255,.88);
+      font-weight: 700;
     }
-
-    .muted{ color: var(--muted); }
 
     footer{
       border-top:1px solid rgba(255,255,255,.06);
@@ -510,32 +574,243 @@
       display:flex; align-items:center; justify-content:space-between;
       gap: 16px; flex-wrap:wrap;
     }
-    .small{
+    .foot .small{
       letter-spacing:.06em;
       text-transform:uppercase;
       color: rgba(255,255,255,.55);
+    }
+
+    /* VIEWER + E-COUNTING */
+    .viewerCard{
+      padding: 18px;
+      min-height: 560px;
+      display:flex;
+      flex-direction:column;
+      gap: 12px;
+    }
+    .viewerTop{
+      position:relative;
+      z-index:2;
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap: 12px;
+    }
+    .viewerTop .left{ min-width:0; }
+    .viewerTop .hint{
+      margin: 0;
+      color: var(--muted2);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+    .viewerTop .hint .kbd{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding: 1px 6px;
+      border-radius: 9px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.86);
+      font-size: 11px;
+      transform: translateY(-1px);
+    }
+    .viewerStage{
+      position:relative;
+      min-height: 380px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.10);
+      background:
+        radial-gradient(900px 520px at 70% 26%, rgba(124,92,255,.12), transparent 60%),
+        radial-gradient(800px 540px at 22% 82%, rgba(229,106,92,.10), transparent 62%),
+        linear-gradient(180deg, rgba(4,10,26,.40), rgba(4,10,26,.20));
+      overflow:hidden;
+    }
+
+    .viewer{
+      position:absolute;
+      inset:0;
+    }
+    .viewer canvas{width:100%;height:100%;display:block}
+
+    .modelOverlay{
+      position:absolute;
+      left:14px;
+      top:14px;
+      z-index: 5;
+      pointer-events:none;
+      max-width: min(520px, 78%);
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.22);
+      backdrop-filter: blur(10px);
+      padding: 12px 12px;
+    }
+    .modelOverlay .title{
+      margin:0;
+      font-family: var(--font-serif);
+      font-size: 28px;
+      letter-spacing:-0.01em;
+      color: rgba(229,106,92,.92);
+      line-height: 1.05;
+      font-style: normal;
+    }
+    .modelOverlay .sub{
+      margin: 6px 0 0;
+      font-family: var(--font-sans);
+      font-size: 14px;
+      color: rgba(255,255,255,.82);
+      font-style: normal;
+      letter-spacing:-0.01em;
+      line-height:1.25;
+    }
+
+    .countSide{
+      border:1px solid var(--stroke);
+      background: rgba(7,18,40,.45);
+      border-radius: 18px;
+      padding: 18px;
+      box-shadow: var(--shadow2);
+      min-height: 240px;
+      position:relative;
+      overflow:hidden;
+    }
+    .countSide h3{
+      margin:0 0 10px;
+      font-family: var(--font-serif);
+      font-size: 24px;
+      letter-spacing:-0.01em;
+    }
+    .countBox{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      border-radius: 16px;
+      padding: 14px 14px;
+      font-family: var(--font-sans);
+      font-size: 15px;
+      line-height: 1.8;
+      color: rgba(255,255,255,.88);
+    }
+    .countRow{
+      display:flex;
+      justify-content:space-between;
+      gap: 14px;
+      max-width: 420px;
+    }
+    .countRow .rhs{font-weight:800;color:rgba(255,255,255,.90);white-space:nowrap}
+    .countRow .lhs{white-space:nowrap}
+    .countSep{height:10px}
+
+    /* ===== NEW: Expandable cluster tabs (accordion) ===== */
+    .clusterTabs{
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+      margin-top:18px;
+    }
+    details.clusterTab{
+      border:1px solid var(--stroke);
+      background: rgba(7,18,40,.55);
+      border-radius: 18px;
+      box-shadow: var(--shadow2);
+      overflow:hidden;
+    }
+    details.clusterTab::after{
+      content:"";
+      position:absolute; inset:auto -40% -60% -40%;
+      height: 220px;
+      background: radial-gradient(circle at 50% 50%, rgba(124,92,255,.20), transparent 60%);
+      filter: blur(18px);
+      opacity:.75;
+      pointer-events:none;
+    }
+    summary.clusterSummary{
+      list-style:none;
+      cursor:pointer;
+      padding:18px;
+      user-select:none;
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:16px;
+    }
+    summary.clusterSummary::-webkit-details-marker{display:none;}
+    .sumLeft{
+      min-width:0;
+      flex: 1;
+    }
+    .sumTopRow{
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+    }
+    .sumTitle{
+      margin:10px 0 6px;
+      font-family: var(--font-serif);
+      letter-spacing:-0.01em;
+      font-size:28px;
+    }
+    .sumHint{
+      margin:0;
+      color: var(--muted2);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+    .sumRight{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-shrink:0;
+      color: rgba(255,255,255,.70);
+      font-size: 13px;
+      white-space:nowrap;
+      padding-top: 14px;
+    }
+    .caret{
+      width: 12px; height: 12px;
+      border-right: 2px solid rgba(229,106,92,.85);
+      border-bottom: 2px solid rgba(229,106,92,.85);
+      transform: rotate(45deg);
+      transition: transform .18s ease;
+      margin-right: 2px;
+    }
+    details[open] .caret{ transform: rotate(225deg); }
+    .clusterBody{
+      padding: 0 18px 18px;
     }
 
     /* Responsive */
     @media (max-width: 980px){
       :root{
         --nav-h: 150px;
-        --logo-h: 105px;
+        --logo-h: 110px;
         --logo-shift-left: 0px;
       }
-      nav.nav-links{display:none;}
+
+      .navCluster{display:none;}
       .menu-btn{display:inline-grid; place-items:center}
 
-      .hero{grid-template-columns: 1fr; padding-top: 14px}
+      .nav-in{
+        grid-template-columns: auto 1fr auto;
+      }
+
+      .hero{grid-template-columns: 1fr; padding-top: 18px}
       .orb{margin: 10px auto 0}
-      .viewerGrid{grid-template-columns: 1fr;}
-      .viewerStage{height: 380px;}
+      .grid{grid-template-columns: 1fr}
+      .concepts{grid-template-columns: 1fr}
+      .quiz{grid-template-columns: 1fr}
+      .resources{grid-template-columns: 1fr}
+
+      .modelOverlay{max-width: 92%;}
+      .modelOverlay .title{font-size:24px}
+
+      .nav-rule{margin-top: -8px;}
     }
   </style>
 </head>
 
 <body>
-  <!-- Mobile drawer -->
   <div class="backdrop" id="backdrop" aria-hidden="true"></div>
   <aside class="drawer" id="drawer" aria-label="Menu">
     <div class="drawer-top">
@@ -551,8 +826,10 @@
 
     <a href="#home">Home</a>
     <a href="#clusters">Clusters</a>
-    <a href="#rules">Wade’s rules</a>
-    <a class="cta" href="#clusters">Open Models</a>
+    <a href="#concepts">Concepts</a>
+    <a href="#quiz">Quiz</a>
+    <a href="#resources">Resources</a>
+    <a class="cta" href="#clusters">Start Learning</a>
   </aside>
 
   <header class="nav">
@@ -561,11 +838,16 @@
         <img class="brand-logo-img" src="HKUCHEMLOGO.PNG" alt="HKU Chemistry" />
       </a>
 
-      <nav class="nav-links" aria-label="Primary navigation">
-        <a href="#home" aria-current="page">Home</a>
-        <a href="#clusters">Clusters</a>
-        <a href="#rules">Wade’s rules</a>
-      </nav>
+      <div class="navCluster" aria-label="Primary navigation cluster">
+        <nav class="nav-links" aria-label="Primary navigation">
+          <a href="#home" aria-current="page">Home</a>
+          <a href="#clusters">Clusters</a>
+          <a href="#concepts">Concepts</a>
+          <a href="#quiz">Quiz</a>
+          <a href="#resources">Resources</a>
+        </nav>
+        <a class="cta" href="#clusters">Start Learning</a>
+      </div>
 
       <button class="menu-btn" id="openMenu" aria-label="Open menu">☰</button>
     </div>
@@ -585,279 +867,239 @@
           <span class="h1-accent">Clusters</span>
         </h1>
 
-        <div class="sub">Expandable tabs • 3D models • classification • e<sup>−</sup> counting</div>
+        <div class="sub">From Memorization to Understanding</div>
 
         <p class="desc">
-          Each cluster below expands into an interactive model plus classification and a clean
-          electron-counting box (same format across all clusters). This keeps the page short and study-friendly.
+          Explore the three-dimensional world of electron-deficient boron hydrides.
+          From Wade's rules to 3c–2e bonds, master the geometry that defines modern cluster chemistry.
         </p>
 
         <div class="hero-actions">
-          <a class="btn primary" href="#clusters">Go to clusters</a>
-          <a class="btn" href="#rules">Wade’s rules</a>
-          <a class="cta" href="#clusters">Open Models</a>
+          <a class="btn primary" href="#clusters">Explore Clusters</a>
+          <a class="btn" href="#concepts">Learn Theory</a>
+          <a class="btn" href="#clusters">Open Models</a>
+        </div>
+
+        <div class="stats" aria-label="Highlights">
+          <div class="stat"><b>3</b><span>Clusters (so far)</span></div>
+          <div class="stat"><b>3</b><span>Wade Rules</span></div>
+          <div class="stat"><b>∞</b><span>Possibilities</span></div>
+        </div>
+
+        <div class="scroll-hint" aria-hidden="true">
+          <span>Scroll to explore</span>
+          <span class="chev"></span>
         </div>
       </div>
 
       <div class="orb" aria-hidden="true">
         <div class="ring"></div>
         <div class="ring ring2"></div>
+        <div class="tilt"></div>
         <div class="core"></div>
+        <div class="p w p1"></div><div class="p y p2"></div><div class="p w p3"></div>
+        <div class="p y p4"></div><div class="p r p5"></div><div class="p w p6"></div>
+        <div class="p y p7"></div><div class="p w p8"></div>
       </div>
     </section>
 
-    <!-- CLUSTERS -->
+    <!-- CLUSTERS SECTION (NOW EXPANDABLE) -->
     <section class="section" id="clusters">
       <div class="section-head">
         <div>
-          <h2>Clusters (click to expand)</h2>
-          <p>
-            Tip: models are <b>lazy-loaded</b> (they render only after you open a tab), so performance stays fast.
-          </p>
+          <h2>Clusters</h2>
+          <p>Interactive models with classification + electron counting. Click a tab to expand.</p>
         </div>
       </div>
 
-      <div class="accordion">
+      <div class="clusterTabs">
 
-        <!-- ===== B4H4^2− ===== -->
-        <details class="cluster" data-cluster="b4" id="cluster-b4">
-          <summary class="clusterSum">
+        <!-- ===== Tab 1: B4H4^2− ===== -->
+        <details class="clusterTab" data-cluster="b4" id="cluster-b4">
+          <summary class="clusterSummary">
             <div class="sumLeft">
-              <div class="sumTitle">
-                B<sub>4</sub>H<sub>4</sub><sup>2−</sup>
+              <div class="sumTopRow">
+                <div>
+                  <span class="badge">Interactive 3D</span>
+                  <div class="sumTitle">B<sub>4</sub>H<sub>4</sub><sup>2−</sup></div>
+                  <p class="sumHint">
+                    <span class="kbd">Drag</span> rotate · <span class="kbd">Scroll</span> zoom · <span class="kbd">RMB</span> pan
+                  </p>
+                </div>
               </div>
-              <div class="sumMeta">
-                <span class="tag">closo</span>
-                <span class="tag">n = 4</span>
-                <span class="tag">Skeletal e<sup>−</sup> pairs = n+1 = 5</span>
+              <div class="meta" style="margin-top:10px">
+                <span>⚡ WebGL</span><span>⬡ Tetrahedral cage</span>
               </div>
             </div>
+
             <div class="sumRight">
               <div class="caret" aria-hidden="true"></div>
-              <span class="muted" style="font-size:13px">Expand</span>
+              <span>Expand</span>
             </div>
           </summary>
 
           <div class="clusterBody">
-            <div class="viewerGrid">
-              <div class="viewerStage" aria-label="3D viewer stage for B4H4 2-">
-                <div class="viewerMount" id="viewer-b4"></div>
+            <div style="display:grid; grid-template-columns: 1.35fr .65fr; gap:18px; margin-top:10px;">
+              <div class="viewerStage" aria-label="3D viewer stage">
+                <div class="viewer" id="viewerB4"></div>
 
-                <!-- CHANGED: removed the "For closo..." / SEP explanation; keep only controls -->
-                <div class="overlay" aria-hidden="true">
-                  <p class="ovTitle">Closo structure</p>
-                  <p class="ovSub">
-                    Drag to rotate · Scroll to zoom · RMB to pan
-                  </p>
+                <div class="modelOverlay" aria-hidden="true">
+                  <p class="title">Closo structure</p>
+                  <p class="sub">(n+1) skeletal electron pairs</p>
                 </div>
               </div>
 
-              <aside class="side" aria-label="Electron counting for B4H4 2-">
-                <h3>Classification + e<sup>−</sup> counting</h3>
-                <div class="box">
+              <aside class="countSide" aria-label="Electron counting">
+                <h3>e<sup>−</sup> counting</h3>
+
+                <div class="countBox">
                   <div style="font-weight:800; margin-bottom: 6px;">
                     B<sub>4</sub>H<sub>4</sub><sup>2−</sup>
                   </div>
 
-                  <div class="row"><div class="lhs">4 BH units</div><div class="rhs">= 8 e</div></div>
-                  <div class="row"><div class="lhs">+ 2 e (charge)</div><div class="rhs">= 10 e</div></div>
+                  <div class="countRow"><div class="lhs">4 BH</div><div class="rhs">= 8 e</div></div>
+                  <div class="countRow"><div class="lhs">+ 2 e (charge)</div><div class="rhs">= 10 e</div></div>
 
-                  <div class="sep"></div>
+                  <div class="countSep"></div>
 
-                  <div class="row"><div class="lhs">Skeletal e<sup>−</sup> pairs</div><div class="rhs">= 10/2 = 5</div></div>
-                  <div class="row"><div class="lhs">n = 4</div><div class="rhs">n+1 = 5</div></div>
+                  <div class="countRow"><div class="lhs">10 e</div><div class="rhs">= 5 pairs</div></div>
 
-                  <div class="sep"></div>
+                  <div class="countSep"></div>
 
-                  <div class="row"><div class="lhs"><b>Wade class</b></div><div class="rhs"><b>closo</b></div></div>
+                  <div class="countRow"><div class="lhs">n</div><div class="rhs">= 4</div></div>
+                  <div class="countRow"><div class="lhs">n + 1</div><div class="rhs">= 5 → closo</div></div>
                 </div>
 
-                <div class="toolsRow">
-                  <button class="btn" type="button" data-action="reset" data-target="b4">Reset view</button>
+                <div class="meta" style="margin-top:12px">
+                  <button class="btn" id="resetCameraB4" type="button">Reset view</button>
                 </div>
               </aside>
             </div>
           </div>
         </details>
 
-        <!-- ===== [B5H5]2− ===== -->
-        <details class="cluster" data-cluster="b5closo" id="cluster-b5closo">
-          <summary class="clusterSum">
+        <!-- ===== Tab 2: [B5H5]^2− ===== -->
+        <details class="clusterTab" data-cluster="b5" id="cluster-b5">
+          <summary class="clusterSummary">
             <div class="sumLeft">
-              <div class="sumTitle">
-                [B<sub>5</sub>H<sub>5</sub>]<sup>2−</sup>
+              <div class="sumTopRow">
+                <div>
+                  <span class="badge">Interactive 3D</span>
+                  <div class="sumTitle">[B<sub>5</sub>H<sub>5</sub>]<sup>2−</sup></div>
+                  <p class="sumHint">
+                    <span class="kbd">Drag</span> rotate · <span class="kbd">Scroll</span> zoom · <span class="kbd">RMB</span> pan
+                  </p>
+                </div>
               </div>
-              <div class="sumMeta">
-                <span class="tag">closo</span>
-                <span class="tag">n = 5</span>
-                <span class="tag">Skeletal e<sup>−</sup> pairs = n+1 = 6</span>
+              <div class="meta" style="margin-top:10px">
+                <span>⚡ WebGL</span><span>⬡ Trigonal bipyramid</span>
               </div>
             </div>
+
             <div class="sumRight">
               <div class="caret" aria-hidden="true"></div>
-              <span class="muted" style="font-size:13px">Expand</span>
+              <span>Expand</span>
             </div>
           </summary>
 
           <div class="clusterBody">
-            <div class="viewerGrid">
-              <div class="viewerStage" aria-label="3D viewer stage for B5H5 2-">
-                <div class="viewerMount" id="viewer-b5closo"></div>
+            <div style="display:grid; grid-template-columns: 1.35fr .65fr; gap:18px; margin-top:10px;">
+              <div class="viewerStage" aria-label="3D viewer stage">
+                <div class="viewer" id="viewerB5"></div>
 
-                <!-- CHANGED: removed the "For closo: SEP = ..." line; keep only controls -->
-                <div class="overlay" aria-hidden="true">
-                  <p class="ovTitle">Closo structure</p>
-                  <p class="ovSub">
-                    Drag to rotate · Scroll to zoom · RMB to pan
-                  </p>
+                <div class="modelOverlay" aria-hidden="true">
+                  <p class="title">Closo structure</p>
+                  <p class="sub">(n+1) skeletal electron pairs</p>
                 </div>
               </div>
 
-              <aside class="side" aria-label="Electron counting for B5H5 2-">
-                <h3>Classification + e<sup>−</sup> counting</h3>
-                <div class="box">
+              <aside class="countSide" aria-label="Electron counting">
+                <h3>e<sup>−</sup> counting</h3>
+
+                <div class="countBox">
                   <div style="font-weight:800; margin-bottom: 6px;">
                     [B<sub>5</sub>H<sub>5</sub>]<sup>2−</sup>
                   </div>
 
-                  <div class="row"><div class="lhs">5 BH units</div><div class="rhs">= 10 e</div></div>
-                  <div class="row"><div class="lhs">+ 2 e (charge)</div><div class="rhs">= 12 e</div></div>
+                  <div class="countRow"><div class="lhs">5 BH</div><div class="rhs">= 10 e</div></div>
+                  <div class="countRow"><div class="lhs">+ 2 e (charge)</div><div class="rhs">= 12 e</div></div>
 
-                  <div class="sep"></div>
+                  <div class="countSep"></div>
 
-                  <div class="row"><div class="lhs">Skeletal e<sup>−</sup> pairs</div><div class="rhs">= 12/2 = 6</div></div>
-                  <div class="row"><div class="lhs">n = 5</div><div class="rhs">n+1 = 6</div></div>
+                  <div class="countRow"><div class="lhs">12 e</div><div class="rhs">= 6 pairs</div></div>
 
-                  <div class="sep"></div>
+                  <div class="countSep"></div>
 
-                  <div class="row"><div class="lhs"><b>Wade class</b></div><div class="rhs"><b>closo</b></div></div>
+                  <div class="countRow"><div class="lhs">n</div><div class="rhs">= 5</div></div>
+                  <div class="countRow"><div class="lhs">n + 1</div><div class="rhs">= 6 → closo</div></div>
                 </div>
 
-                <div class="toolsRow">
-                  <button class="btn" type="button" data-action="reset" data-target="b5closo">Reset view</button>
+                <div class="meta" style="margin-top:12px">
+                  <button class="btn" id="resetCameraB5" type="button">Reset view</button>
                 </div>
               </aside>
             </div>
           </div>
         </details>
 
-        <!-- ===== [B8H8]2− ===== -->
-        <details class="cluster" data-cluster="b8" id="cluster-b8">
-          <summary class="clusterSum">
+        <!-- ===== Tab 3: [B8H8]^2− ===== -->
+        <details class="clusterTab" data-cluster="b8" id="cluster-b8">
+          <summary class="clusterSummary">
             <div class="sumLeft">
-              <div class="sumTitle">
-                [B<sub>8</sub>H<sub>8</sub>]<sup>2−</sup>
+              <div class="sumTopRow">
+                <div>
+                  <span class="badge">Interactive 3D</span>
+                  <div class="sumTitle">[B<sub>8</sub>H<sub>8</sub>]<sup>2−</sup></div>
+                  <p class="sumHint">
+                    <span class="kbd">Drag</span> rotate · <span class="kbd">Scroll</span> zoom · <span class="kbd">RMB</span> pan
+                  </p>
+                </div>
               </div>
-              <div class="sumMeta">
-                <span class="tag">closo</span>
-                <span class="tag">n = 8</span>
-                <span class="tag">Skeletal e<sup>−</sup> pairs = n+1 = 9</span>
+              <div class="meta" style="margin-top:10px">
+                <span>⚡ WebGL</span><span>⬡ Triangular dodecahedron</span>
               </div>
             </div>
+
             <div class="sumRight">
               <div class="caret" aria-hidden="true"></div>
-              <span class="muted" style="font-size:13px">Expand</span>
+              <span>Expand</span>
             </div>
           </summary>
 
           <div class="clusterBody">
-            <div class="viewerGrid">
-              <div class="viewerStage" aria-label="3D viewer stage for B8H8 2-">
-                <div class="viewerMount" id="viewer-b8"></div>
+            <div style="display:grid; grid-template-columns: 1.35fr .65fr; gap:18px; margin-top:10px;">
+              <div class="viewerStage" aria-label="3D viewer stage">
+                <div class="viewer" id="viewerB8"></div>
 
-                <!-- CHANGED: keep only controls -->
-                <div class="overlay" aria-hidden="true">
-                  <p class="ovTitle">Closo structure</p>
-                  <p class="ovSub">
-                    Drag to rotate · Scroll to zoom · RMB to pan
-                  </p>
+                <div class="modelOverlay" aria-hidden="true">
+                  <p class="title">Closo (deltahedral)</p>
+                  <p class="sub">(n+1) skeletal electron pairs</p>
                 </div>
               </div>
 
-              <aside class="side" aria-label="Electron counting for B8H8 2-">
-                <h3>Classification + e<sup>−</sup> counting</h3>
-                <div class="box">
+              <aside class="countSide" aria-label="Electron counting">
+                <h3>e<sup>−</sup> counting</h3>
+
+                <div class="countBox">
                   <div style="font-weight:800; margin-bottom: 6px;">
                     [B<sub>8</sub>H<sub>8</sub>]<sup>2−</sup>
                   </div>
 
-                  <div class="row"><div class="lhs">8 BH units</div><div class="rhs">= 16 e</div></div>
-                  <div class="row"><div class="lhs">+ 2 e (charge)</div><div class="rhs">= 18 e</div></div>
+                  <div class="countRow"><div class="lhs">8 BH</div><div class="rhs">= 16 e</div></div>
+                  <div class="countRow"><div class="lhs">+ 2 e (charge)</div><div class="rhs">= 18 e</div></div>
 
-                  <div class="sep"></div>
+                  <div class="countSep"></div>
 
-                  <div class="row"><div class="lhs">Skeletal e<sup>−</sup> pairs</div><div class="rhs">= 18/2 = 9</div></div>
-                  <div class="row"><div class="lhs">n = 8</div><div class="rhs">n+1 = 9</div></div>
+                  <div class="countRow"><div class="lhs">18 e</div><div class="rhs">= 9 pairs</div></div>
 
-                  <div class="sep"></div>
+                  <div class="countSep"></div>
 
-                  <div class="row"><div class="lhs"><b>Wade class</b></div><div class="rhs"><b>closo</b></div></div>
+                  <div class="countRow"><div class="lhs">n</div><div class="rhs">= 8</div></div>
+                  <div class="countRow"><div class="lhs">n + 1</div><div class="rhs">= 9 → closo</div></div>
                 </div>
 
-                <div class="toolsRow">
-                  <button class="btn" type="button" data-action="reset" data-target="b8">Reset view</button>
-                </div>
-              </aside>
-            </div>
-          </div>
-        </details>
-
-        <!-- ===== B5H9 (nido) ===== -->
-        <details class="cluster" data-cluster="b5h9" id="cluster-b5h9">
-          <summary class="clusterSum">
-            <div class="sumLeft">
-              <div class="sumTitle">
-                B<sub>5</sub>H<sub>9</sub>
-              </div>
-              <div class="sumMeta">
-                <span class="tag">nido</span>
-                <span class="tag">n = 5</span>
-                <span class="tag">Skeletal e<sup>−</sup> pairs = n+2 = 7</span>
-              </div>
-            </div>
-            <div class="sumRight">
-              <div class="caret" aria-hidden="true"></div>
-              <span class="muted" style="font-size:13px">Expand</span>
-            </div>
-          </summary>
-
-          <div class="clusterBody">
-            <div class="viewerGrid">
-              <div class="viewerStage" aria-label="3D viewer stage for B5H9">
-                <div class="viewerMount" id="viewer-b5h9"></div>
-
-                <!-- CHANGED: removed extra explanation; keep only controls -->
-                <div class="overlay" aria-hidden="true">
-                  <p class="ovTitle">Nido structure</p>
-                  <p class="ovSub">
-                    Drag to rotate · Scroll to zoom · RMB to pan
-                  </p>
-                </div>
-              </div>
-
-              <aside class="side" aria-label="Electron counting for B5H9">
-                <h3>Classification + e<sup>−</sup> counting</h3>
-                <div class="box">
-                  <div style="font-weight:800; margin-bottom: 6px;">
-                    B<sub>5</sub>H<sub>9</sub>
-                  </div>
-
-                  <div class="row"><div class="lhs">Total valence e<sup>−</sup></div><div class="rhs">= 5×3 + 9×1 = 24</div></div>
-                  <div class="row"><div class="lhs">− terminal B–H bonds</div><div class="rhs">= 5×2 = 10</div></div>
-
-                  <div class="sep"></div>
-
-                  <div class="row"><div class="lhs">Skeletal e<sup>−</sup></div><div class="rhs">= 24 − 10 = 14</div></div>
-                  <div class="row"><div class="lhs">Skeletal e<sup>−</sup> pairs</div><div class="rhs">= 14/2 = 7</div></div>
-
-                  <div class="sep"></div>
-
-                  <div class="row"><div class="lhs">n = 5</div><div class="rhs">n+2 = 7</div></div>
-                  <div class="row"><div class="lhs"><b>Wade class</b></div><div class="rhs"><b>nido</b></div></div>
-                </div>
-
-                <div class="toolsRow">
-                  <button class="btn" type="button" data-action="reset" data-target="b5h9">Reset view</button>
+                <div class="meta" style="margin-top:12px">
+                  <button class="btn" id="resetCameraB8" type="button">Reset view</button>
                 </div>
               </aside>
             </div>
@@ -867,32 +1109,96 @@
       </div>
     </section>
 
-    <!-- RULES -->
-    <section class="section" id="rules">
+    <section class="section" id="concepts">
       <div class="section-head">
         <div>
-          <h2>Wade’s rules (quick reference)</h2>
-          <p>Relate number of vertices \(n\) to skeletal electron pairs.</p>
+          <h2>Concepts</h2>
+          <p>Short, high-signal explanations you can expand into full lessons later.</p>
         </div>
       </div>
 
-      <div style="display:grid; grid-template-columns: 1fr 1fr; gap:14px;">
-        <div style="border:1px solid var(--stroke);background:rgba(7,18,40,.45);border-radius:18px;padding:16px;box-shadow:var(--shadow2);">
-          <h3 style="margin:0 0 8px;font-family:var(--font-serif);font-size:22px;">Classes</h3>
-          <div class="box">
-            <div class="row"><div class="lhs"><b>closo</b></div><div class="rhs">Skeletal e<sup>−</sup> pairs = n + 1</div></div>
-            <div class="row"><div class="lhs"><b>nido</b></div><div class="rhs">Skeletal e<sup>−</sup> pairs = n + 2</div></div>
-            <div class="row"><div class="lhs"><b>arachno</b></div><div class="rhs">Skeletal e<sup>−</sup> pairs = n + 3</div></div>
+      <div class="concepts">
+        <div class="panel">
+          <h3>Wade’s rules (quick map)</h3>
+          <ul>
+            <li><b>closo</b>: (n+1) skeletal electron pairs (SEP)</li>
+            <li><b>nido</b>: (n+2) SEP</li>
+            <li><b>arachno</b>: (n+3) SEP</li>
+            <li>Practice: relate vertices (n) → shape family → predicted formula tendencies.</li>
+          </ul>
+          <div class="pill-row" aria-label="Tags">
+            <span class="pill">electron counting</span>
+            <span class="pill">polyhedra</span>
+            <span class="pill">structure</span>
           </div>
         </div>
 
-        <div style="border:1px solid var(--stroke);background:rgba(7,18,40,.45);border-radius:18px;padding:16px;box-shadow:var(--shadow2);">
-          <h3 style="margin:0 0 8px;font-family:var(--font-serif);font-size:22px;">Counting reminders</h3>
-          <div class="box">
-            <div>• For <b>closo boranes</b> like [B<sub>n</sub>H<sub>n</sub>]<sup>2−</sup>, a common shortcut is “BH = 2 e” + charge.</div>
-            <div class="sep"></div>
-            <div>• For <b>neutral nido boranes</b> like B<sub>5</sub>H<sub>9</sub>, use total valence e<sup>−</sup> then subtract 2 e for each <b>terminal</b> B–H bond to get <b>skeletal</b> e<sup>−</sup>.</div>
+        <div class="panel">
+          <h3>3c–2e bonding (intuition)</h3>
+          <ul>
+            <li>Bridging hydrogens stabilize electron-deficient frameworks.</li>
+            <li>Think “shared pair across three centers” instead of a missing bond.</li>
+            <li>Use bonding motifs to predict where bridges appear in small boranes.</li>
+          </ul>
+          <div class="pill-row">
+            <span class="pill">bonding</span>
+            <span class="pill">bridges</span>
+            <span class="pill">stability</span>
           </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="quiz">
+      <div class="section-head">
+        <div>
+          <h2>Quiz</h2>
+          <p>A simple built-in quiz (no backend). Click an option to see feedback.</p>
+        </div>
+      </div>
+
+      <div class="quiz">
+        <div class="q" data-answer="b">
+          <h3>1) For a <i>closo</i> cluster with n vertices, SEP equals:</h3>
+          <button class="opt" data-opt="a" aria-pressed="false">A) n</button>
+          <button class="opt" data-opt="b" aria-pressed="false">B) n+1</button>
+          <button class="opt" data-opt="c" aria-pressed="false">C) n+2</button>
+          <div class="result" aria-live="polite"></div>
+        </div>
+
+        <div class="q" data-answer="c">
+          <h3>2) A typical 3c–2e bond is best described as:</h3>
+          <button class="opt" data-opt="a" aria-pressed="false">A) 3 centers sharing 4 electrons</button>
+          <button class="opt" data-opt="b" aria-pressed="false">B) 2 centers sharing 3 electrons</button>
+          <button class="opt" data-opt="c" aria-pressed="false">C) 3 centers sharing 2 electrons</button>
+          <div class="result" aria-live="polite"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="resources">
+      <div class="section-head">
+        <div>
+          <h2>Resources</h2>
+          <p>Replace these with your PDFs, videos, and interactive tools later.</p>
+        </div>
+      </div>
+
+      <div class="resources">
+        <div class="res">
+          <h3>Lecture Notes</h3>
+          <p>Quick-reference sheets for Wade–Mingos and common borane motifs.</p>
+          <a href="#" onclick="return false;">Open <span class="arrow" aria-hidden="true"></span></a>
+        </div>
+        <div class="res">
+          <h3>Practice Set</h3>
+          <p>Electron counting drills with increasing complexity and worked solutions.</p>
+          <a href="#" onclick="return false;">Open <span class="arrow" aria-hidden="true"></span></a>
+        </div>
+        <div class="res">
+          <h3>3D Viewer</h3>
+          <p>Embedded in the Clusters section as B<sub>4</sub>H<sub>4</sub><sup>2−</sup>, [B<sub>5</sub>H<sub>5</sub>]<sup>2−</sup>, and [B<sub>8</sub>H<sub>8</sub>]<sup>2−</sup>.</p>
+          <a href="#clusters">Go to models <span class="arrow" aria-hidden="true"></span></a>
         </div>
       </div>
     </section>
@@ -900,23 +1206,20 @@
     <footer>
       <div class="foot">
         <div>
-          <div class="small">CHEM2341 • Inorganic Chemistry • Interactive borane clusters</div>
-          <div>© <span id="year"></span> Your Website / Project.</div>
+          <div class="small">CHEM2341 • Inorganic Chemistry</div>
+          <div>© <span id="year"></span> Your Project Name. All rights reserved.</div>
         </div>
-        <div style="display:flex;gap:12px;flex-wrap:wrap">
+        <div style="display:flex;gap:14px;flex-wrap:wrap">
           <a class="btn" href="#home">Back to top</a>
-          <a class="cta" href="#clusters">Open Clusters</a>
         </div>
       </div>
     </footer>
   </main>
 
-  <!-- Three.js (match teacher version family) -->
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 
   <script>
-    // Year
     document.getElementById('year').textContent = new Date().getFullYear();
 
     // Drawer
@@ -950,71 +1253,97 @@
       a.setAttribute('aria-current', 'page');
     }));
 
-    // ========= 3D ENGINE (lazy-load per open tab) =========
+    // ========= Quiz (unchanged behavior) =========
+    document.querySelectorAll('.q').forEach(q => {
+      const ans = q.getAttribute('data-answer');
+      const result = q.querySelector('.result');
+      q.querySelectorAll('.opt').forEach(btn => {
+        btn.addEventListener('click', () => {
+          q.querySelectorAll('.opt').forEach(b => b.setAttribute('aria-pressed','false'));
+          btn.setAttribute('aria-pressed','true');
+          const picked = btn.getAttribute('data-opt');
+          if (picked === ans){
+            result.textContent = "Correct.";
+          } else {
+            result.textContent = "Not quite—try again.";
+          }
+        });
+      });
+    });
 
-    // Shared materials
+    // ========= Shared materials / geometry helpers =========
     const boronMaterial = new THREE.MeshStandardMaterial({
       color: 0x7dd3fc,
       roughness: 0.35,
       metalness: 0.08,
       emissive: 0x071635,
-      emissiveIntensity: 0.10
+      emissiveIntensity: 0.12
     });
+
     const hydrogenMaterial = new THREE.MeshStandardMaterial({
       color: 0xf8fafc,
       roughness: 0.25,
       metalness: 0.05
     });
+
     const bondMaterial = new THREE.MeshStandardMaterial({
       color: 0x94a3b8,
-      roughness: 0.68,
+      roughness: 0.65,
       metalness: 0.0
     });
 
-    // Shared geometry
     const boronGeometry = new THREE.SphereGeometry(0.38, 32, 32);
     const hydrogenGeometry = new THREE.SphereGeometry(0.20, 28, 28);
     const bondGeometry = new THREE.CylinderGeometry(0.055, 0.055, 1, 24);
 
     function addLights(scene){
-      scene.add(new THREE.AmbientLight(0xffffff, 0.58));
+      scene.add(new THREE.AmbientLight(0xffffff, 0.55));
 
-      const key = new THREE.DirectionalLight(0xffffff, 0.95);
-      key.position.set(4, 6, 5);
-      scene.add(key);
+      const keyLight = new THREE.DirectionalLight(0xffffff, 0.95);
+      keyLight.position.set(4, 6, 5);
+      scene.add(keyLight);
 
-      const rim = new THREE.DirectionalLight(0x7c5cff, 0.35);
-      rim.position.set(-6, 2, -4);
-      scene.add(rim);
+      const rimLight = new THREE.DirectionalLight(0x7c5cff, 0.35);
+      rimLight.position.set(-6, 2, -4);
+      scene.add(rimLight);
 
-      const warm = new THREE.DirectionalLight(0xe56a5c, 0.18);
-      warm.position.set(6, -2, -2);
-      scene.add(warm);
+      const warmFill = new THREE.DirectionalLight(0xe56a5c, 0.18);
+      warmFill.position.set(6, -2, -2);
+      scene.add(warmFill);
+
+      const backPlane = new THREE.Mesh(
+        new THREE.PlaneGeometry(50, 50),
+        new THREE.MeshBasicMaterial({ color: 0x050b1a, transparent: true, opacity: 0.18 })
+      );
+      backPlane.position.set(0, 0, -6.8);
+      scene.add(backPlane);
     }
 
     function createCylinderBond(group, start, end) {
-      const s = new THREE.Vector3(...start);
-      const e = new THREE.Vector3(...end);
-      const length = s.distanceTo(e);
+      const startVec = new THREE.Vector3(...start);
+      const endVec = new THREE.Vector3(...end);
+      const length = startVec.distanceTo(endVec);
       if (!isFinite(length) || length <= 1e-6) return;
 
       const cyl = new THREE.Mesh(bondGeometry, bondMaterial);
-      const mid = s.clone().add(e).multiplyScalar(0.5);
+
+      const mid = startVec.clone().add(endVec).multiplyScalar(0.5);
       cyl.position.copy(mid);
 
-      // y-axis cylinder, scale y to length
       cyl.scale.set(1, length, 1);
 
-      const dir = e.clone().sub(s).normalize();
-      cyl.setRotationFromQuaternion(new THREE.Quaternion().setFromUnitVectors(new THREE.Vector3(0,1,0), dir));
+      const dir = endVec.clone().sub(startVec).normalize();
+      const axis = new THREE.Vector3(0, 1, 0);
+      cyl.setRotationFromQuaternion(new THREE.Quaternion().setFromUnitVectors(axis, dir));
       group.add(cyl);
     }
 
-    function setupViewer({ mountEl, defaultCam, buildModelFn }) {
+    function setupViewer({ mountEl, defaultCamZ, buildModelFn, resetBtn }) {
       const scene = new THREE.Scene();
       scene.background = null;
 
       const camera = new THREE.PerspectiveCamera(55, 1, 0.1, 1000);
+
       const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
       renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
       mountEl.appendChild(renderer.domElement);
@@ -1023,13 +1352,14 @@
       controls.enableDamping = true;
       controls.dampingFactor = 0.06;
       controls.rotateSpeed = 0.6;
-      controls.zoomSpeed = 0.85;
+      controls.zoomSpeed = 0.8;
       controls.panSpeed = 0.8;
 
       addLights(scene);
 
       const modelGroup = new THREE.Group();
       scene.add(modelGroup);
+
       buildModelFn(modelGroup);
 
       function resize() {
@@ -1045,71 +1375,61 @@
       ro.observe(mountEl);
 
       function resetCamera(){
-        camera.position.set(defaultCam.x, defaultCam.y, defaultCam.z);
-        controls.target.set(0,0,0);
+        camera.position.set(0, 0, defaultCamZ);
+        controls.target.set(0, 0, 0);
         controls.update();
         resize();
       }
-      resetCamera();
 
-      let alive = true;
-      function animate(){
-        if (!alive) return;
+      function animate() {
         requestAnimationFrame(animate);
         controls.update();
         renderer.render(scene, camera);
       }
+
+      if (resetBtn) resetBtn.addEventListener('click', resetCamera);
+      resetCamera();
       animate();
 
-      return {
-        resetCamera,
-        dispose(){
-          alive = false;
-          ro.disconnect();
-          controls.dispose();
-          renderer.dispose();
-          mountEl.innerHTML = "";
-        }
-      };
+      return { resetCamera };
     }
 
-    // ========= Models =========
-
-    function buildB4(group){
+    // ========= Build model: B4H4^2− (tetrahedral) =========
+    function buildB4(modelGroup){
       const boronPositions = [
         [ 1,  1,  1],
         [ 1, -1, -1],
         [-1,  1, -1],
         [-1, -1,  1]
-      ].map(p => p.map(c => c * 0.60));
+      ].map(pos => pos.map(c => c * 0.577));
 
       const hydrogenPositions = [];
 
       boronPositions.forEach((pos) => {
         const b = new THREE.Mesh(boronGeometry, boronMaterial);
         b.position.set(pos[0], pos[1], pos[2]);
-        group.add(b);
+        modelGroup.add(b);
 
         const len = Math.hypot(pos[0], pos[1], pos[2]) || 1;
-        const out = 0.90;
-        const hPos = pos.map(c => c * ((len + out) / len));
+        const hPos = pos.map(coord => coord * ((len + 0.85) / len));
         hydrogenPositions.push(hPos);
 
         const h = new THREE.Mesh(hydrogenGeometry, hydrogenMaterial);
         h.position.set(hPos[0], hPos[1], hPos[2]);
-        group.add(h);
+        modelGroup.add(h);
       });
 
       const edges = [
-        [0,1],[0,2],[0,3],
-        [1,2],[1,3],
-        [2,3]
+        [0, 1], [0, 2], [0, 3],
+        [1, 2], [1, 3],
+        [2, 3]
       ];
-      edges.forEach(([i,j]) => createCylinderBond(group, boronPositions[i], boronPositions[j]));
-      boronPositions.forEach((bPos, i) => createCylinderBond(group, bPos, hydrogenPositions[i]));
+      edges.forEach(([i, j]) => createCylinderBond(modelGroup, boronPositions[i], boronPositions[j]));
+      boronPositions.forEach((bPos, i) => createCylinderBond(modelGroup, bPos, hydrogenPositions[i]));
     }
 
-    function buildB5Closo(group){
+    // ========= Build model: [B5H5]^2− (trigonal bipyramid) =========
+    function buildB5(modelGroup){
       const r = 1.00;
       const h = 1.25;
 
@@ -1126,7 +1446,7 @@
       boronPositions.forEach((pos) => {
         const b = new THREE.Mesh(boronGeometry, boronMaterial);
         b.position.set(pos[0], pos[1], pos[2]);
-        group.add(b);
+        modelGroup.add(b);
 
         const len = Math.hypot(pos[0], pos[1], pos[2]) || 1;
         const out = 0.85;
@@ -1135,7 +1455,7 @@
 
         const hAtom = new THREE.Mesh(hydrogenGeometry, hydrogenMaterial);
         hAtom.position.set(hPos[0], hPos[1], hPos[2]);
-        group.add(hAtom);
+        modelGroup.add(hAtom);
       });
 
       const edges = [
@@ -1143,11 +1463,12 @@
         [3,0],[3,1],[3,2],
         [4,0],[4,1],[4,2]
       ];
-      edges.forEach(([i,j]) => createCylinderBond(group, boronPositions[i], boronPositions[j]));
-      boronPositions.forEach((bPos, i) => createCylinderBond(group, bPos, hydrogenPositions[i]));
+      edges.forEach(([i, j]) => createCylinderBond(modelGroup, boronPositions[i], boronPositions[j]));
+      boronPositions.forEach((bPos, i) => createCylinderBond(modelGroup, bPos, hydrogenPositions[i]));
     }
 
-    function buildB8(group){
+    // ========= Build model: [B8H8]^2− =========
+    function buildB8(modelGroup){
       const a = 1.0;
       const boronPositions = [
         [0, 0,  a * 1.2],
@@ -1170,13 +1491,13 @@
       boronPositions.forEach(pos => {
         const b = new THREE.Mesh(boronGeometry, boronMaterial);
         b.position.set(pos[0], pos[1], pos[2]);
-        group.add(b);
+        modelGroup.add(b);
       });
 
       hydrogenPositions.forEach(pos => {
         const h = new THREE.Mesh(hydrogenGeometry, hydrogenMaterial);
         h.position.set(pos[0], pos[1], pos[2]);
-        group.add(h);
+        modelGroup.add(h);
       });
 
       const edges = [
@@ -1187,131 +1508,68 @@
         [4, 6], [4, 7],
         [5, 6], [5, 7]
       ];
-      edges.forEach(([i,j]) => createCylinderBond(group, boronPositions[i], boronPositions[j]));
-      boronPositions.forEach((bPos, i) => createCylinderBond(group, bPos, hydrogenPositions[i]));
+      edges.forEach(([i, j]) => createCylinderBond(modelGroup, boronPositions[i], boronPositions[j]));
+      boronPositions.forEach((bPos, i) => createCylinderBond(modelGroup, bPos, hydrogenPositions[i]));
     }
 
-    function buildB5H9(group){
-      const scale = 1.15;
-
-      const boronPositions = [
-        [0, 0, 1],
-        [1, 0, 0],
-        [0, 1, 0],
-        [-1, 0, 0],
-        [0, -1, 0]
-      ].map(p => p.map(c => c * scale));
-
-      const terminalHPositions = boronPositions.map(pos => {
-        const len = Math.hypot(pos[0], pos[1], pos[2]) || 1;
-        const out = 0.95;
-        const s = (len + out) / len;
-        return pos.map(c => c * s);
-      });
-
-      const bridges = [
-        { a: 1, b: 2 },
-        { a: 2, b: 3 },
-        { a: 3, b: 4 },
-        { a: 4, b: 1 }
-      ];
-      const bridgeHPositions = bridges.map(({a,b}) => {
-        const pa = boronPositions[a], pb = boronPositions[b];
-        return [
-          (pa[0] + pb[0]) / 2,
-          (pa[1] + pb[1]) / 2,
-          (pa[2] + pb[2]) / 2 - 0.55
-        ];
-      });
-
-      boronPositions.forEach(pos => {
-        const b = new THREE.Mesh(boronGeometry, boronMaterial);
-        b.position.set(pos[0], pos[1], pos[2]);
-        group.add(b);
-      });
-
-      terminalHPositions.forEach(pos => {
-        const h = new THREE.Mesh(hydrogenGeometry, hydrogenMaterial);
-        h.position.set(pos[0], pos[1], pos[2]);
-        group.add(h);
-      });
-
-      bridgeHPositions.forEach(pos => {
-        const h = new THREE.Mesh(hydrogenGeometry, hydrogenMaterial);
-        h.position.set(pos[0], pos[1], pos[2]);
-        group.add(h);
-      });
-
-      const edges = [
-        [0,1],[0,2],[0,3],[0,4],
-        [1,2],[2,3],[3,4],[4,1]
-      ];
-      edges.forEach(([i,j]) => createCylinderBond(group, boronPositions[i], boronPositions[j]));
-
-      boronPositions.forEach((bPos, i) => createCylinderBond(group, bPos, terminalHPositions[i]));
-
-      bridges.forEach(({a,b}, idx) => {
-        const hPos = bridgeHPositions[idx];
-        createCylinderBond(group, boronPositions[a], hPos);
-        createCylinderBond(group, boronPositions[b], hPos);
-      });
-    }
-
-    // ========= Lazy init on expand =========
-    const viewers = new Map();
-    function initClusterViewer(key){
+    // ========= Lazy init: only build a viewer when its tab opens =========
+    const viewers = new Map(); // key -> { resetCamera }
+    function initViewer(key){
       if (viewers.has(key)) return;
 
-      let mountId, buildFn, defaultCam;
-      if (key === "b4") {
-        mountId = "viewer-b4"; buildFn = buildB4; defaultCam = {x: 0, y: 0, z: 5.2};
-      } else if (key === "b5closo") {
-        mountId = "viewer-b5closo"; buildFn = buildB5Closo; defaultCam = {x: 0.3, y: 0.2, z: 6.2};
-      } else if (key === "b8") {
-        mountId = "viewer-b8"; buildFn = buildB8; defaultCam = {x: 0.6, y: 0.4, z: 6.8};
-      } else if (key === "b5h9") {
-        mountId = "viewer-b5h9"; buildFn = buildB5H9; defaultCam = {x: 0.6, y: 0.5, z: 7.6};
-      } else {
-        return;
+      if (key === "b4"){
+        const v = setupViewer({
+          mountEl: document.getElementById('viewerB4'),
+          defaultCamZ: 5.2,
+          buildModelFn: buildB4,
+          resetBtn: document.getElementById('resetCameraB4')
+        });
+        viewers.set(key, v);
       }
 
-      const mountEl = document.getElementById(mountId);
-      if (!mountEl) return;
+      if (key === "b5"){
+        const v = setupViewer({
+          mountEl: document.getElementById('viewerB5'),
+          defaultCamZ: 6.0,
+          buildModelFn: buildB5,
+          resetBtn: document.getElementById('resetCameraB5')
+        });
+        viewers.set(key, v);
+      }
 
-      const v = setupViewer({ mountEl, defaultCam, buildModelFn: buildFn });
-      viewers.set(key, v);
+      if (key === "b8"){
+        const v = setupViewer({
+          mountEl: document.getElementById('viewerB8'),
+          defaultCamZ: 6.6,
+          buildModelFn: buildB8,
+          resetBtn: document.getElementById('resetCameraB8')
+        });
+        viewers.set(key, v);
+      }
     }
 
-    document.querySelectorAll('details.cluster').forEach(det => {
+    document.querySelectorAll('details.clusterTab').forEach(det => {
       det.addEventListener('toggle', () => {
-        if (det.open) {
-          const key = det.getAttribute('data-cluster');
-          initClusterViewer(key);
-          setTimeout(() => {
-            const v = viewers.get(key);
-            if (v) v.resetCamera();
-          }, 60);
-        }
+        if (!det.open) return;
+        const key = det.getAttribute('data-cluster');
+        initViewer(key);
+        // small delay helps layout settle before first resize
+        setTimeout(() => {
+          const v = viewers.get(key);
+          if (v) v.resetCamera();
+        }, 60);
       });
     });
 
-    document.querySelectorAll('button[data-action="reset"]').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const key = btn.getAttribute('data-target');
-        initClusterViewer(key);
-        const v = viewers.get(key);
-        if (v) v.resetCamera();
-      });
-    });
-
+    // If user lands on #cluster-b4 etc, open + init
     function openFromHash(){
       const hash = location.hash || "";
       if (!hash.startsWith("#cluster-")) return;
       const el = document.querySelector(hash);
-      if (el && el.tagName === "DETAILS") {
+      if (el && el.tagName === "DETAILS"){
         el.open = true;
         const key = el.getAttribute('data-cluster');
-        initClusterViewer(key);
+        initViewer(key);
         setTimeout(() => {
           const v = viewers.get(key);
           if (v) v.resetCamera();
