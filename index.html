@@ -4,1288 +4,862 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Borane Clusters | HKU Chemistry</title>
-  <meta name="description" content="A modern editorial-style learning website in a single HTML file." />
 
-  <!-- Fonts -->
+  <!-- GitHub Pages friendly: one file, no build tools -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Italiana&family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --bg0:#050b1a;
-      --bg1:#071635;
+      --blue:#1C2C44;
+      --gold:#B49D74;
 
-      --stroke:rgba(255,255,255,.10);
-      --stroke2:rgba(255,255,255,.14);
+      --white: rgba(255,255,255,.92);
+      --white2: rgba(255,255,255,.74);
+      --white3: rgba(255,255,255,.55);
 
-      --text:rgba(255,255,255,.92);
-      --muted:rgba(255,255,255,.72);
-      --muted2:rgba(255,255,255,.55);
+      --ink: #0b1220;
+      --ink2: rgba(11,18,32,.72);
 
-      --accent:#e56a5c;
-      --accent2:#7c5cff;
-      --accent3:#23d5ab;
+      --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      --font-serif: "DM Serif Display", Georgia, "Times New Roman", Times, serif;
 
-      --shadow: 0 22px 70px rgba(0,0,0,.38);
-      --shadow2: 0 14px 40px rgba(0,0,0,.26);
+      --font-hku: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      --font-chem: "Italiana", Georgia, "Times New Roman", Times, serif;
 
-      --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-      --font-serif: "DM Serif Display", ui-serif, Georgia, "Times New Roman", Times, serif;
+      /* Header height equals the logo lockup area */
+      --nav-h: 150px;
+      --page-w: 1120px;
 
-      --nav-h: 210px;
-      --logo-h: 160px;
-      --logo-shift-left: 34px;
-
-      /* BMW-like white line */
-      --bwm-line-opacity: .42;
+      --shadow-soft: 0 18px 60px rgba(0,0,0,.25);
+      --shadow-hard: 0 22px 70px rgba(0,0,0,.35);
 
       color-scheme: dark;
     }
 
-    *{box-sizing:border-box}
-    html,body{height:100%}
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
+    html{ scroll-behavior:smooth; }
     body{
       margin:0;
-      color:var(--text);
       font-family: var(--font-sans);
-      letter-spacing:-0.01em;
-      text-rendering: geometricPrecision;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
+      color: var(--white);
+      overflow-x:hidden;
 
       background:
-        radial-gradient(900px 520px at 70% 26%, rgba(124,92,255,.22), transparent 60%),
-        radial-gradient(800px 540px at 22% 82%, rgba(229,106,92,.16), transparent 62%),
-        radial-gradient(700px 420px at 90% 90%, rgba(35,213,171,.10), transparent 60%),
-        linear-gradient(180deg, var(--bg1), var(--bg0));
-      overflow-x:hidden;
+        radial-gradient(1100px 520px at 22% 18%, rgba(180,157,116,.14), rgba(180,157,116,0) 60%),
+        radial-gradient(900px 520px at 75% 30%, rgba(120,160,255,.10), rgba(120,160,255,0) 62%),
+        radial-gradient(900px 520px at 70% 88%, rgba(180,157,116,.08), rgba(180,157,116,0) 60%),
+        linear-gradient(180deg, #1C2C44 0%, #1A2940 42%, #18263C 100%);
+
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      text-rendering: geometricPrecision;
     }
-    a{color:inherit;text-decoration:none}
-    button, input{font:inherit}
 
-    .wrap{max-width:1200px;margin:0 auto;padding:0 22px}
+    a{ color:inherit; text-decoration:none; }
+    button{ font:inherit; }
+    .wrap{ max-width: var(--page-w); margin:0 auto; padding:0 22px; }
 
-    /* ===== HEADER ===== */
-    header.nav{position:relative; z-index:50;}
+    .grain{
+      position:fixed; inset:0;
+      pointer-events:none;
+      z-index:-1;
+      opacity:.07;
+      background-image:
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.45'/%3E%3C/svg%3E");
+      background-size: 180px 180px;
+      mix-blend-mode: overlay;
+    }
+
+    /* =========================
+       Header: visible only at top
+       ========================= */
+    header.nav{
+      position: sticky;
+      top: 0;
+      z-index: 50;
+
+      /* "disappear after sliding down" */
+      opacity: 1;
+      pointer-events: auto;
+
+      background: transparent;
+      border-bottom: 1px solid rgba(255,255,255,.12);
+
+      transition: opacity .22s ease, transform .22s ease;
+      will-change: opacity, transform;
+    }
+    header.nav.is-hidden{
+      opacity: 0;
+      transform: translateY(-12px);
+      pointer-events: none;
+    }
 
     .nav-in{
       height: var(--nav-h);
-      display:grid;
-      grid-template-columns: auto 1fr; /* logo | centered cluster */
-      align-items:center;
-      gap: 16px;
-    }
-
-    .brand{
-      display:flex;
-      align-items:center;
-      justify-content:flex-start;
-      min-width: 240px;
-      transform: translateX(calc(var(--logo-shift-left) * -1));
-    }
-    .brand-logo-img{
-      height: var(--logo-h);
-      width: auto;
-      display:block;
-      object-fit: contain;
-      filter: drop-shadow(0 12px 28px rgba(0,0,0,.38));
-    }
-
-    .navCluster{
-      justify-self: center;
       display:flex;
       align-items:center;
       justify-content:center;
-      gap: 22px;
     }
 
-    nav.nav-links{
+    .logoLockup{
       display:flex;
+      flex-direction:column;
       align-items:center;
       justify-content:center;
-      gap: 30px;
-      color: rgba(255,255,255,.84);
-      font-size: 15px;
-      white-space: nowrap;
-    }
-    .nav-links a{
-      padding: 10px 2px;
-      position:relative;
-      letter-spacing:-0.01em;
-    }
-    .nav-links a:hover{color:var(--text)}
-    .nav-links a[aria-current="page"]::after{
-      content:"";
-      position:absolute; left:0; right:0; bottom:6px;
-      height:2px; border-radius:999px;
-      background: linear-gradient(90deg, rgba(229,106,92,.92), rgba(124,92,255,.92));
-      opacity:.9;
+      gap: 12px;
+      padding: 18px 0 14px;
+      text-align:center;
+      user-select:none;
     }
 
-    .cta{
-      display:inline-flex; align-items:center; justify-content:center;
-      background: rgba(229,106,92,.92);
-      border: 1px solid rgba(255,255,255,.14);
-      color:#fff;
-      padding:12px 16px;
-      border-radius: 12px;
-      box-shadow: 0 14px 30px rgba(229,106,92,.22);
-      font-weight:800;
-      white-space:nowrap;
-      min-width: 140px;
+    /* HKU font a bit smaller + more aesthetic */
+    .logoLockup .hku{
+      font-family: var(--font-hku);
+      font-weight: 300;
+      font-size: 62px;             /* was 70px */
+      letter-spacing: .40em;       /* slightly tighter */
+      line-height: 1;
+      color: rgba(255,255,255,.92);
+      padding-left: .40em;
     }
-    .cta:hover{filter:brightness(1.03)}
-    .cta:active{transform:translateY(1px)}
-
-    .menu-btn{
-      display:none;
-      width:42px;height:42px;border-radius:14px;
-      border:1px solid var(--stroke);
-      background: rgba(255,255,255,.06);
-      color: var(--text);
-      cursor:pointer;
+    .logoLockup .chem{
+      font-family: var(--font-chem);
+      font-weight: 400;
+      font-size: 28px;             /* was 30px */
+      letter-spacing: .46em;
+      line-height: 1;
+      color: rgba(255,255,255,.72);
+      padding-left: .46em;
     }
 
-    .nav-rule{
-      margin-top: -14px;
-      height: 1px;
-      background: linear-gradient(
-        90deg,
-        rgba(255,255,255,0),
-        rgba(255,255,255,var(--bwm-line-opacity)),
-        rgba(255,255,255,0)
-      );
-      border: none;
+    @media (max-width:520px){
+      :root{ --nav-h: 128px; }
+      .logoLockup{gap:10px}
+      .logoLockup .hku{font-size:48px;letter-spacing:.32em;padding-left:.32em}
+      .logoLockup .chem{font-size:22px;letter-spacing:.38em;padding-left:.38em}
     }
 
-    /* MOBILE DRAWER */
-    .backdrop{
-      position:fixed; inset:0;
-      background: rgba(0,0,0,.5);
-      opacity:0; pointer-events:none;
-      transition: opacity .18s ease;
-      z-index:60;
-    }
-    .backdrop.open{opacity:1; pointer-events:auto;}
-    .drawer{
-      position:fixed; top:0; right:0; height:100vh; width:min(420px, 86vw);
-      background: rgba(7,14,32,.88);
-      backdrop-filter: blur(16px);
-      border-left:1px solid var(--stroke);
-      transform: translateX(105%);
-      transition: transform .22s ease;
-      z-index:70;
-      padding:18px;
-      display:flex; flex-direction:column; gap:16px;
-    }
-    .drawer.open{transform: translateX(0);}
-    .drawer-top{
-      display:flex; align-items:center; justify-content:space-between;
-      padding-bottom:12px; border-bottom:1px solid var(--stroke);
-    }
-    .drawer a{
-      padding:12px 12px;
-      border:1px solid var(--stroke);
-      background: rgba(255,255,255,.04);
-      border-radius: 14px;
-      color: rgba(255,255,255,.86);
-    }
-    .drawer a:hover{background: rgba(255,255,255,.06)}
-    .drawer .cta{justify-content:center}
-
-    /* HERO */
     .hero{
-      padding: 24px 0 34px;
-      display:grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap:38px;
-      align-items:center;
+      background: transparent;
+      padding: 30px 0 30px;
+      border-top: 1px solid rgba(255,255,255,.08);
+      border-bottom: 1px solid rgba(255,255,255,.10);
     }
 
     .kicker{
-      display:flex; align-items:center; gap:10px;
-      color:rgba(255,255,255,.78);
-      letter-spacing:.08em;
-      text-transform:uppercase;
-      font-size:12px;
-      margin-bottom:18px;
+      display:flex;
+      align-items:center;
+      gap:10px;
+      letter-spacing:.10em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.72);
+      font-size: 12px;
+      margin-bottom: 18px;
     }
     .kicker .dot{
       width:10px;height:10px;border-radius:999px;
-      background: var(--accent);
-      box-shadow: 0 0 0 7px rgba(229,106,92,.14);
+      background: var(--gold);
+      box-shadow: 0 0 0 7px rgba(180,157,116,.14);
       border: 1px solid rgba(255,255,255,.12);
     }
 
     h1{
       margin:0;
       font-family: var(--font-serif);
-      font-size: clamp(46px, 5.8vw, 78px);
-      line-height:.95;
-      letter-spacing:-0.03em;
+      font-size: clamp(56px, 6.6vw, 104px);
+      line-height: .92;
+      letter-spacing: -0.03em;
     }
-    .h1-accent{color: var(--accent); display:block; margin-top:6px;}
+    .accent{
+      display:block;
+      color: var(--gold);
+      margin-top: 12px;
+    }
 
     .sub{
-      margin:16px 0 16px;
+      margin: 22px 0 16px;
       font-family: var(--font-serif);
       font-style: italic;
-      color: rgba(255,255,255,.74);
-      font-size: clamp(18px, 2.1vw, 22px);
-      letter-spacing: -0.01em;
+      font-size: clamp(18px, 2.1vw, 24px);
+      color: rgba(255,255,255,.72);
     }
+
     .desc{
-      color:var(--muted);
-      max-width:62ch;
-      font-size:16px;
-      line-height:1.65;
-      margin:0 0 26px;
+      margin:0;
+      max-width: 74ch;
+      line-height: 1.75;
+      font-size: 15px;
+      color: rgba(255,255,255,.70);
     }
-    .hero-actions{
-      display:flex; gap:14px; align-items:center; flex-wrap:wrap;
-      margin-bottom:30px;
+
+    .ctaRow{
+      display:flex;
+      gap: 16px;
+      flex-wrap:wrap;
+      margin-top: 26px;
     }
 
     .btn{
-      padding:12px 16px;
-      border-radius: 12px;
-      border:1px solid var(--stroke2);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding: 16px 26px;
+      min-width: 280px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,.16);
       background: rgba(255,255,255,.06);
-      color:var(--text);
-      font-weight:700;
+      color: rgba(255,255,255,.92);
+      font-weight: 700;
       cursor:pointer;
+      position:relative;
+      z-index:10;
+      pointer-events:auto;
+      box-shadow: var(--shadow-soft);
+      transition: transform .15s ease, background .15s ease, border-color .15s ease;
+      outline:none;
     }
-    .btn:hover{background: rgba(255,255,255,.08)}
+    .btn:hover{ transform: translateY(-1px); border-color: rgba(255,255,255,.26); }
+    .btn:focus-visible{
+      box-shadow: 0 0 0 4px rgba(180,157,116,.20), var(--shadow-soft);
+      border-color: rgba(180,157,116,.55);
+    }
     .btn.primary{
-      background: rgba(229,106,92,.92);
-      border-color: rgba(255,255,255,.16);
+      background: linear-gradient(180deg, rgba(180,157,116,.36), rgba(180,157,116,.20));
+      border-color: rgba(180,157,116,.65);
     }
 
     .stats{
-      display:flex; gap:38px; flex-wrap:wrap;
-      color:var(--muted2);
-      margin-top:6px;
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 22px;
+      margin-top: 30px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(255,255,255,.10);
     }
-    .stat b{
-      display:block;
-      color:var(--accent);
-      font-size:28px;
-      line-height:1.05;
-      letter-spacing:-0.02em;
+    .statNum{
+      font-family: var(--font-serif);
+      font-size: 46px;
+      color: var(--gold);
+      line-height:1;
     }
-    .stat span{
-      font-size:12px;
-      letter-spacing:.12em;
-      text-transform:uppercase;
-    }
-
-    /* ORBIT VISUAL */
-    .orb{
-      width:min(540px, 100%);
-      aspect-ratio: 1 / 1;
-      margin-left:auto;
-      border-radius: 999px;
-      position:relative;
-      background:
-        radial-gradient(circle at 50% 50%, rgba(229,106,92,.16), transparent 55%),
-        radial-gradient(circle at 50% 50%, rgba(124,92,255,.16), transparent 62%);
-      border: 1px solid rgba(255,255,255,.10);
-      box-shadow: 0 44px 90px rgba(0,0,0,.34);
-      overflow:hidden;
-    }
-    .orb::before{
-      content:"";
-      position:absolute; inset:-25%;
-      background: radial-gradient(circle at 50% 55%, rgba(229,106,92,.16), transparent 60%);
-      filter: blur(18px);
-      opacity:.9;
-    }
-    .ring{
-      position:absolute; inset:8%;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.10);
-      box-shadow: inset 0 0 0 1px rgba(0,0,0,.12);
-    }
-    .ring2{ inset:18%; opacity:.7 }
-    .tilt{
-      position:absolute; left:50%; top:50%;
-      width:44%; height:44%;
-      transform: translate(-50%,-50%) rotate(14deg);
-      border-radius: 22px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.02);
-    }
-    .core{
-      position:absolute; left:50%; top:50%;
-      width:88px; height:88px; transform:translate(-50%,-50%);
-      border-radius:999px;
-      background:
-        radial-gradient(circle at 30% 30%, rgba(255,255,255,.25), transparent 45%),
-        linear-gradient(135deg, var(--accent2), var(--accent));
-      filter: drop-shadow(0 16px 30px rgba(229,106,92,.20));
-      border: 1px solid rgba(255,255,255,.10);
-    }
-    .p{position:absolute;width:10px;height:10px;border-radius:999px;opacity:.92}
-    .p.w{background:rgba(255,255,255,.85)}
-    .p.y{background:rgba(245,208,116,.92)}
-    .p.r{background:rgba(229,106,92,.85)}
-    .p1{left:22%;top:30%}.p2{left:70%;top:24%}.p3{left:78%;top:64%}
-    .p4{left:28%;top:72%}.p5{left:50%;top:18%}.p6{left:18%;top:55%}
-    .p7{left:62%;top:78%}.p8{left:82%;top:44%}
-
-    .scroll-hint{
-      margin-top: 28px;
-      display:flex;
-      align-items:center;
-      gap:10px;
-      justify-content:center;
-      color: rgba(255,255,255,.55);
+    .statLbl{
+      margin-top: 6px;
       font-size: 12px;
-      letter-spacing:.22em;
-      text-transform:uppercase;
+      letter-spacing:.18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.50);
     }
-    .chev{
+    @media (max-width:760px){
+      .stats{ grid-template-columns: 1fr; }
+      .btn{ min-width: 0; width: 100%; }
+    }
+
+    .scrollHint{
+      text-align:center;
+      margin-top: 18px;
+      letter-spacing:.28em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.46);
+      font-size: 12px;
+    }
+    .scrollHint .chev{
+      display:inline-block;
       width: 10px; height: 10px;
-      border-right: 2px solid rgba(229,106,92,.75);
-      border-bottom: 2px solid rgba(229,106,92,.75);
-      transform: rotate(45deg);
-      margin-top: -4px;
-      animation: bob 1.3s ease-in-out infinite;
-    }
-    @keyframes bob{
-      0%,100%{ transform: translateY(0) rotate(45deg); opacity:.65}
-      50%{ transform: translateY(6px) rotate(45deg); opacity:1}
+      border-right: 2px solid rgba(180,157,116,.85);
+      border-bottom: 2px solid rgba(180,157,116,.85);
+      transform: rotate(45deg) translateY(-1px);
+      margin-left: 10px;
     }
 
-    /* SECTIONS */
-    section{scroll-margin-top: 24px;}
+    .whiteStrip{
+      background: rgba(255,255,255,.98);
+      color: var(--ink);
+      padding: 34px 0 56px;
+    }
+    .whiteWrap{ max-width: var(--page-w); margin:0 auto; padding:0 22px; }
 
-    .section{
-      padding:34px 0 80px;
-      border-top:1px solid rgba(255,255,255,.06);
+    .sectionHead{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:14px;
+      margin: 0 0 18px;
     }
-    .section-head{
-      display:flex; align-items:end; justify-content:space-between; gap:16px;
-      margin-bottom: 16px;
-    }
-    .section-head h2{
+    .sectionHead h2{
       margin:0;
       font-family: var(--font-serif);
-      font-size: 34px;
-      letter-spacing:-0.02em;
+      font-size: 36px;
+      letter-spacing: -0.02em;
+      color: var(--ink);
     }
-    .section-head p{
+    .sectionHead p{
       margin:0;
-      max-width: 64ch;
-      color: var(--muted);
+      max-width: 70ch;
+      color: var(--ink2);
       line-height: 1.6;
       font-size: 14px;
     }
 
-    .grid{
-      display:grid;
-      grid-template-columns: repeat(3, minmax(0,1fr));
-      gap:18px;
-      margin-top: 18px;
-    }
-    .card{
-      border:1px solid var(--stroke);
-      background: rgba(7,18,40,.55);
-      border-radius: 18px;
-      padding:18px;
-      box-shadow: var(--shadow2);
-      min-height: 240px;
-      position:relative;
-      overflow:hidden;
-    }
-    .card::after{
-      content:"";
-      position:absolute; inset:auto -40% -60% -40%;
-      height: 220px;
-      background: radial-gradient(circle at 50% 50%, rgba(124,92,255,.20), transparent 60%);
-      filter: blur(18px);
-      opacity:.75;
-      pointer-events:none;
-    }
-    .badge{
-      float:right;
-      font-size:12px;
-      color:rgba(255,255,255,.75);
-      padding:6px 10px;
-      border-radius:999px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.06);
-    }
-    .card h3{
-      margin:10px 0 6px;
-      font-family: var(--font-serif);
-      letter-spacing:-0.01em;
-      font-size:28px;
-      position:relative;
-      z-index:1;
-    }
-    .card p{
-      margin:0 0 14px;
-      color:var(--muted);
-      line-height:1.6;
-      font-size:14px;
-      position:relative;
-      z-index:1;
-    }
-    .meta{
-      display:flex; gap:14px; flex-wrap:wrap;
-      color:rgba(255,255,255,.65);
-      font-size:12px;
-      position:relative;
-      z-index:1;
-    }
-    .arrow{
-      width:10px;height:10px;
-      border-right:2px solid currentColor;
-      border-top:2px solid currentColor;
-      transform: rotate(45deg);
-      margin-top:2px;
-    }
-
-    .concepts{
-      display:grid;
-      grid-template-columns: 1.05fr .95fr;
-      gap:18px;
-      margin-top:18px;
-    }
-    .panel{
-      border:1px solid var(--stroke);
-      background: rgba(7,18,40,.45);
-      border-radius: 18px;
-      padding:18px;
-      box-shadow: var(--shadow2);
-    }
-    .panel h3{
-      margin:0 0 8px;
-      font-family: var(--font-serif);
-      font-size: 26px;
-      letter-spacing:-0.01em;
-    }
-    .panel ul{
-      margin: 10px 0 0;
-      padding: 0 0 0 18px;
-      color: var(--muted);
-      line-height: 1.75;
-      font-size: 14px;
-    }
-    .pill-row{
-      display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;
-    }
-    .pill{
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.05);
-      padding:8px 10px;
-      border-radius:999px;
-      color: rgba(255,255,255,.80);
-      font-size:12px;
-      letter-spacing:.08em;
-      text-transform:uppercase;
-    }
-
-    .quiz{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:18px;
-      margin-top:18px;
-    }
-    .q{
-      border:1px solid var(--stroke);
-      background: rgba(7,18,40,.45);
-      border-radius: 18px;
-      padding:18px;
-      box-shadow: var(--shadow2);
-    }
-    .q h3{
-      margin:0 0 12px;
-      font-family: var(--font-serif);
-      font-size: 24px;
-    }
-    .q .opt{
-      display:block;
-      width:100%;
-      text-align:left;
-      padding:12px 12px;
-      border-radius: 14px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.04);
-      color: rgba(255,255,255,.86);
-      cursor:pointer;
-      margin:10px 0;
-    }
-    .q .opt:hover{background: rgba(255,255,255,.06)}
-    .q .opt[aria-pressed="true"]{
-      border-color: rgba(229,106,92,.45);
-      background: rgba(229,106,92,.14);
-    }
-    .q .result{
-      margin-top:10px;
-      color: var(--muted);
-      font-size: 14px;
-      line-height: 1.55;
-    }
-
-    .resources{
-      display:grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap:18px;
-      margin-top:18px;
-    }
-    .res{
-      border:1px solid var(--stroke);
-      background: rgba(7,18,40,.45);
-      border-radius: 18px;
-      padding:18px;
-      box-shadow: var(--shadow2);
-      min-height: 160px;
-    }
-    .res h3{
-      margin:0 0 8px;
-      font-family: var(--font-serif);
-      font-size: 24px;
-    }
-    .res p{
-      margin:0;
-      color: var(--muted);
-      line-height:1.6;
-      font-size: 14px;
-    }
-    .res a{
-      margin-top: 14px;
-      display:inline-flex;
-      gap:10px;
-      align-items:center;
-      color: rgba(255,255,255,.88);
-      font-weight: 700;
-    }
-
-    footer{
-      border-top:1px solid rgba(255,255,255,.06);
-      padding: 22px 0 40px;
-      color: rgba(255,255,255,.62);
-      font-size: 13px;
-    }
-    .foot{
-      display:flex; align-items:center; justify-content:space-between;
-      gap: 16px; flex-wrap:wrap;
-    }
-    .foot .small{
-      letter-spacing:.06em;
-      text-transform:uppercase;
-      color: rgba(255,255,255,.55);
-    }
-
-    /* VIEWER + E-COUNTING */
-    .viewerCard{
-      padding: 18px;
-      min-height: 560px;
+    .subHead{
+      margin-top: 34px;
+      padding-top: 26px;
+      border-top: 1px solid rgba(11,18,32,.10);
       display:flex;
-      flex-direction:column;
-      gap: 12px;
-    }
-    .viewerTop{
-      position:relative;
-      z-index:2;
-      display:flex;
-      align-items:flex-start;
+      align-items:flex-end;
       justify-content:space-between;
-      gap: 12px;
+      gap:14px;
     }
-    .viewerTop .left{ min-width:0; }
-    .viewerTop .hint{
-      margin: 0;
-      color: var(--muted2);
-      font-size: 12px;
-      line-height: 1.45;
-    }
-    .viewerTop .hint .kbd{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      padding: 1px 6px;
-      border-radius: 9px;
-      border: 1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      color: rgba(255,255,255,.86);
-      font-size: 11px;
-      transform: translateY(-1px);
-    }
-    .viewerStage{
-      position:relative;
-      min-height: 380px;
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,.10);
-      background:
-        radial-gradient(900px 520px at 70% 26%, rgba(124,92,255,.12), transparent 60%),
-        radial-gradient(800px 540px at 22% 82%, rgba(229,106,92,.10), transparent 62%),
-        linear-gradient(180deg, rgba(4,10,26,.40), rgba(4,10,26,.20));
-      overflow:hidden;
-    }
-
-    .viewer{
-      position:absolute;
-      inset:0;
-    }
-    .viewer canvas{width:100%;height:100%;display:block}
-
-    .modelOverlay{
-      position:absolute;
-      left:14px;
-      top:14px;
-      z-index: 5;
-      pointer-events:none;
-      max-width: min(520px, 78%);
-      border-radius: 16px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(0,0,0,.22);
-      backdrop-filter: blur(10px);
-      padding: 12px 12px;
-    }
-    .modelOverlay .title{
+    .subHead h3{
       margin:0;
       font-family: var(--font-serif);
       font-size: 28px;
-      letter-spacing:-0.01em;
-      color: rgba(229,106,92,.92);
-      line-height: 1.05;
-      font-style: normal;
+      letter-spacing: -0.02em;
+      color: var(--ink);
     }
-    .modelOverlay .sub{
-      margin: 6px 0 0;
-      font-family: var(--font-sans);
-      font-size: 14px;
-      color: rgba(255,255,255,.82);
-      font-style: normal;
-      letter-spacing:-0.01em;
-      line-height:1.25;
-    }
-
-    .countSide{
-      border:1px solid var(--stroke);
-      background: rgba(7,18,40,.45);
-      border-radius: 18px;
-      padding: 18px;
-      box-shadow: var(--shadow2);
-      min-height: 240px;
-      position:relative;
-      overflow:hidden;
-    }
-    .countSide h3{
-      margin:0 0 10px;
-      font-family: var(--font-serif);
-      font-size: 24px;
-      letter-spacing:-0.01em;
-    }
-    .countBox{
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.04);
-      border-radius: 16px;
-      padding: 14px 14px;
-      font-family: var(--font-sans);
-      font-size: 15px;
-      line-height: 1.8;
-      color: rgba(255,255,255,.88);
-    }
-    .countRow{
-      display:flex;
-      justify-content:space-between;
-      gap: 14px;
-      max-width: 420px;
-    }
-    .countRow .rhs{font-weight:800;color:rgba(255,255,255,.90);white-space:nowrap}
-    .countRow .lhs{white-space:nowrap}
-    .countSep{height:10px}
-
-    /* ===== NEW: Expandable cluster tabs (accordion) ===== */
-    .clusterTabs{
-      display:flex;
-      flex-direction:column;
-      gap:18px;
-      margin-top:18px;
-    }
-    details.clusterTab{
-      border:1px solid var(--stroke);
-      background: rgba(7,18,40,.55);
-      border-radius: 18px;
-      box-shadow: var(--shadow2);
-      overflow:hidden;
-    }
-    details.clusterTab::after{
-      content:"";
-      position:absolute; inset:auto -40% -60% -40%;
-      height: 220px;
-      background: radial-gradient(circle at 50% 50%, rgba(124,92,255,.20), transparent 60%);
-      filter: blur(18px);
-      opacity:.75;
-      pointer-events:none;
-    }
-    summary.clusterSummary{
-      list-style:none;
-      cursor:pointer;
-      padding:18px;
-      user-select:none;
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:16px;
-    }
-    summary.clusterSummary::-webkit-details-marker{display:none;}
-    .sumLeft{
-      min-width:0;
-      flex: 1;
-    }
-    .sumTopRow{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:12px;
-    }
-    .sumTitle{
-      margin:10px 0 6px;
-      font-family: var(--font-serif);
-      letter-spacing:-0.01em;
-      font-size:28px;
-    }
-    .sumHint{
-      margin:0;
-      color: var(--muted2);
-      font-size: 12px;
-      line-height: 1.45;
-    }
-    .sumRight{
-      display:flex;
+    .pill{
+      display:inline-flex;
       align-items:center;
       gap:10px;
-      flex-shrink:0;
-      color: rgba(255,255,255,.70);
-      font-size: 13px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(11,18,32,.12);
+      background: rgba(11,18,32,.03);
+      color: rgba(11,18,32,.70);
+      font-size: 12px;
+      letter-spacing:.12em;
+      text-transform: uppercase;
       white-space:nowrap;
-      padding-top: 14px;
     }
-    .caret{
-      width: 12px; height: 12px;
-      border-right: 2px solid rgba(229,106,92,.85);
-      border-bottom: 2px solid rgba(229,106,92,.85);
-      transform: rotate(45deg);
-      transition: transform .18s ease;
-      margin-right: 2px;
-    }
-    details[open] .caret{ transform: rotate(225deg); }
-    .clusterBody{
-      padding: 0 18px 18px;
+    .pill b{ color: rgba(11,18,32,.88); letter-spacing:.02em; text-transform:none; font-size:12px; }
+    .pillDot{
+      width:9px;height:9px;border-radius:999px;background: var(--gold);
+      box-shadow: 0 0 0 6px rgba(180,157,116,.14);
+      border: 1px solid rgba(11,18,32,.10);
     }
 
-    /* Responsive */
+    #cluster-1, #cluster-2, #cluster-3, #cluster-4, #cluster-5, #cluster-n1, #cluster-a1, #theory { scroll-margin-top: calc(var(--nav-h) + 18px); }
+
+    .row{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 28px;
+      align-items:start;
+      padding: 24px 0;
+      border-top: 1px solid rgba(11,18,32,.10);
+    }
+    .row:first-of-type{ border-top:none; }
+    .row.mirror{ grid-template-columns: .9fr 1.1fr; }
+
+    .modelCard{
+      border-radius: 20px;
+      background: var(--blue);
+      border: 1px solid rgba(255,255,255,.16);
+      box-shadow: var(--shadow-hard);
+      overflow:hidden;
+      position:relative;
+      min-height: 380px;
+    }
+    .modelCard .bar{
+      padding: 16px 18px 0;
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:10px;
+    }
+    .modelCard .title{
+      margin:0;
+      font-family: var(--font-serif);
+      font-size: 26px;
+      color: rgba(255,255,255,.95);
+    }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-size: 12px;
+      letter-spacing:.14em;
+      text-transform: uppercase;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.08);
+      color: rgba(255,255,255,.80);
+      white-space:nowrap;
+    }
+    .viewerStage{
+      position:absolute;
+      left:0; right:0;
+      top: 58px;
+      bottom: 0;
+    }
+    .viewer{ position:absolute; inset:0; }
+    .viewer canvas{ width:100%; height:100%; display:block; }
+    .goldMark{
+      position:absolute;
+      inset:auto 16px 14px auto;
+      width: 10px; height: 10px;
+      border-radius: 999px;
+      background: var(--gold);
+      box-shadow: 0 0 0 8px rgba(180,157,116,.12);
+      border: 1px solid rgba(255,255,255,.14);
+      pointer-events:none;
+    }
+
+    .count{ padding-top: 8px; }
+    .count .eyebrow{
+      letter-spacing:.22em;
+      text-transform: uppercase;
+      font-size: 12px;
+      color: rgba(11,18,32,.55);
+      margin-bottom: 10px;
+    }
+    .count h3{
+      margin:0 0 10px;
+      font-family: var(--font-serif);
+      font-size: 26px;
+      color: var(--ink);
+      line-height:1.1;
+    }
+    .count .lede{
+      margin: 0 0 14px;
+      color: rgba(11,18,32,.70);
+      line-height: 1.6;
+      font-size: 14px;
+      max-width: 62ch;
+    }
+    .targetLine{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      font-size: 13px;
+      letter-spacing: .02em;
+      color: rgba(11,18,32,.78);
+      margin: 10px 0 14px;
+    }
+    .grid{ display:grid; gap: 10px; margin:0; padding:0; }
+    .line{
+      display:grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items:baseline;
+      padding: 6px 0;
+      border-bottom: 1px solid rgba(11,18,32,.08);
+    }
+    .line:last-child{ border-bottom:none; }
+    .lhs{ color: rgba(11,18,32,.86); }
+    .rhs{ color: rgba(11,18,32,.92); font-weight: 800; white-space:nowrap; }
+    .note{
+      margin-top: 14px;
+      color: rgba(11,18,32,.62);
+      font-size: 13px;
+      line-height:1.55;
+    }
+
     @media (max-width: 980px){
-      :root{
-        --nav-h: 150px;
-        --logo-h: 110px;
-        --logo-shift-left: 0px;
-      }
+      .row, .row.mirror{ grid-template-columns: 1fr; }
+      .modelCard{ min-height: 340px; }
+    }
 
-      .navCluster{display:none;}
-      .menu-btn{display:inline-grid; place-items:center}
+    .blueSection{
+      padding: 44px 0;
+      border-top: 1px solid rgba(255,255,255,.12);
+      background: transparent;
+    }
+    .blueSection h2{
+      margin:0 0 10px;
+      font-family: var(--font-serif);
+      font-size: 34px;
+    }
+    .blueSection p{
+      margin:0;
+      color: rgba(255,255,255,.72);
+      line-height: 1.75;
+      max-width: 72ch;
+    }
 
-      .nav-in{
-        grid-template-columns: auto 1fr auto;
-      }
+    footer{
+      padding: 22px 0 40px;
+      color: rgba(255,255,255,.62);
+      font-size: 13px;
+      border-top: 1px solid rgba(255,255,255,.12);
+      background: transparent;
+    }
+    .footRow{
+      display:flex;
+      justify-content:space-between;
+      gap:16px;
+      flex-wrap:wrap;
+      align-items:center;
+    }
+    .toTop{
+      padding:11px 16px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.06);
+      font-weight:700;
+    }
 
-      .hero{grid-template-columns: 1fr; padding-top: 18px}
-      .orb{margin: 10px auto 0}
-      .grid{grid-template-columns: 1fr}
-      .concepts{grid-template-columns: 1fr}
-      .quiz{grid-template-columns: 1fr}
-      .resources{grid-template-columns: 1fr}
-
-      .modelOverlay{max-width: 92%;}
-      .modelOverlay .title{font-size:24px}
-
-      .nav-rule{margin-top: -8px;}
+    /* Respect reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      header.nav{ transition:none; }
+      html{ scroll-behavior:auto; }
+      .btn{ transition:none; }
     }
   </style>
 </head>
 
 <body>
-  <div class="backdrop" id="backdrop" aria-hidden="true"></div>
-  <aside class="drawer" id="drawer" aria-label="Menu">
-    <div class="drawer-top">
-      <div style="display:flex;align-items:center;gap:12px">
-        <img src="HKUCHEMLOGO.PNG" alt="HKU Chemistry" style="height:56px;width:auto;display:block;object-fit:contain" />
-        <div style="display:flex;flex-direction:column;line-height:1.08">
-          <b style="font-size:14px;letter-spacing:.08em;text-transform:uppercase;">CHEM2341</b>
-          <span style="font-size:12px;color:rgba(255,255,255,.55)">Borane Studio</span>
-        </div>
-      </div>
-      <button class="menu-btn" id="closeMenu" aria-label="Close menu" style="display:inline-grid">✕</button>
-    </div>
+  <div class="grain" aria-hidden="true"></div>
 
-    <a href="#home">Home</a>
-    <a href="#clusters">Clusters</a>
-    <a href="#concepts">Concepts</a>
-    <a href="#quiz">Quiz</a>
-    <a href="#resources">Resources</a>
-    <a class="cta" href="#clusters">Start Learning</a>
-  </aside>
-
-  <header class="nav">
+  <header class="nav" id="top">
     <div class="wrap nav-in">
-      <a class="brand" href="#home" aria-label="Home">
-        <img class="brand-logo-img" src="./logo.png" alt="HKU Chemistry">
+      <a class="logoLockup" href="#top" aria-label="HKU Chemistry Home">
+        <div class="hku">HKU</div>
+        <div class="chem">CHEMISTRY</div>
       </a>
-
-      <div class="navCluster" aria-label="Primary navigation cluster">
-        <nav class="nav-links" aria-label="Primary navigation">
-          <a href="#home" aria-current="page">Home</a>
-          <a href="#clusters">Clusters</a>
-          <a href="#concepts">Concepts</a>
-          <a href="#quiz">Quiz</a>
-          <a href="#resources">Resources</a>
-        </nav>
-        <a class="cta" href="#clusters">Start Learning</a>
-      </div>
-
-      <button class="menu-btn" id="openMenu" aria-label="Open menu">☰</button>
-    </div>
-
-    <div class="wrap">
-      <hr class="nav-rule" aria-hidden="true" />
     </div>
   </header>
 
-  <main class="wrap">
+  <main>
     <section class="hero" id="home">
-      <div>
-        <div class="kicker"><span class="dot" aria-hidden="true"></span> CHEM2341 Inorganic Chemistry I</div>
+      <div class="wrap">
+        <div class="kicker"><span class="dot" aria-hidden="true"></span> CHEM2341 INORGANIC CHEMISTRY I</div>
 
-        <h1>
-          Borane
-          <span class="h1-accent">Clusters</span>
-        </h1>
+        <h1>Borane <span class="accent">Clusters</span></h1>
 
         <div class="sub">From Memorization to Understanding</div>
 
         <p class="desc">
-          Explore the three-dimensional world of electron-deficient boron hydrides.
-          From Wade's rules to 3c–2e bonds, master the geometry that defines modern cluster chemistry.
+          Explore the three-dimensional world of electron-deficient boron hydrides. From Wade's rules to 3c–2e bonds,
+          master the geometry that defines modern cluster chemistry.
         </p>
 
-        <div class="hero-actions">
-          <a class="btn primary" href="#clusters">Explore Clusters</a>
-          <a class="btn" href="#concepts">Learn Theory</a>
-          <a class="btn" href="#clusters">Open Models</a>
+        <div class="ctaRow">
+          <a class="btn primary" id="exploreBtn" href="#cluster-1">Explore Clusters</a>
+          <a class="btn" href="#theory">Learn Theory</a>
         </div>
 
-        <div class="stats" aria-label="Highlights">
-          <div class="stat"><b>3</b><span>Clusters (so far)</span></div>
-          <div class="stat"><b>3</b><span>Wade Rules</span></div>
-          <div class="stat"><b>∞</b><span>Possibilities</span></div>
+        <div class="stats" aria-label="Summary stats">
+          <div><div class="statNum">7</div><div class="statLbl">CLUSTERS (SO FAR)</div></div>
+          <div><div class="statNum">3</div><div class="statLbl">WADE TYPES</div></div>
+          <div><div class="statNum">&infin;</div><div class="statLbl">POSSIBILITIES</div></div>
         </div>
 
-        <div class="scroll-hint" aria-hidden="true">
-          <span>Scroll to explore</span>
-          <span class="chev"></span>
-        </div>
-      </div>
-
-      <div class="orb" aria-hidden="true">
-        <div class="ring"></div>
-        <div class="ring ring2"></div>
-        <div class="tilt"></div>
-        <div class="core"></div>
-        <div class="p w p1"></div><div class="p y p2"></div><div class="p w p3"></div>
-        <div class="p y p4"></div><div class="p r p5"></div><div class="p w p6"></div>
-        <div class="p y p7"></div><div class="p w p8"></div>
+        <div class="scrollHint">SCROLL TO EXPLORE <span class="chev" aria-hidden="true"></span></div>
       </div>
     </section>
 
-    <!-- CLUSTERS SECTION (NOW EXPANDABLE) -->
-    <section class="section" id="clusters">
-      <div class="section-head">
-        <div>
-          <h2>Clusters</h2>
-          <p>Interactive models with classification + electron counting. Click a tab to expand.</p>
+    <section class="whiteStrip" id="clusters">
+      <div class="whiteWrap">
+        <div class="sectionHead">
+          <div>
+            <h2>Closo boranes</h2>
+            <p>Wade’s rule target: skeletal electron pairs (SEP) \(=\;n + 1\).</p>
+          </div>
         </div>
-      </div>
 
-      <div class="clusterTabs">
-
-        <!-- ===== Tab 1: B4H4^2− ===== -->
-        <details class="clusterTab" data-cluster="b4" id="cluster-b4">
-          <summary class="clusterSummary">
-            <div class="sumLeft">
-              <div class="sumTopRow">
-                <div>
-                  <span class="badge">Interactive 3D</span>
-                  <div class="sumTitle">B<sub>4</sub>H<sub>4</sub><sup>2−</sup></div>
-                  <p class="sumHint">
-                    <span class="kbd">Drag</span> rotate · <span class="kbd">Scroll</span> zoom · <span class="kbd">RMB</span> pan
-                  </p>
-                </div>
-              </div>
-              <div class="meta" style="margin-top:10px">
-                <span>⚡ WebGL</span><span>⬡ Tetrahedral cage</span>
-              </div>
+        <!-- 1) B4 -->
+        <div class="row" id="cluster-1">
+          <div class="modelCard">
+            <div class="bar">
+              <h3 class="title">B<sub>4</sub>H<sub>4</sub><sup>2−</sup></h3>
+              <span class="badge">closo • n=4</span>
             </div>
-
-            <div class="sumRight">
-              <div class="caret" aria-hidden="true"></div>
-              <span>Expand</span>
+            <div class="viewerStage"><div class="viewer" id="viewerB4"></div></div>
+            <div class="goldMark" aria-hidden="true"></div>
+          </div>
+          <div class="count">
+            <div class="eyebrow">e<sup>−</sup> counting (skeletal)</div>
+            <h3>B<sub>4</sub>H<sub>4</sub><sup>2−</sup></h3>
+            <p class="lede">Each BH contributes 2 skeletal e<sup>−</sup>; add charge electrons.</p>
+            <div class="targetLine">Target closo: SEP = n + 1 (n = 4)</div>
+            <div class="grid" role="list">
+              <div class="line" role="listitem"><div class="lhs">BH skeletal e<sup>−</sup> (2 each)</div><div class="rhs">4 × 2 = 8</div></div>
+              <div class="line" role="listitem"><div class="lhs">+ charge electrons</div><div class="rhs">+2</div></div>
+              <div class="line" role="listitem"><div class="lhs">total skeletal e<sup>−</sup></div><div class="rhs">10</div></div>
+              <div class="line" role="listitem"><div class="lhs">SEP = total / 2</div><div class="rhs">5</div></div>
+              <div class="line" role="listitem"><div class="lhs">compare with n + 1</div><div class="rhs">4 + 1 = 5</div></div>
             </div>
-          </summary>
+            <div class="note">Conclusion: closo (tetrahedral).</div>
+          </div>
+        </div>
 
-          <div class="clusterBody">
-            <div style="display:grid; grid-template-columns: 1.35fr .65fr; gap:18px; margin-top:10px;">
-              <div class="viewerStage" aria-label="3D viewer stage">
-                <div class="viewer" id="viewerB4"></div>
+        <!-- 2) B5 -->
+        <div class="row mirror" id="cluster-2">
+          <div class="count">
+            <div class="eyebrow">e<sup>−</sup> counting (skeletal)</div>
+            <h3>[B<sub>5</sub>H<sub>5</sub>]<sup>2−</sup></h3>
+            <p class="lede">Each BH contributes 2 skeletal e<sup>−</sup>; add charge electrons.</p>
+            <div class="targetLine">Target closo: SEP = n + 1 (n = 5)</div>
+            <div class="grid" role="list">
+              <div class="line" role="listitem"><div class="lhs">BH skeletal e<sup>−</sup> (2 each)</div><div class="rhs">5 × 2 = 10</div></div>
+              <div class="line" role="listitem"><div class="lhs">+ charge electrons</div><div class="rhs">+2</div></div>
+              <div class="line" role="listitem"><div class="lhs">total skeletal e<sup>−</sup></div><div class="rhs">12</div></div>
+              <div class="line" role="listitem"><div class="lhs">SEP = total / 2</div><div class="rhs">6</div></div>
+              <div class="line" role="listitem"><div class="lhs">compare with n + 1</div><div class="rhs">5 + 1 = 6</div></div>
+            </div>
+            <div class="note">Conclusion: closo.</div>
+          </div>
+          <div class="modelCard">
+            <div class="bar">
+              <h3 class="title">[B<sub>5</sub>H<sub>5</sub>]<sup>2−</sup></h3>
+              <span class="badge">closo • n=5</span>
+            </div>
+            <div class="viewerStage"><div class="viewer" id="viewerB5"></div></div>
+            <div class="goldMark" aria-hidden="true"></div>
+          </div>
+        </div>
 
-                <div class="modelOverlay" aria-hidden="true">
-                  <p class="title">Closo structure</p>
-                  <p class="sub">(n+1) skeletal electron pairs</p>
-                </div>
-              </div>
+        <!-- 3) B6 -->
+        <div class="row" id="cluster-3">
+          <div class="modelCard">
+            <div class="bar">
+              <h3 class="title">[B<sub>6</sub>H<sub>6</sub>]<sup>2−</sup></h3>
+              <span class="badge">closo • n=6</span>
+            </div>
+            <div class="viewerStage"><div class="viewer" id="viewerB6"></div></div>
+            <div class="goldMark" aria-hidden="true"></div>
+          </div>
+          <div class="count">
+            <div class="eyebrow">e<sup>−</sup> counting (skeletal)</div>
+            <h3>[B<sub>6</sub>H<sub>6</sub>]<sup>2−</sup></h3>
+            <p class="lede">Each BH contributes 2 skeletal e<sup>−</sup>; add charge electrons.</p>
+            <div class="targetLine">Target closo: SEP = n + 1 (n = 6)</div>
+            <div class="grid" role="list">
+              <div class="line" role="listitem"><div class="lhs">BH skeletal e<sup>−</sup> (2 each)</div><div class="rhs">6 × 2 = 12</div></div>
+              <div class="line" role="listitem"><div class="lhs">+ charge electrons</div><div class="rhs">+2</div></div>
+              <div class="line" role="listitem"><div class="lhs">total skeletal e<sup>−</sup></div><div class="rhs">14</div></div>
+              <div class="line" role="listitem"><div class="lhs">SEP = total / 2</div><div class="rhs">7</div></div>
+              <div class="line" role="listitem"><div class="lhs">compare with n + 1</div><div class="rhs">6 + 1 = 7</div></div>
+            </div>
+            <div class="note">Conclusion: closo (octahedral).</div>
+          </div>
+        </div>
 
-              <aside class="countSide" aria-label="Electron counting">
-                <h3>e<sup>−</sup> counting</h3>
+        <!-- 4) B7 -->
+        <div class="row mirror" id="cluster-4">
+          <div class="count">
+            <div class="eyebrow">e<sup>−</sup> counting (skeletal)</div>
+            <h3>[B<sub>7</sub>H<sub>7</sub>]<sup>2−</sup></h3>
+            <p class="lede">Each BH contributes 2 skeletal e<sup>−</sup>; add charge electrons.</p>
+            <div class="targetLine">Target closo: SEP = n + 1 (n = 7)</div>
+            <div class="grid" role="list">
+              <div class="line" role="listitem"><div class="lhs">BH skeletal e<sup>−</sup> (2 each)</div><div class="rhs">7 × 2 = 14</div></div>
+              <div class="line" role="listitem"><div class="lhs">+ charge electrons</div><div class="rhs">+2</div></div>
+              <div class="line" role="listitem"><div class="lhs">total skeletal e<sup>−</sup></div><div class="rhs">16</div></div>
+              <div class="line" role="listitem"><div class="lhs">SEP = total / 2</div><div class="rhs">8</div></div>
+              <div class="line" role="listitem"><div class="lhs">compare with n + 1</div><div class="rhs">7 + 1 = 8</div></div>
+            </div>
+            <div class="note">Conclusion: closo (pentagonal bipyramid).</div>
+          </div>
+          <div class="modelCard">
+            <div class="bar">
+              <h3 class="title">[B<sub>7</sub>H<sub>7</sub>]<sup>2−</sup></h3>
+              <span class="badge">closo • n=7</span>
+            </div>
+            <div class="viewerStage"><div class="viewer" id="viewerB7"></div></div>
+            <div class="goldMark" aria-hidden="true"></div>
+          </div>
+        </div>
 
-                <div class="countBox">
-                  <div style="font-weight:800; margin-bottom: 6px;">
-                    B<sub>4</sub>H<sub>4</sub><sup>2−</sup>
-                  </div>
+        <!-- 5) B12 -->
+        <div class="row" id="cluster-5">
+          <div class="modelCard">
+            <div class="bar">
+              <h3 class="title">[B<sub>12</sub>H<sub>12</sub>]<sup>2−</sup></h3>
+              <span class="badge">closo • n=12</span>
+            </div>
+            <div class="viewerStage"><div class="viewer" id="viewerB12"></div></div>
+            <div class="goldMark" aria-hidden="true"></div>
+          </div>
+          <div class="count">
+            <div class="eyebrow">e<sup>−</sup> counting (skeletal)</div>
+            <h3>[B<sub>12</sub>H<sub>12</sub>]<sup>2−</sup></h3>
+            <p class="lede">
+              Fast Wade count (closo): each BH vertex gives 2 skeletal e<sup>−</sup>, then add charge electrons.
+            </p>
+            <div class="targetLine">Target closo: SEP = n + 1 (n = 12)</div>
+            <div class="grid" role="list">
+              <div class="line" role="listitem"><div class="lhs">n vertices</div><div class="rhs">12</div></div>
+              <div class="line" role="listitem"><div class="lhs">BH skeletal e<sup>−</sup> (2 each)</div><div class="rhs">12 × 2 = 24</div></div>
+              <div class="line" role="listitem"><div class="lhs">+ charge electrons</div><div class="rhs">+2</div></div>
+              <div class="line" role="listitem"><div class="lhs">total skeletal e<sup>−</sup></div><div class="rhs">26</div></div>
+              <div class="line" role="listitem"><div class="lhs">SEP = total / 2</div><div class="rhs">13</div></div>
+              <div class="line" role="listitem"><div class="lhs">compare with n + 1</div><div class="rhs">12 + 1 = 13</div></div>
+            </div>
+            <div class="note">Conclusion: closo (icosahedral).</div>
+          </div>
+        </div>
 
-                  <div class="countRow"><div class="lhs">4 BH</div><div class="rhs">= 8 e</div></div>
-                  <div class="countRow"><div class="lhs">+ 2 e (charge)</div><div class="rhs">= 10 e</div></div>
+        <!-- ===== NIDO ===== -->
+        <div class="subHead" id="nido">
+          <div>
+            <h3>Nido boranes</h3>
+            <p style="margin:6px 0 0;max-width:72ch;color:var(--ink2);line-height:1.6;font-size:14px;">
+              Wade’s rule target: SEP \(=\;n + 2\) (one vertex missing from the parent closo deltahedron).
+            </p>
+          </div>
+          <div class="pill" aria-label="Rule pill"><span class="pillDot" aria-hidden="true"></span> target <b>SEP = n + 2</b></div>
+        </div>
 
-                  <div class="countSep"></div>
-
-                  <div class="countRow"><div class="lhs">10 e</div><div class="rhs">= 5 pairs</div></div>
-
-                  <div class="countSep"></div>
-
-                  <div class="countRow"><div class="lhs">n</div><div class="rhs">= 4</div></div>
-                  <div class="countRow"><div class="lhs">n + 1</div><div class="rhs">= 5 → closo</div></div>
-                </div>
-
-                <div class="meta" style="margin-top:12px">
-                  <button class="btn" id="resetCameraB4" type="button">Reset view</button>
-                </div>
-              </aside>
+        <!-- 6) Nido B5H9 -->
+        <div class="row" id="cluster-n1">
+          <div class="modelCard">
+            <div class="bar">
+              <h3 class="title">B<sub>5</sub>H<sub>9</sub></h3>
+              <span class="badge">nido • n=5</span>
+            </div>
+            <div class="viewerStage"><div class="viewer" id="viewerNidoB5H9"></div></div>
+            <div class="goldMark" aria-hidden="true"></div>
+          </div>
+          <div class="count">
+            <div class="eyebrow">e<sup>−</sup> counting (skeletal)</div>
+            <h3>B<sub>5</sub>H<sub>9</sub></h3>
+            <p class="lede">
+              Quick Wade target method: nido clusters require SEP \(=\;n+2\), so skeletal e<sup>−</sup> \(=\;2(n+2)\).
+            </p>
+            <div class="targetLine">Target nido: SEP = n + 2 (n = 5)</div>
+            <div class="grid" role="list">
+              <div class="line" role="listitem"><div class="lhs">n vertices (B atoms)</div><div class="rhs">5</div></div>
+              <div class="line" role="listitem"><div class="lhs">target SEP</div><div class="rhs">5 + 2 = 7</div></div>
+              <div class="line" role="listitem"><div class="lhs">target skeletal e<sup>−</sup></div><div class="rhs">2 × 7 = 14</div></div>
+            </div>
+            <div class="note">
+              3D model: square-pyramidal nido cage + 4 bridging H on the basal edges (schematic positions).
             </div>
           </div>
-        </details>
+        </div>
 
-        <!-- ===== Tab 2: [B5H5]^2− ===== -->
-        <details class="clusterTab" data-cluster="b5" id="cluster-b5">
-          <summary class="clusterSummary">
-            <div class="sumLeft">
-              <div class="sumTopRow">
-                <div>
-                  <span class="badge">Interactive 3D</span>
-                  <div class="sumTitle">[B<sub>5</sub>H<sub>5</sub>]<sup>2−</sup></div>
-                  <p class="sumHint">
-                    <span class="kbd">Drag</span> rotate · <span class="kbd">Scroll</span> zoom · <span class="kbd">RMB</span> pan
-                  </p>
-                </div>
-              </div>
-              <div class="meta" style="margin-top:10px">
-                <span>⚡ WebGL</span><span>⬡ Trigonal bipyramid</span>
-              </div>
+        <!-- ===== ARACHNO ===== -->
+        <div class="subHead" id="arachno">
+          <div>
+            <h3>Arachno boranes</h3>
+            <p style="margin:6px 0 0;max-width:72ch;color:var(--ink2);line-height:1.6;font-size:14px;">
+              Wade’s rule target: SEP \(=\;n + 3\) (two vertices missing from the parent closo deltahedron).
+            </p>
+          </div>
+          <div class="pill" aria-label="Rule pill"><span class="pillDot" aria-hidden="true"></span> target <b>SEP = n + 3</b></div>
+        </div>
+
+        <!-- 7) Arachno B4H10 -->
+        <div class="row mirror" id="cluster-a1">
+          <div class="count">
+            <div class="eyebrow">e<sup>−</sup> counting (skeletal)</div>
+            <h3>B<sub>4</sub>H<sub>10</sub></h3>
+
+            <p class="lede">
+              For boranes B<sub>n</sub>H<sub>m</sub>, total valence e<sup>−</sup> \(=\;3n+m\).
+              Each terminal B–H bond uses 2 e<sup>−</sup> (not skeletal). Remaining e<sup>−</sup> are skeletal.
+            </p>
+
+            <div class="targetLine">Arachno target: SEP = n + 3 (n = 4) ⇒ SEP = 7</div>
+
+            <div class="grid" role="list">
+              <div class="line" role="listitem"><div class="lhs">total valence e<sup>−</sup></div><div class="rhs">3×4 + 10 = 22</div></div>
+              <div class="line" role="listitem"><div class="lhs">terminal B–H bonds (6 terminal H)</div><div class="rhs">6 × 2 = 12</div></div>
+              <div class="line" role="listitem"><div class="lhs">skeletal e<sup>−</sup> = total − terminal</div><div class="rhs">22 − 12 = 10</div></div>
+              <div class="line" role="listitem"><div class="lhs">skeletal electron pairs (SEP)</div><div class="rhs">10 / 2 = 5</div></div>
+              <div class="line" role="listitem"><div class="lhs">compare with arachno target (n+3)</div><div class="rhs">4 + 3 = 7</div></div>
             </div>
 
-            <div class="sumRight">
-              <div class="caret" aria-hidden="true"></div>
-              <span>Expand</span>
-            </div>
-          </summary>
-
-          <div class="clusterBody">
-            <div style="display:grid; grid-template-columns: 1.35fr .65fr; gap:18px; margin-top:10px;">
-              <div class="viewerStage" aria-label="3D viewer stage">
-                <div class="viewer" id="viewerB5"></div>
-
-                <div class="modelOverlay" aria-hidden="true">
-                  <p class="title">Closo structure</p>
-                  <p class="sub">(n+1) skeletal electron pairs</p>
-                </div>
-              </div>
-
-              <aside class="countSide" aria-label="Electron counting">
-                <h3>e<sup>−</sup> counting</h3>
-
-                <div class="countBox">
-                  <div style="font-weight:800; margin-bottom: 6px;">
-                    [B<sub>5</sub>H<sub>5</sub>]<sup>2−</sup>
-                  </div>
-
-                  <div class="countRow"><div class="lhs">5 BH</div><div class="rhs">= 10 e</div></div>
-                  <div class="countRow"><div class="lhs">+ 2 e (charge)</div><div class="rhs">= 12 e</div></div>
-
-                  <div class="countSep"></div>
-
-                  <div class="countRow"><div class="lhs">12 e</div><div class="rhs">= 6 pairs</div></div>
-
-                  <div class="countSep"></div>
-
-                  <div class="countRow"><div class="lhs">n</div><div class="rhs">= 5</div></div>
-                  <div class="countRow"><div class="lhs">n + 1</div><div class="rhs">= 6 → closo</div></div>
-                </div>
-
-                <div class="meta" style="margin-top:12px">
-                  <button class="btn" id="resetCameraB5" type="button">Reset view</button>
-                </div>
-              </aside>
+            <div class="note">
+              Note: The simple “terminal-BH subtraction” method can undercount SEP for boranes with multiple bridging H.
+              Wade classification for B<sub>4</sub>H<sub>10</sub> is conventionally <b>arachno</b>, with SEP \(=\;n+3=7\).
+              (Your 3D model below uses a standard “butterfly” B<sub>4</sub> framework with 4 bridging H.)
             </div>
           </div>
-        </details>
 
-        <!-- ===== Tab 3: [B8H8]^2− ===== -->
-        <details class="clusterTab" data-cluster="b8" id="cluster-b8">
-          <summary class="clusterSummary">
-            <div class="sumLeft">
-              <div class="sumTopRow">
-                <div>
-                  <span class="badge">Interactive 3D</span>
-                  <div class="sumTitle">[B<sub>8</sub>H<sub>8</sub>]<sup>2−</sup></div>
-                  <p class="sumHint">
-                    <span class="kbd">Drag</span> rotate · <span class="kbd">Scroll</span> zoom · <span class="kbd">RMB</span> pan
-                  </p>
-                </div>
-              </div>
-              <div class="meta" style="margin-top:10px">
-                <span>⚡ WebGL</span><span>⬡ Triangular dodecahedron</span>
-              </div>
+          <div class="modelCard">
+            <div class="bar">
+              <h3 class="title">B<sub>4</sub>H<sub>10</sub></h3>
+              <span class="badge">arachno • n=4</span>
             </div>
-
-            <div class="sumRight">
-              <div class="caret" aria-hidden="true"></div>
-              <span>Expand</span>
-            </div>
-          </summary>
-
-          <div class="clusterBody">
-            <div style="display:grid; grid-template-columns: 1.35fr .65fr; gap:18px; margin-top:10px;">
-              <div class="viewerStage" aria-label="3D viewer stage">
-                <div class="viewer" id="viewerB8"></div>
-
-                <div class="modelOverlay" aria-hidden="true">
-                  <p class="title">Closo (deltahedral)</p>
-                  <p class="sub">(n+1) skeletal electron pairs</p>
-                </div>
-              </div>
-
-              <aside class="countSide" aria-label="Electron counting">
-                <h3>e<sup>−</sup> counting</h3>
-
-                <div class="countBox">
-                  <div style="font-weight:800; margin-bottom: 6px;">
-                    [B<sub>8</sub>H<sub>8</sub>]<sup>2−</sup>
-                  </div>
-
-                  <div class="countRow"><div class="lhs">8 BH</div><div class="rhs">= 16 e</div></div>
-                  <div class="countRow"><div class="lhs">+ 2 e (charge)</div><div class="rhs">= 18 e</div></div>
-
-                  <div class="countSep"></div>
-
-                  <div class="countRow"><div class="lhs">18 e</div><div class="rhs">= 9 pairs</div></div>
-
-                  <div class="countSep"></div>
-
-                  <div class="countRow"><div class="lhs">n</div><div class="rhs">= 8</div></div>
-                  <div class="countRow"><div class="lhs">n + 1</div><div class="rhs">= 9 → closo</div></div>
-                </div>
-
-                <div class="meta" style="margin-top:12px">
-                  <button class="btn" id="resetCameraB8" type="button">Reset view</button>
-                </div>
-              </aside>
-            </div>
+            <div class="viewerStage"><div class="viewer" id="viewerArachnoB4H10"></div></div>
+            <div class="goldMark" aria-hidden="true"></div>
           </div>
-        </details>
+        </div>
 
       </div>
     </section>
 
-    <section class="section" id="concepts">
-      <div class="section-head">
-        <div>
-          <h2>Concepts</h2>
-          <p>Short, high-signal explanations you can expand into full lessons later.</p>
-        </div>
-      </div>
-
-      <div class="concepts">
-        <div class="panel">
-          <h3>Wade’s rules (quick map)</h3>
-          <ul>
-            <li><b>closo</b>: (n+1) skeletal electron pairs (SEP)</li>
-            <li><b>nido</b>: (n+2) SEP</li>
-            <li><b>arachno</b>: (n+3) SEP</li>
-            <li>Practice: relate vertices (n) → shape family → predicted formula tendencies.</li>
-          </ul>
-          <div class="pill-row" aria-label="Tags">
-            <span class="pill">electron counting</span>
-            <span class="pill">polyhedra</span>
-            <span class="pill">structure</span>
-          </div>
-        </div>
-
-        <div class="panel">
-          <h3>3c–2e bonding (intuition)</h3>
-          <ul>
-            <li>Bridging hydrogens stabilize electron-deficient frameworks.</li>
-            <li>Think “shared pair across three centers” instead of a missing bond.</li>
-            <li>Use bonding motifs to predict where bridges appear in small boranes.</li>
-          </ul>
-          <div class="pill-row">
-            <span class="pill">bonding</span>
-            <span class="pill">bridges</span>
-            <span class="pill">stability</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="quiz">
-      <div class="section-head">
-        <div>
-          <h2>Quiz</h2>
-          <p>A simple built-in quiz (no backend). Click an option to see feedback.</p>
-        </div>
-      </div>
-
-      <div class="quiz">
-        <div class="q" data-answer="b">
-          <h3>1) For a <i>closo</i> cluster with n vertices, SEP equals:</h3>
-          <button class="opt" data-opt="a" aria-pressed="false">A) n</button>
-          <button class="opt" data-opt="b" aria-pressed="false">B) n+1</button>
-          <button class="opt" data-opt="c" aria-pressed="false">C) n+2</button>
-          <div class="result" aria-live="polite"></div>
-        </div>
-
-        <div class="q" data-answer="c">
-          <h3>2) A typical 3c–2e bond is best described as:</h3>
-          <button class="opt" data-opt="a" aria-pressed="false">A) 3 centers sharing 4 electrons</button>
-          <button class="opt" data-opt="b" aria-pressed="false">B) 2 centers sharing 3 electrons</button>
-          <button class="opt" data-opt="c" aria-pressed="false">C) 3 centers sharing 2 electrons</button>
-          <div class="result" aria-live="polite"></div>
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="resources">
-      <div class="section-head">
-        <div>
-          <h2>Resources</h2>
-          <p>Replace these with your PDFs, videos, and interactive tools later.</p>
-        </div>
-      </div>
-
-      <div class="resources">
-        <div class="res">
-          <h3>Lecture Notes</h3>
-          <p>Quick-reference sheets for Wade–Mingos and common borane motifs.</p>
-          <a href="#" onclick="return false;">Open <span class="arrow" aria-hidden="true"></span></a>
-        </div>
-        <div class="res">
-          <h3>Practice Set</h3>
-          <p>Electron counting drills with increasing complexity and worked solutions.</p>
-          <a href="#" onclick="return false;">Open <span class="arrow" aria-hidden="true"></span></a>
-        </div>
-        <div class="res">
-          <h3>3D Viewer</h3>
-          <p>Embedded in the Clusters section as B<sub>4</sub>H<sub>4</sub><sup>2−</sup>, [B<sub>5</sub>H<sub>5</sub>]<sup>2−</sup>, and [B<sub>8</sub>H<sub>8</sub>]<sup>2−</sup>.</p>
-          <a href="#clusters">Go to models <span class="arrow" aria-hidden="true"></span></a>
-        </div>
+    <section class="blueSection" id="theory">
+      <div class="wrap">
+        <h2>Learn Theory</h2>
+        <p>
+          Add your notes here: Wade’s rules (closo/nido/arachno), 3c–2e bonding, and how terminal vs bridging H affects
+          skeletal electron counting.
+        </p>
       </div>
     </section>
 
     <footer>
-      <div class="foot">
+      <div class="wrap footRow">
         <div>
-          <div class="small">CHEM2341 • Inorganic Chemistry</div>
-          <div>© <span id="year"></span> Your Project Name. All rights reserved.</div>
+          <div style="letter-spacing:.08em;text-transform:uppercase;color: rgba(255,255,255,.55);">
+            CHEM2341 • Inorganic Chemistry
+          </div>
+          <div>© <span id="year"></span> HKU Chemistry.</div>
         </div>
-        <div style="display:flex;gap:14px;flex-wrap:wrap">
-          <a class="btn" href="#home">Back to top</a>
-        </div>
+        <a class="toTop" href="#top">Back to top</a>
       </div>
     </footer>
   </main>
 
+  <!-- Use jsDelivr (approved) for both to avoid mixed-CDN issues -->
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // Drawer
-    const drawer = document.getElementById('drawer');
-    const backdrop = document.getElementById('backdrop');
-    const openMenu = document.getElementById('openMenu');
-    const closeMenu = document.getElementById('closeMenu');
+    // Hide the HKU/CHEMISTRY logo after user scrolls down a bit
+    (function(){
+      const header = document.querySelector('header.nav');
+      if (!header) return;
 
-    function openDrawer(){
-      drawer.classList.add('open');
-      backdrop.classList.add('open');
-      backdrop.setAttribute('aria-hidden','false');
-    }
-    function closeDrawer(){
-      drawer.classList.remove('open');
-      backdrop.classList.remove('open');
-      backdrop.setAttribute('aria-hidden','true');
-    }
-    openMenu.addEventListener('click', openDrawer);
-    closeMenu.addEventListener('click', closeDrawer);
-    backdrop.addEventListener('click', closeDrawer);
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closeDrawer();
-    });
-    drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', closeDrawer));
-
-    // Active link highlight (desktop)
-    const navLinks = document.querySelectorAll('.nav-links a');
-    navLinks.forEach(a => a.addEventListener('click', () => {
-      navLinks.forEach(x => x.removeAttribute('aria-current'));
-      a.setAttribute('aria-current', 'page');
-    }));
-
-    // ========= Quiz (unchanged behavior) =========
-    document.querySelectorAll('.q').forEach(q => {
-      const ans = q.getAttribute('data-answer');
-      const result = q.querySelector('.result');
-      q.querySelectorAll('.opt').forEach(btn => {
-        btn.addEventListener('click', () => {
-          q.querySelectorAll('.opt').forEach(b => b.setAttribute('aria-pressed','false'));
-          btn.setAttribute('aria-pressed','true');
-          const picked = btn.getAttribute('data-opt');
-          if (picked === ans){
-            result.textContent = "Correct.";
-          } else {
-            result.textContent = "Not quite—try again.";
-          }
+      let ticking = false;
+      const hideAfter = 60; // px scrolled before hiding
+      function onScroll(){
+        if (ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          const y = window.scrollY || document.documentElement.scrollTop || 0;
+          header.classList.toggle('is-hidden', y > hideAfter);
+          ticking = false;
         });
-      });
-    });
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
 
-    // ========= Shared materials / geometry helpers =========
+    (function () {
+      const btn = document.getElementById('exploreBtn');
+      const target = document.getElementById('cluster-1');
+      if (!btn || !target) return;
+
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const navHStr = getComputedStyle(document.documentElement).getPropertyValue('--nav-h');
+        const navH = parseFloat(navHStr) || 0;
+        const y = target.getBoundingClientRect().top + window.scrollY - navH - 18;
+        window.scrollTo({ top: y, behavior: 'smooth' });
+      });
+    })();
+
+    // ===== Shared 3D viewer utilities =====
     const boronMaterial = new THREE.MeshStandardMaterial({
       color: 0x7dd3fc,
       roughness: 0.35,
       metalness: 0.08,
-      emissive: 0x071635,
+      emissive: 0x1C2C44,
       emissiveIntensity: 0.12
     });
-
     const hydrogenMaterial = new THREE.MeshStandardMaterial({
       color: 0xf8fafc,
       roughness: 0.25,
       metalness: 0.05
     });
-
     const bondMaterial = new THREE.MeshStandardMaterial({
       color: 0x94a3b8,
       roughness: 0.65,
@@ -1298,25 +872,15 @@
 
     function addLights(scene){
       scene.add(new THREE.AmbientLight(0xffffff, 0.55));
-
       const keyLight = new THREE.DirectionalLight(0xffffff, 0.95);
       keyLight.position.set(4, 6, 5);
       scene.add(keyLight);
-
-      const rimLight = new THREE.DirectionalLight(0x7c5cff, 0.35);
-      rimLight.position.set(-6, 2, -4);
-      scene.add(rimLight);
-
-      const warmFill = new THREE.DirectionalLight(0xe56a5c, 0.18);
+      const warmFill = new THREE.DirectionalLight(0xB49D74, 0.22);
       warmFill.position.set(6, -2, -2);
       scene.add(warmFill);
-
-      const backPlane = new THREE.Mesh(
-        new THREE.PlaneGeometry(50, 50),
-        new THREE.MeshBasicMaterial({ color: 0x050b1a, transparent: true, opacity: 0.18 })
-      );
-      backPlane.position.set(0, 0, -6.8);
-      scene.add(backPlane);
+      const coolRim = new THREE.DirectionalLight(0x8ab4ff, 0.20);
+      coolRim.position.set(-6, 2, -4);
+      scene.add(coolRim);
     }
 
     function createCylinderBond(group, start, end) {
@@ -1326,10 +890,8 @@
       if (!isFinite(length) || length <= 1e-6) return;
 
       const cyl = new THREE.Mesh(bondGeometry, bondMaterial);
-
       const mid = startVec.clone().add(endVec).multiplyScalar(0.5);
       cyl.position.copy(mid);
-
       cyl.scale.set(1, length, 1);
 
       const dir = endVec.clone().sub(startVec).normalize();
@@ -1338,7 +900,9 @@
       group.add(cyl);
     }
 
-    function setupViewer({ mountEl, defaultCamZ, buildModelFn, resetBtn }) {
+    function setupViewer({ mountEl, defaultCamZ, buildModelFn }) {
+      if (!mountEl) return;
+
       const scene = new THREE.Scene();
       scene.background = null;
 
@@ -1353,13 +917,11 @@
       controls.dampingFactor = 0.06;
       controls.rotateSpeed = 0.6;
       controls.zoomSpeed = 0.8;
-      controls.panSpeed = 0.8;
 
       addLights(scene);
 
       const modelGroup = new THREE.Group();
       scene.add(modelGroup);
-
       buildModelFn(modelGroup);
 
       function resize() {
@@ -1370,31 +932,49 @@
         camera.updateProjectionMatrix();
         renderer.setSize(w, h, false);
       }
-
       const ro = new ResizeObserver(resize);
       ro.observe(mountEl);
 
-      function resetCamera(){
-        camera.position.set(0, 0, defaultCamZ);
-        controls.target.set(0, 0, 0);
-        controls.update();
-        resize();
-      }
+      camera.position.set(0, 0, defaultCamZ);
+      controls.target.set(0, 0, 0);
+      controls.update();
 
       function animate() {
         requestAnimationFrame(animate);
         controls.update();
         renderer.render(scene, camera);
       }
-
-      if (resetBtn) resetBtn.addEventListener('click', resetCamera);
-      resetCamera();
+      resize();
       animate();
-
-      return { resetCamera };
     }
 
-    // ========= Build model: B4H4^2− (tetrahedral) =========
+    // --- shared helper: add terminal H radially
+    function addTerminalH(modelGroup, boronPositions, out){
+      const hydrogenPositions = boronPositions.map((pos) => {
+        const len = Math.hypot(pos[0], pos[1], pos[2]) || 1;
+        return pos.map(c => c * ((len + out) / len));
+      });
+
+      boronPositions.forEach((pos, i) => {
+        const b = new THREE.Mesh(boronGeometry, boronMaterial);
+        b.position.set(pos[0], pos[1], pos[2]);
+        modelGroup.add(b);
+
+        const h = new THREE.Mesh(hydrogenGeometry, hydrogenMaterial);
+        h.position.set(hydrogenPositions[i][0], hydrogenPositions[i][1], hydrogenPositions[i][2]);
+        modelGroup.add(h);
+
+        createCylinderBond(modelGroup, pos, hydrogenPositions[i]);
+      });
+    }
+
+    function buildFromVertices(modelGroup, boronPositions, edgePairs, camScale=1.0){
+      const out = 0.85 * camScale;
+      addTerminalH(modelGroup, boronPositions, out);
+      edgePairs.forEach(([i,j]) => createCylinderBond(modelGroup, boronPositions[i], boronPositions[j]));
+    }
+
+    // ===== Closo models =====
     function buildB4(modelGroup){
       const boronPositions = [
         [ 1,  1,  1],
@@ -1402,37 +982,12 @@
         [-1,  1, -1],
         [-1, -1,  1]
       ].map(pos => pos.map(c => c * 0.577));
-
-      const hydrogenPositions = [];
-
-      boronPositions.forEach((pos) => {
-        const b = new THREE.Mesh(boronGeometry, boronMaterial);
-        b.position.set(pos[0], pos[1], pos[2]);
-        modelGroup.add(b);
-
-        const len = Math.hypot(pos[0], pos[1], pos[2]) || 1;
-        const hPos = pos.map(coord => coord * ((len + 0.85) / len));
-        hydrogenPositions.push(hPos);
-
-        const h = new THREE.Mesh(hydrogenGeometry, hydrogenMaterial);
-        h.position.set(hPos[0], hPos[1], hPos[2]);
-        modelGroup.add(h);
-      });
-
-      const edges = [
-        [0, 1], [0, 2], [0, 3],
-        [1, 2], [1, 3],
-        [2, 3]
-      ];
-      edges.forEach(([i, j]) => createCylinderBond(modelGroup, boronPositions[i], boronPositions[j]));
-      boronPositions.forEach((bPos, i) => createCylinderBond(modelGroup, bPos, hydrogenPositions[i]));
+      const edges = [[0,1],[0,2],[0,3],[1,2],[1,3],[2,3]];
+      buildFromVertices(modelGroup, boronPositions, edges, 1.0);
     }
 
-    // ========= Build model: [B5H5]^2− (trigonal bipyramid) =========
     function buildB5(modelGroup){
-      const r = 1.00;
-      const h = 1.25;
-
+      const r = 1.00, h = 1.25;
       const boronPositions = [
         [ r * Math.cos(0),             r * Math.sin(0),             0 ],
         [ r * Math.cos(2*Math.PI/3),   r * Math.sin(2*Math.PI/3),   0 ],
@@ -1440,144 +995,202 @@
         [ 0, 0,  h ],
         [ 0, 0, -h ]
       ];
-
-      const hydrogenPositions = [];
-
-      boronPositions.forEach((pos) => {
-        const b = new THREE.Mesh(boronGeometry, boronMaterial);
-        b.position.set(pos[0], pos[1], pos[2]);
-        modelGroup.add(b);
-
-        const len = Math.hypot(pos[0], pos[1], pos[2]) || 1;
-        const out = 0.85;
-        const hPos = pos.map(c => c * ((len + out) / len));
-        hydrogenPositions.push(hPos);
-
-        const hAtom = new THREE.Mesh(hydrogenGeometry, hydrogenMaterial);
-        hAtom.position.set(hPos[0], hPos[1], hPos[2]);
-        modelGroup.add(hAtom);
-      });
-
       const edges = [
         [0,1],[1,2],[2,0],
         [3,0],[3,1],[3,2],
         [4,0],[4,1],[4,2]
       ];
-      edges.forEach(([i, j]) => createCylinderBond(modelGroup, boronPositions[i], boronPositions[j]));
-      boronPositions.forEach((bPos, i) => createCylinderBond(modelGroup, bPos, hydrogenPositions[i]));
+      buildFromVertices(modelGroup, boronPositions, edges, 1.0);
     }
 
-    // ========= Build model: [B8H8]^2− =========
-    function buildB8(modelGroup){
-      const a = 1.0;
+    function buildB6(modelGroup){
+      const a = 1.15;
       const boronPositions = [
-        [0, 0,  a * 1.2],
-        [0, 0, -a * 1.2],
-        [a, 0,  a * 0.4],
-        [-a, 0, a * 0.4],
-        [0, a, -a * 0.4],
-        [0, -a, -a * 0.4],
-        [a * 0.7, a * 0.7, 0],
-        [-a * 0.7, -a * 0.7, 0]
+        [ a, 0, 0],[-a, 0, 0],
+        [0, a, 0],[0,-a, 0],
+        [0, 0, a],[0, 0,-a]
+      ];
+      const edges = [
+        [0,2],[0,3],[0,4],[0,5],
+        [1,2],[1,3],[1,4],[1,5],
+        [2,4],[2,5],[3,4],[3,5]
+      ];
+      buildFromVertices(modelGroup, boronPositions, edges, 1.0);
+    }
+
+    function buildB7(modelGroup){
+      const r = 1.10;
+      const z = 1.35;
+      const boronPositions = [];
+      for (let k=0; k<5; k++){
+        const t = (2*Math.PI*k)/5;
+        boronPositions.push([r*Math.cos(t), r*Math.sin(t), 0]);
+      }
+      boronPositions.push([0,0, z]); // 5
+      boronPositions.push([0,0,-z]); // 6
+
+      const edges = [];
+      for (let k=0; k<5; k++) edges.push([k, (k+1)%5]);
+      for (let k=0; k<5; k++){
+        edges.push([5, k]);
+        edges.push([6, k]);
+      }
+      buildFromVertices(modelGroup, boronPositions, edges, 1.0);
+    }
+
+    function buildB12(modelGroup){
+      const phi = (1 + Math.sqrt(5)) / 2;
+      const a = 1;
+      const b = a / phi;
+      const scale = 1.12;
+
+      const boronPositions = [
+        [0, 0, a],
+        [a, 0, b],
+        [a * Math.cos(2 * Math.PI / 5), a * Math.sin(2 * Math.PI / 5), b],
+        [a * Math.cos(4 * Math.PI / 5), a * Math.sin(4 * Math.PI / 5), b],
+        [a * Math.cos(6 * Math.PI / 5), a * Math.sin(6 * Math.PI / 5), b],
+        [a * Math.cos(8 * Math.PI / 5), a * Math.sin(8 * Math.PI / 5), b],
+        [a * Math.cos(Math.PI / 5), a * Math.sin(Math.PI / 5), -b],
+        [a * Math.cos(3 * Math.PI / 5), a * Math.sin(3 * Math.PI / 5), -b],
+        [a * Math.cos(5 * Math.PI / 5), a * Math.sin(5 * Math.PI / 5), -b],
+        [a * Math.cos(7 * Math.PI / 5), a * Math.sin(7 * Math.PI / 5), -b],
+        [a * Math.cos(9 * Math.PI / 5), a * Math.sin(9 * Math.PI / 5), -b],
+        [0, 0, -a]
+      ].map(p => p.map(v => v*scale));
+
+      const edges = [
+        [0, 1], [0, 2], [0, 3], [0, 4], [0, 5],
+        [1, 2], [2, 3], [3, 4], [4, 5], [5, 1],
+        [11, 6], [11, 7], [11, 8], [11, 9], [11, 10],
+        [6, 7], [7, 8], [8, 9], [9, 10], [10, 6],
+        [1, 6], [1, 10],
+        [2, 6], [2, 7], [2, 3],
+        [3, 7], [3, 8],
+        [4, 8], [4, 9],
+        [5, 9], [5, 10]
       ];
 
-      const hydrogenPositions = boronPositions.map(pos => {
-        const len = Math.hypot(pos[0], pos[1], pos[2]) || 1;
-        const out = 0.85;
-        const scale = (len + out) / len;
-        return pos.map(c => c * scale);
-      });
+      buildFromVertices(modelGroup, boronPositions, edges, 1.0);
+    }
 
-      boronPositions.forEach(pos => {
+    // ===== Nido B5H9 =====
+    function buildNidoB5H9(modelGroup){
+      const scale = 1.15;
+      const boronPositions = [
+        [0, 0, 1],    // apex
+        [1, 0, 0],
+        [0, 1, 0],
+        [-1, 0, 0],
+        [0, -1, 0]
+      ].map(p => p.map(v => v*scale));
+
+      const edges = [
+        [0,1],[0,2],[0,3],[0,4],
+        [1,2],[2,3],[3,4],[4,1]
+      ];
+
+      buildFromVertices(modelGroup, boronPositions, edges, 1.15);
+
+      const basalBridges = [[1,2],[2,3],[3,4],[4,1]];
+      basalBridges.forEach(([i,j]) => {
+        const pi = boronPositions[i], pj = boronPositions[j];
+        const hPos = [(pi[0]+pj[0])/2, (pi[1]+pj[1])/2, (pi[2]+pj[2])/2 - 0.55];
+        const h = new THREE.Mesh(hydrogenGeometry, hydrogenMaterial);
+        h.position.set(hPos[0], hPos[1], hPos[2]);
+        modelGroup.add(h);
+        createCylinderBond(modelGroup, pi, hPos);
+        createCylinderBond(modelGroup, pj, hPos);
+      });
+    }
+
+    // ===== Arachno B4H10 (INTEGRATED from your provided model) =====
+    function makeTextSprite(text){
+      const canvas = document.createElement('canvas');
+      canvas.width = 256;
+      canvas.height = 128;
+      const ctx = canvas.getContext('2d');
+
+      ctx.fillStyle = 'rgba(0,0,0,0.55)';
+      ctx.fillRect(0,0,canvas.width,canvas.height);
+
+      ctx.font = '44px Inter, Arial, sans-serif';
+      ctx.fillStyle = 'white';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(text, canvas.width/2, canvas.height/2);
+
+      const tex = new THREE.CanvasTexture(canvas);
+      tex.anisotropy = 2;
+      const mat = new THREE.SpriteMaterial({ map: tex, transparent: true });
+      const spr = new THREE.Sprite(mat);
+      spr.scale.set(0.9, 0.45, 1);
+      return spr;
+    }
+
+    function buildArachnoB4H10(modelGroup){
+      const scale = 1.2;
+
+      const boronPositions = [
+        [ 0.0000, -0.8520, 0.0000], // B1
+        [ 0.0000,  0.8520, 0.0000], // B2
+        [ 1.4060,  0.0000, 0.8610], // B3
+        [-1.4060,  0.0000, 0.8610]  // B4
+      ].map(p => p.map(v => v*scale));
+
+      const hydrogenPositions = [
+        [ 0.0000, -1.2930, -1.1390], // Ht on B1
+        [ 0.0000,  1.2930, -1.1390], // Ht on B2
+        [ 0.9850, -1.4100,  0.6690], // Hμ (B1-B3)
+        [-0.9850, -1.4100,  0.6690], // Hμ (B1-B4)
+        [-0.9850,  1.4100,  0.6690], // Hμ (B2-B4)
+        [ 0.9850,  1.4100,  0.6690], // Hμ (B2-B3)
+        [ 1.2030,  0.0000,  2.0370], // Ht on B3
+        [ 2.5060,  0.0000,  0.3960], // Ht on B3
+        [-1.2030,  0.0000,  2.0370], // Ht on B4
+        [-2.5060,  0.0000,  0.3960]  // Ht on B4
+      ].map(p => p.map(v => v*scale));
+
+      boronPositions.forEach((pos, i) => {
         const b = new THREE.Mesh(boronGeometry, boronMaterial);
         b.position.set(pos[0], pos[1], pos[2]);
         modelGroup.add(b);
+
+        const label = makeTextSprite(`B${i+1}`);
+        label.position.set(pos[0] + 0.6, pos[1] + 0.6, pos[2] + 0.6);
+        modelGroup.add(label);
       });
 
-      hydrogenPositions.forEach(pos => {
+      hydrogenPositions.forEach((pos) => {
         const h = new THREE.Mesh(hydrogenGeometry, hydrogenMaterial);
         h.position.set(pos[0], pos[1], pos[2]);
         modelGroup.add(h);
       });
 
-      const edges = [
-        [0, 2], [0, 3], [0, 6], [0, 7],
-        [1, 4], [1, 5], [1, 6], [1, 7],
-        [2, 4], [2, 6], [2, 7],
-        [3, 5], [3, 6], [3, 7],
-        [4, 6], [4, 7],
-        [5, 6], [5, 7]
+      const bbEdges = [[0,1],[0,2],[0,3],[1,2],[1,3]];
+      bbEdges.forEach(([i,j]) => createCylinderBond(modelGroup, boronPositions[i], boronPositions[j]));
+
+      const terminalBH = [[0,0],[1,1],[2,6],[2,7],[3,8],[3,9]];
+      terminalBH.forEach(([b,h]) => createCylinderBond(modelGroup, boronPositions[b], hydrogenPositions[h]));
+
+      const bridgingBH = [
+        [0, 2], [2, 2],
+        [1, 5], [2, 5],
+        [0, 3], [3, 3],
+        [1, 4], [3, 4]
       ];
-      edges.forEach(([i, j]) => createCylinderBond(modelGroup, boronPositions[i], boronPositions[j]));
-      boronPositions.forEach((bPos, i) => createCylinderBond(modelGroup, bPos, hydrogenPositions[i]));
+      bridgingBH.forEach(([b,h]) => createCylinderBond(modelGroup, boronPositions[b], hydrogenPositions[h]));
     }
 
-    // ========= Lazy init: only build a viewer when its tab opens =========
-    const viewers = new Map(); // key -> { resetCamera }
-    function initViewer(key){
-      if (viewers.has(key)) return;
+    // Init viewers (7 models)
+    setupViewer({ mountEl: document.getElementById('viewerB4'),  defaultCamZ: 5.2, buildModelFn: buildB4  });
+    setupViewer({ mountEl: document.getElementById('viewerB5'),  defaultCamZ: 6.0, buildModelFn: buildB5  });
+    setupViewer({ mountEl: document.getElementById('viewerB6'),  defaultCamZ: 6.2, buildModelFn: buildB6  });
+    setupViewer({ mountEl: document.getElementById('viewerB7'),  defaultCamZ: 6.6, buildModelFn: buildB7  });
+    setupViewer({ mountEl: document.getElementById('viewerB12'), defaultCamZ: 7.2, buildModelFn: buildB12 });
 
-      if (key === "b4"){
-        const v = setupViewer({
-          mountEl: document.getElementById('viewerB4'),
-          defaultCamZ: 5.2,
-          buildModelFn: buildB4,
-          resetBtn: document.getElementById('resetCameraB4')
-        });
-        viewers.set(key, v);
-      }
-
-      if (key === "b5"){
-        const v = setupViewer({
-          mountEl: document.getElementById('viewerB5'),
-          defaultCamZ: 6.0,
-          buildModelFn: buildB5,
-          resetBtn: document.getElementById('resetCameraB5')
-        });
-        viewers.set(key, v);
-      }
-
-      if (key === "b8"){
-        const v = setupViewer({
-          mountEl: document.getElementById('viewerB8'),
-          defaultCamZ: 6.6,
-          buildModelFn: buildB8,
-          resetBtn: document.getElementById('resetCameraB8')
-        });
-        viewers.set(key, v);
-      }
-    }
-
-    document.querySelectorAll('details.clusterTab').forEach(det => {
-      det.addEventListener('toggle', () => {
-        if (!det.open) return;
-        const key = det.getAttribute('data-cluster');
-        initViewer(key);
-        // small delay helps layout settle before first resize
-        setTimeout(() => {
-          const v = viewers.get(key);
-          if (v) v.resetCamera();
-        }, 60);
-      });
-    });
-
-    // If user lands on #cluster-b4 etc, open + init
-    function openFromHash(){
-      const hash = location.hash || "";
-      if (!hash.startsWith("#cluster-")) return;
-      const el = document.querySelector(hash);
-      if (el && el.tagName === "DETAILS"){
-        el.open = true;
-        const key = el.getAttribute('data-cluster');
-        initViewer(key);
-        setTimeout(() => {
-          const v = viewers.get(key);
-          if (v) v.resetCamera();
-        }, 60);
-      }
-    }
-    window.addEventListener('hashchange', openFromHash);
-    openFromHash();
+    setupViewer({ mountEl: document.getElementById('viewerNidoB5H9'), defaultCamZ: 6.2, buildModelFn: buildNidoB5H9 });
+    setupViewer({ mountEl: document.getElementById('viewerArachnoB4H10'), defaultCamZ: 7.8, buildModelFn: buildArachnoB4H10 });
   </script>
 </body>
 </html>
