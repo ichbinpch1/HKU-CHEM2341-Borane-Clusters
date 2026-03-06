@@ -395,7 +395,7 @@
       border: 1px solid rgba(11,18,32,.10);
     }
 
-    #cluster-1, #cluster-2, #cluster-3, #cluster-4, #cluster-5, #cluster-n1, #cluster-a1, #theory { scroll-margin-top: calc(var(--nav-h) + 18px); }
+    #cluster-1, #cluster-2, #cluster-3, #cluster-4, #cluster-5, #cluster-n1, #cluster-n2, #cluster-n3, #cluster-a1, #theory, #pathway { scroll-margin-top: calc(var(--nav-h) + 18px); }
 
     .row{
       display:grid;
@@ -423,6 +423,7 @@
       align-items:flex-start;
       justify-content:space-between;
       gap:10px;
+      flex-wrap: wrap;
     }
     .modelCard .title{
       margin:0;
@@ -444,14 +445,49 @@
       color: rgba(255,255,255,.80);
       white-space:nowrap;
     }
+
+    .modelSwitch{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      margin-top:4px;
+      width:100%;
+    }
+    .switchBtn{
+      border: 1px solid rgba(255,255,255,.22);
+      background: rgba(255,255,255,.08);
+      color: rgba(255,255,255,.86);
+      border-radius: 999px;
+      padding: 7px 12px;
+      font-size: 11px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+    .switchBtn.active{
+      border-color: rgba(180,157,116,.72);
+      background: rgba(180,157,116,.24);
+      color: rgba(255,255,255,.96);
+    }
+
     .viewerStage{
       position:absolute;
       left:0; right:0;
       top: 58px;
       bottom: 0;
     }
+    .viewerStack{
+      position:absolute;
+      inset:0;
+    }
+    .viewerStack.is-hidden{
+      visibility:hidden;
+      pointer-events:none;
+    }
+
     .viewer{ position:absolute; inset:0; }
     .viewer canvas{ width:100%; height:100%; display:block; }
+
     .goldMark{
       position:absolute;
       inset:auto 16px 14px auto;
@@ -509,6 +545,21 @@
       color: rgba(11,18,32,.62);
       font-size: 13px;
       line-height:1.55;
+    }
+
+    .opsHint{
+      margin-top: 14px;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding: 9px 12px;
+      border-radius: 999px;
+      background: rgba(11,18,32,.04);
+      border: 1px solid rgba(11,18,32,.10);
+      color: rgba(11,18,32,.68);
+      letter-spacing:.08em;
+      text-transform: uppercase;
+      font-size:11px;
     }
 
     @media (max-width: 980px){
@@ -570,8 +621,72 @@
       color: rgba(255,255,255,.74);
     }
 
+    .pathwayWrap{
+      margin-top: 30px;
+      padding-top: 26px;
+      border-top: 1px solid rgba(255,255,255,.16);
+    }
+    .pathwayHead{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      gap:12px;
+      align-items:flex-end;
+      margin-bottom: 18px;
+    }
+    .pathwayHead h3{
+      margin:0;
+      font-family: var(--font-serif);
+      font-size: 28px;
+      color: rgba(255,255,255,.95);
+    }
+    .pathwayGrid{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .pathCard{
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.05);
+      box-shadow: var(--shadow-soft);
+      overflow:hidden;
+      min-height: 300px;
+      position:relative;
+    }
+    .pathBar{
+      padding: 14px 14px 0;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:8px;
+      flex-wrap: wrap;
+    }
+    .pathTitle{
+      margin:0;
+      font-family: var(--font-serif);
+      font-size: 22px;
+      color: rgba(255,255,255,.96);
+    }
+    .pathViewer{
+      position:absolute;
+      left:0; right:0;
+      top: 54px;
+      bottom: 8px;
+    }
+    .pathArrow{
+      text-align:center;
+      margin-top:12px;
+      font-size: 12px;
+      letter-spacing:.16em;
+      color: rgba(255,255,255,.62);
+      text-transform:uppercase;
+    }
+
     @media (max-width: 900px){
       .theoryGrid{ grid-template-columns: 1fr; }
+      .pathwayGrid{ grid-template-columns: 1fr; }
+      .pathCard{ min-height: 320px; }
     }
 
     footer{
@@ -640,7 +755,7 @@
         </div>
 
         <div class="stats" aria-label="Summary stats">
-          <div><div class="statNum">7</div><div class="statLbl">CLUSTERS (SO FAR)</div></div>
+          <div><div class="statNum">9</div><div class="statLbl">CLUSTERS (SO FAR)</div></div>
           <div><div class="statNum">3</div><div class="statLbl">CLUSTER TYPES</div></div>
           <div><div class="statNum">&infin;</div><div class="statLbl">POSSIBILITIES</div></div>
         </div>
@@ -664,7 +779,7 @@
               <h3 class="title">[B<sub>4</sub>H<sub>4</sub>]<sup>2−</sup></h3>
               <span class="badge">closo • n=4</span>
             </div>
-            <div class="viewerStage"><div class="viewer" id="viewerB4" aria-label="3D model of closo diborane cluster B4H4 2 minus"></div></div>
+            <div class="viewerStage"><div class="viewer" id="viewerB4" aria-label="3D model of closo borane cluster B4H4 2 minus"></div></div>
             <div class="goldMark" aria-hidden="true"></div>
           </div>
           <div class="count">
@@ -680,6 +795,7 @@
               <div class="line" role="listitem"><div class="lhs">compare with n + 1</div><div class="rhs">4 + 1 = 5</div></div>
             </div>
             <div class="note">Conclusion: closo (tetrahedral).</div>
+            <div class="opsHint">Drag: rotate • Scroll: zoom • Right-click: pan</div>
           </div>
         </div>
 
@@ -823,6 +939,72 @@
           </div>
         </div>
 
+        <div class="row mirror" id="cluster-n2">
+          <div class="count">
+            <div class="eyebrow">e<sup>−</sup> counting (skeletal)</div>
+            <h3>B<sub>6</sub>H<sub>10</sub></h3>
+            <p class="lede">
+              For nido boranes, use SEP \(=\;n+2\). Here \(n=6\), so target SEP \(=\;8\), corresponding to 16 skeletal e<sup>−</sup>.
+            </p>
+            <div class="targetLine">Target nido: SEP = n + 2 (n = 6)</div>
+            <div class="grid" role="list">
+              <div class="line" role="listitem"><div class="lhs">n vertices (B atoms)</div><div class="rhs">6</div></div>
+              <div class="line" role="listitem"><div class="lhs">target SEP</div><div class="rhs">6 + 2 = 8</div></div>
+              <div class="line" role="listitem"><div class="lhs">target skeletal e<sup>−</sup></div><div class="rhs">2 × 8 = 16</div></div>
+            </div>
+            <div class="note">
+              B<sub>6</sub>H<sub>10</sub> is displayed as an open-cage nido framework with bridging H added schematically.
+            </div>
+          </div>
+          <div class="modelCard">
+            <div class="bar">
+              <h3 class="title">B<sub>6</sub>H<sub>10</sub></h3>
+              <span class="badge">nido • n=6</span>
+            </div>
+            <div class="viewerStage"><div class="viewer" id="viewerNidoB6H10" aria-label="3D model of nido borane cluster B6H10"></div></div>
+            <div class="goldMark" aria-hidden="true"></div>
+          </div>
+        </div>
+
+        <div class="row" id="cluster-n3">
+          <div class="modelCard">
+            <div class="bar">
+              <h3 class="title">B<sub>11</sub>H<sub>15</sub></h3>
+              <span class="badge">nido • n=11</span>
+              <div class="modelSwitch" role="group" aria-label="B11H15 colour mode">
+                <button class="switchBtn active" type="button" data-mode="same">same colour</button>
+                <button class="switchBtn" type="button" data-mode="dual">2-colour highlight</button>
+              </div>
+            </div>
+            <div class="viewerStage">
+              <div class="viewerStack" id="stackB11Same">
+                <div class="viewer" id="viewerNidoB11H15Same" aria-label="3D model of nido borane cluster B11H15 same colour"></div>
+              </div>
+              <div class="viewerStack is-hidden" id="stackB11Dual">
+                <div class="viewer" id="viewerNidoB11H15Dual" aria-label="3D model of nido borane cluster B11H15 two colour highlight"></div>
+              </div>
+            </div>
+            <div class="goldMark" aria-hidden="true"></div>
+          </div>
+          <div class="count">
+            <div class="eyebrow">nido from closo by removing one vertex</div>
+            <h3>B<sub>11</sub>H<sub>15</sub></h3>
+            <p class="lede">
+              This pair of models emphasizes the “remove one vertex from parent closo” concept. In 2-colour mode,
+              the rim around the open face is highlighted to show the region adjacent to the missing closo vertex.
+            </p>
+            <div class="targetLine">Target nido: SEP = n + 2 (n = 11)</div>
+            <div class="grid" role="list">
+              <div class="line" role="listitem"><div class="lhs">n vertices (B atoms)</div><div class="rhs">11</div></div>
+              <div class="line" role="listitem"><div class="lhs">target SEP</div><div class="rhs">11 + 2 = 13</div></div>
+              <div class="line" role="listitem"><div class="lhs">target skeletal e<sup>−</sup></div><div class="rhs">2 × 13 = 26</div></div>
+            </div>
+            <div class="note">
+              Same-colour view = standard appearance. 2-colour view = pedagogical highlight of the nido opening.
+            </div>
+          </div>
+        </div>
+
         <div class="subHead" id="arachno">
           <div>
             <h3>Arachno boranes</h3>
@@ -903,6 +1085,49 @@
             </p>
           </div>
         </div>
+
+        <div class="pathwayWrap" id="pathway">
+          <div class="pathwayHead">
+            <h3>Vertex-removal pathway (same family)</h3>
+            <div class="ruleLine">[B<sub>6</sub>H<sub>6</sub>]<sup>2−</sup> → B<sub>5</sub>H<sub>9</sub> → B<sub>4</sub>H<sub>10</sub></div>
+          </div>
+
+          <div class="pathwayGrid">
+            <div>
+              <div class="pathCard">
+                <div class="pathBar">
+                  <h4 class="pathTitle">[B<sub>6</sub>H<sub>6</sub>]<sup>2−</sup></h4>
+                  <span class="badge">closo</span>
+                </div>
+                <div class="pathViewer"><div class="viewer" id="viewerPathB6" aria-label="Pathway closo model B6H6 2 minus"></div></div>
+              </div>
+              <div class="pathArrow">remove 1 vertex</div>
+            </div>
+
+            <div>
+              <div class="pathCard">
+                <div class="pathBar">
+                  <h4 class="pathTitle">B<sub>5</sub>H<sub>9</sub></h4>
+                  <span class="badge">nido</span>
+                </div>
+                <div class="pathViewer"><div class="viewer" id="viewerPathB5" aria-label="Pathway nido model B5H9"></div></div>
+              </div>
+              <div class="pathArrow">remove 1 vertex</div>
+            </div>
+
+            <div>
+              <div class="pathCard">
+                <div class="pathBar">
+                  <h4 class="pathTitle">B<sub>4</sub>H<sub>10</sub></h4>
+                  <span class="badge">arachno</span>
+                </div>
+                <div class="pathViewer"><div class="viewer" id="viewerPathB4" aria-label="Pathway arachno model B4H10"></div></div>
+              </div>
+              <div class="pathArrow">two vertices removed from parent closo total</div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </section>
 
@@ -964,6 +1189,13 @@
       metalness: 0.08,
       emissive: 0x1C2C44,
       emissiveIntensity: 0.12
+    });
+    const boronHighlightMaterial = new THREE.MeshStandardMaterial({
+      color: 0xB49D74,
+      roughness: 0.32,
+      metalness: 0.26,
+      emissive: 0x1f2d44,
+      emissiveIntensity: 0.10
     });
     const hydrogenMaterial = new THREE.MeshStandardMaterial({
       color: 0xf8fafc,
@@ -1081,7 +1313,7 @@
       controls.dampingFactor = 0.06;
       controls.rotateSpeed = 0.6;
       controls.zoomSpeed = 0.8;
-      controls.enablePan = false;
+      controls.enablePan = true;
       controls.minDistance = 3;
       controls.maxDistance = 12;
 
@@ -1268,9 +1500,7 @@
           const dy = boronPositions[i][1] - boronPositions[j][1];
           const dz = boronPositions[i][2] - boronPositions[j][2];
           const d = Math.hypot(dx, dy, dz) / scale * phi;
-          if (Math.abs(d - 2) < tolerance) {
-            edges.push([i, j]);
-          }
+          if (Math.abs(d - 2) < tolerance) edges.push([i, j]);
         }
       }
 
@@ -1298,6 +1528,42 @@
       basalBridges.forEach(([i,j]) => {
         const pi = boronPositions[i], pj = boronPositions[j];
         const hPos = [(pi[0]+pj[0])/2, (pi[1]+pj[1])/2, (pi[2]+pj[2])/2 - 0.55];
+        const h = new THREE.Mesh(hydrogenGeometry, hydrogenMaterial);
+        h.position.set(hPos[0], hPos[1], hPos[2]);
+        modelGroup.add(h);
+        createCylinderBond(modelGroup, pi, hPos);
+        createCylinderBond(modelGroup, pj, hPos);
+      });
+    }
+
+    function buildNidoB6H10(modelGroup){
+      const r = 1.22;
+      const zApex = 1.35;
+      const boronPositions = [
+        [0, 0, zApex],
+        [r*Math.cos(0), r*Math.sin(0), 0],
+        [r*Math.cos(2*Math.PI/5), r*Math.sin(2*Math.PI/5), 0],
+        [r*Math.cos(4*Math.PI/5), r*Math.sin(4*Math.PI/5), 0],
+        [r*Math.cos(6*Math.PI/5), r*Math.sin(6*Math.PI/5), 0],
+        [r*Math.cos(8*Math.PI/5), r*Math.sin(8*Math.PI/5), 0]
+      ];
+
+      const edges = [
+        [0,1],[0,2],[0,3],[0,4],[0,5],
+        [1,2],[2,3],[3,4],[4,5],[5,1]
+      ];
+
+      buildFromVertices(modelGroup, boronPositions, edges, 1.08);
+
+      const bridges = [[1,2],[2,3],[4,5],[5,1]];
+      bridges.forEach(([i,j], idx) => {
+        const pi = boronPositions[i], pj = boronPositions[j];
+        const sign = idx < 2 ? -1 : 1;
+        const hPos = [
+          (pi[0]+pj[0])/2 + 0.10*sign,
+          (pi[1]+pj[1])/2 - 0.08*sign,
+          (pi[2]+pj[2])/2 - 0.58
+        ];
         const h = new THREE.Mesh(hydrogenGeometry, hydrogenMaterial);
         h.position.set(hPos[0], hPos[1], hPos[2]);
         modelGroup.add(h);
@@ -1386,6 +1652,94 @@
       bridgingBH.forEach(([b,h]) => createCylinderBond(modelGroup, boronPositions[b], hydrogenPositions[h]));
     }
 
+    function getB11Core(scale = 1.02){
+      const phi = (1 + Math.sqrt(5)) / 2;
+      const raw = [
+        [-1,  phi, 0], [ 1,  phi, 0], [-1, -phi, 0], [ 1, -phi, 0],
+        [0, -1,  phi], [0,  1,  phi], [0, -1, -phi], [0,  1, -phi],
+        [ phi, 0, -1], [ phi, 0,  1], [-phi, 0, -1], [-phi, 0,  1]
+      ];
+      const full = raw.map(([x,y,z]) => [x*scale/phi, y*scale/phi, z*scale/phi]);
+
+      const removedIndex = 0; // one vertex removed from closo B12 parent
+      const keptOldIndices = full.map((_, i) => i).filter(i => i !== removedIndex);
+      const oldToNew = new Map();
+      keptOldIndices.forEach((oldI, newI) => oldToNew.set(oldI, newI));
+      const boronPositions = keptOldIndices.map(i => full[i]);
+
+      const tolerance = 0.08;
+      const fullEdges = [];
+      for (let i = 0; i < full.length; i++) {
+        for (let j = i + 1; j < full.length; j++) {
+          const dx = full[i][0] - full[j][0];
+          const dy = full[i][1] - full[j][1];
+          const dz = full[i][2] - full[j][2];
+          const d = Math.hypot(dx, dy, dz) / scale * phi;
+          if (Math.abs(d - 2) < tolerance) fullEdges.push([i, j]);
+        }
+      }
+
+      const edges = [];
+      fullEdges.forEach(([i,j]) => {
+        if (i === removedIndex || j === removedIndex) return;
+        edges.push([oldToNew.get(i), oldToNew.get(j)]);
+      });
+
+      const removedNeighborsOld = fullEdges
+        .filter(([i,j]) => i === removedIndex || j === removedIndex)
+        .map(([i,j]) => (i === removedIndex ? j : i));
+
+      const removedNeighborsNew = removedNeighborsOld.map(i => oldToNew.get(i));
+
+      return { boronPositions, edges, removedNeighborsNew };
+    }
+
+    function buildNidoB11H15(modelGroup, twoColour = false){
+      const { boronPositions, edges, removedNeighborsNew } = getB11Core(1.15);
+
+      const terminalOut = 0.78;
+      const hydrogenPositions = boronPositions.map((pos) => {
+        const len = Math.hypot(pos[0], pos[1], pos[2]) || 1;
+        return pos.map(c => c * ((len + terminalOut) / len));
+      });
+
+      const highlightSet = new Set(removedNeighborsNew);
+
+      boronPositions.forEach((pos, i) => {
+        const mat = twoColour && highlightSet.has(i) ? boronHighlightMaterial : boronMaterial;
+        const b = new THREE.Mesh(boronGeometry, mat);
+        b.position.set(pos[0], pos[1], pos[2]);
+        modelGroup.add(b);
+      });
+
+      hydrogenPositions.forEach((pos) => {
+        const h = new THREE.Mesh(hydrogenGeometry, hydrogenMaterial);
+        h.position.set(pos[0], pos[1], pos[2]);
+        modelGroup.add(h);
+      });
+
+      edges.forEach(([i,j]) => createCylinderBond(modelGroup, boronPositions[i], boronPositions[j]));
+      boronPositions.forEach((pos, i) => createCylinderBond(modelGroup, pos, hydrogenPositions[i]));
+
+      // add 4 bridging hydrogens near the open face for B11H15 total H = 15
+      for (let k = 0; k < 4; k++){
+        const i = removedNeighborsNew[k % removedNeighborsNew.length];
+        const j = removedNeighborsNew[(k + 1) % removedNeighborsNew.length];
+        const pi = boronPositions[i];
+        const pj = boronPositions[j];
+        const hPos = [
+          (pi[0] + pj[0]) / 2,
+          (pi[1] + pj[1]) / 2,
+          (pi[2] + pj[2]) / 2 + 0.22
+        ];
+        const h = new THREE.Mesh(hydrogenGeometry, hydrogenMaterial);
+        h.position.set(hPos[0], hPos[1], hPos[2]);
+        modelGroup.add(h);
+        createCylinderBond(modelGroup, pi, hPos);
+        createCylinderBond(modelGroup, pj, hPos);
+      }
+    }
+
     function buildHeroB4H10(modelGroup){
       const { boronPositions, hydrogenPositions, bbEdges, terminalBH, bridgingBH } = getB4H10Data(1.28);
 
@@ -1423,14 +1777,51 @@
     setupViewer({ mountEl: document.getElementById('viewerB7'),  defaultCamZ: 6.6, buildModelFn: buildB7  });
     setupViewer({ mountEl: document.getElementById('viewerB12'), defaultCamZ: 7.2, buildModelFn: buildB12 });
 
-    setupViewer({ mountEl: document.getElementById('viewerNidoB5H9'), defaultCamZ: 6.2, buildModelFn: buildNidoB5H9 });
+    setupViewer({ mountEl: document.getElementById('viewerNidoB5H9'),  defaultCamZ: 6.2, buildModelFn: buildNidoB5H9 });
+    setupViewer({ mountEl: document.getElementById('viewerNidoB6H10'), defaultCamZ: 6.8, buildModelFn: buildNidoB6H10 });
+
+    setupViewer({
+      mountEl: document.getElementById('viewerNidoB11H15Same'),
+      defaultCamZ: 8.1,
+      buildModelFn: (g) => buildNidoB11H15(g, false)
+    });
+    setupViewer({
+      mountEl: document.getElementById('viewerNidoB11H15Dual'),
+      defaultCamZ: 8.1,
+      buildModelFn: (g) => buildNidoB11H15(g, true)
+    });
+
     setupViewer({ mountEl: document.getElementById('viewerArachnoB4H10'), defaultCamZ: 7.8, buildModelFn: buildArachnoB4H10 });
+
+    setupViewer({ mountEl: document.getElementById('viewerPathB6'), defaultCamZ: 6.1, buildModelFn: buildB6 });
+    setupViewer({ mountEl: document.getElementById('viewerPathB5'), defaultCamZ: 6.0, buildModelFn: buildNidoB5H9 });
+    setupViewer({ mountEl: document.getElementById('viewerPathB4'), defaultCamZ: 7.5, buildModelFn: buildArachnoB4H10 });
 
     setupHeroViewer({
       mountEl: document.getElementById('viewerHeroB4H10'),
       defaultCamZ: 8.0,
       buildModelFn: buildHeroB4H10
     });
+
+    (function(){
+      const container = document.getElementById('cluster-n3');
+      if (!container) return;
+      const btns = container.querySelectorAll('.switchBtn');
+      const same = document.getElementById('stackB11Same');
+      const dual = document.getElementById('stackB11Dual');
+
+      function setMode(mode){
+        btns.forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
+        same.classList.toggle('is-hidden', mode !== 'same');
+        dual.classList.toggle('is-hidden', mode !== 'dual');
+      }
+
+      btns.forEach(btn => {
+        btn.addEventListener('click', () => setMode(btn.dataset.mode));
+      });
+
+      setMode('same');
+    })();
   </script>
 </body>
 </html>
