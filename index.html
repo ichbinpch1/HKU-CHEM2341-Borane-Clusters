@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Borane Clusters | HKU Chemistry</title>
 
-  <!-- GitHub Pages friendly: one file, no build tools -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Italiana&family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -45,13 +44,11 @@
       font-family: var(--font-sans);
       color: var(--white);
       overflow-x:hidden;
-
       background:
         radial-gradient(1100px 520px at 22% 18%, rgba(180,157,116,.14), rgba(180,157,116,0) 60%),
         radial-gradient(900px 520px at 75% 30%, rgba(120,160,255,.10), rgba(120,160,255,0) 62%),
         radial-gradient(900px 520px at 70% 88%, rgba(180,157,116,.08), rgba(180,157,116,0) 60%),
         linear-gradient(180deg, #1C2C44 0%, #1A2940 42%, #18263C 100%);
-
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
       text-rendering: geometricPrecision;
@@ -72,9 +69,6 @@
       mix-blend-mode: overlay;
     }
 
-    /* =========================
-       Header: visible only at top
-       ========================= */
     header.nav{
       position: sticky;
       top: 0;
@@ -395,7 +389,9 @@
       border: 1px solid rgba(11,18,32,.10);
     }
 
-    #cluster-1, #cluster-2, #cluster-3, #cluster-4, #cluster-5, #cluster-n1, #cluster-n2, #cluster-n3, #cluster-a1, #theory, #pathway { scroll-margin-top: calc(var(--nav-h) + 18px); }
+    #cluster-1, #cluster-2, #cluster-3, #cluster-4, #cluster-5, #cluster-n1, #cluster-n2, #cluster-n3, #cluster-a1, #theory, #pathway {
+      scroll-margin-top: calc(var(--nav-h) + 18px);
+    }
 
     .row{
       display:grid;
@@ -417,6 +413,7 @@
       position:relative;
       min-height: 380px;
     }
+
     .modelCard .bar{
       padding: 16px 18px 0;
       display:flex;
@@ -424,13 +421,17 @@
       justify-content:space-between;
       gap:10px;
       flex-wrap: wrap;
+      position: relative;
+      z-index: 3;
     }
+
     .modelCard .title{
       margin:0;
       font-family: var(--font-serif);
       font-size: 26px;
       color: rgba(255,255,255,.95);
     }
+
     .badge{
       display:inline-flex;
       align-items:center;
@@ -452,7 +453,11 @@
       gap:8px;
       margin-top:4px;
       width:100%;
+      position: relative;
+      z-index: 4;
+      pointer-events: auto;
     }
+
     .switchBtn{
       border: 1px solid rgba(255,255,255,.22);
       background: rgba(255,255,255,.08);
@@ -463,7 +468,11 @@
       letter-spacing: .12em;
       text-transform: uppercase;
       cursor: pointer;
+      position: relative;
+      z-index: 5;
+      pointer-events: auto;
     }
+
     .switchBtn.active{
       border-color: rgba(180,157,116,.72);
       background: rgba(180,157,116,.24);
@@ -475,7 +484,13 @@
       left:0; right:0;
       top: 58px;
       bottom: 0;
+      z-index: 1;
     }
+
+    .modelCard.hasSwitch .viewerStage{
+      top: 108px;
+    }
+
     .viewerStack{
       position:absolute;
       inset:0;
@@ -497,6 +512,7 @@
       box-shadow: 0 0 0 8px rgba(180,157,116,.12);
       border: 1px solid rgba(255,255,255,.14);
       pointer-events:none;
+      z-index: 2;
     }
 
     .count{ padding-top: 8px; }
@@ -565,6 +581,7 @@
     @media (max-width: 980px){
       .row, .row.mirror{ grid-template-columns: 1fr; }
       .modelCard{ min-height: 340px; }
+      .modelCard.hasSwitch .viewerStage{ top: 110px; }
     }
 
     .blueSection{
@@ -739,11 +756,8 @@
 
       <div class="wrap heroContent">
         <div class="kicker"><span class="dot" aria-hidden="true"></span> CHEM2341 INORGANIC CHEMISTRY I</div>
-
         <h1>Borane <span class="accent">Clusters</span></h1>
-
         <div class="sub">From Memorization to Understanding</div>
-
         <p class="desc">
           Explore the three-dimensional world of electron-deficient boron hydrides. From Wade’s rules to 3c–2e bonding,
           this page introduces how cluster geometry and skeletal electron counting work together in borane chemistry.
@@ -967,7 +981,7 @@
         </div>
 
         <div class="row" id="cluster-n3">
-          <div class="modelCard">
+          <div class="modelCard hasSwitch">
             <div class="bar">
               <h3 class="title">B<sub>11</sub>H<sub>15</sub></h3>
               <span class="badge">nido • n=11</span>
@@ -986,6 +1000,7 @@
             </div>
             <div class="goldMark" aria-hidden="true"></div>
           </div>
+
           <div class="count">
             <div class="eyebrow">nido from closo by removing one vertex</div>
             <h3>B<sub>11</sub>H<sub>15</sub></h3>
@@ -1153,7 +1168,6 @@
     (function(){
       const header = document.querySelector('header.nav');
       if (!header) return;
-
       let ticking = false;
       const hideAfter = 60;
       function onScroll(){
@@ -1190,6 +1204,7 @@
       emissive: 0x1C2C44,
       emissiveIntensity: 0.12
     });
+
     const boronHighlightMaterial = new THREE.MeshStandardMaterial({
       color: 0xB49D74,
       roughness: 0.32,
@@ -1197,11 +1212,13 @@
       emissive: 0x1f2d44,
       emissiveIntensity: 0.10
     });
+
     const hydrogenMaterial = new THREE.MeshStandardMaterial({
       color: 0xf8fafc,
       roughness: 0.25,
       metalness: 0.05
     });
+
     const bondMaterial = new THREE.MeshStandardMaterial({
       color: 0x94a3b8,
       roughness: 0.65,
@@ -1215,6 +1232,7 @@
       emissive: 0x233149,
       emissiveIntensity: 0.08
     });
+
     const heroHydrogenMaterial = new THREE.MeshStandardMaterial({
       color: 0xf2f5fb,
       roughness: 0.24,
@@ -1222,6 +1240,7 @@
       transparent: true,
       opacity: 0.95
     });
+
     const heroBondMaterial = new THREE.MeshStandardMaterial({
       color: 0xb9a17b,
       roughness: 0.34,
@@ -1247,15 +1266,12 @@
 
     function addHeroLights(scene){
       scene.add(new THREE.AmbientLight(0xffffff, 0.46));
-
       const keyLight = new THREE.DirectionalLight(0xffffff, 0.95);
       keyLight.position.set(5, 5, 6);
       scene.add(keyLight);
-
       const warmFill = new THREE.DirectionalLight(0xB49D74, 0.62);
       warmFill.position.set(4, 1, 4);
       scene.add(warmFill);
-
       const coolFill = new THREE.DirectionalLight(0x7a92bb, 0.22);
       coolFill.position.set(-6, 2, -4);
       scene.add(coolFill);
@@ -1661,7 +1677,7 @@
       ];
       const full = raw.map(([x,y,z]) => [x*scale/phi, y*scale/phi, z*scale/phi]);
 
-      const removedIndex = 0; // one vertex removed from closo B12 parent
+      const removedIndex = 0;
       const keptOldIndices = full.map((_, i) => i).filter(i => i !== removedIndex);
       const oldToNew = new Map();
       keptOldIndices.forEach((oldI, newI) => oldToNew.set(oldI, newI));
@@ -1721,7 +1737,6 @@
       edges.forEach(([i,j]) => createCylinderBond(modelGroup, boronPositions[i], boronPositions[j]));
       boronPositions.forEach((pos, i) => createCylinderBond(modelGroup, pos, hydrogenPositions[i]));
 
-      // add 4 bridging hydrogens near the open face for B11H15 total H = 15
       for (let k = 0; k < 4; k++){
         const i = removedNeighborsNew[k % removedNeighborsNew.length];
         const j = removedNeighborsNew[(k + 1) % removedNeighborsNew.length];
@@ -1806,6 +1821,7 @@
     (function(){
       const container = document.getElementById('cluster-n3');
       if (!container) return;
+
       const btns = container.querySelectorAll('.switchBtn');
       const same = document.getElementById('stackB11Same');
       const dual = document.getElementById('stackB11Dual');
@@ -1817,7 +1833,11 @@
       }
 
       btns.forEach(btn => {
-        btn.addEventListener('click', () => setMode(btn.dataset.mode));
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          setMode(btn.dataset.mode);
+        });
       });
 
       setMode('same');
