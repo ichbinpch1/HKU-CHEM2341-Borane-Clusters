@@ -201,18 +201,19 @@
     .kicker{
       display:flex;
       align-items:center;
-      gap:10px;
-      letter-spacing:.10em;
+      gap:12px;
+      letter-spacing:.12em;
       text-transform: uppercase;
-      color: rgba(255,255,255,.72);
-      font-size: 12px;
-      margin-bottom: 18px;
+      color: rgba(255,255,255,.75);
+      font-size: 14px;
+      margin-bottom: 20px;
     }
     .kicker .dot{
-      width:10px;height:10px;border-radius:999px;
+      width:14px;height:14px;border-radius:999px;
       background: var(--gold);
-      box-shadow: 0 0 0 7px rgba(180,157,116,.14);
-      border: 1px solid rgba(255,255,255,.12);
+      box-shadow: 0 0 0 9px rgba(180,157,116,.14);
+      border: 1px solid rgba(255,255,255,.14);
+      flex: 0 0 auto;
     }
 
     h1{
@@ -323,6 +324,90 @@
       margin-left: 10px;
     }
 
+    /* ===== HISTORY SECTION (clean modern white) ===== */
+    .historySection{
+      padding: 56px 0 62px;
+      background: #ffffff;
+    }
+
+    .historyGrid{
+      display:grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 34px;
+      align-items:center; /* changed from start */
+    }
+
+    .historyPortraitBlock{
+      display:flex;
+      flex-direction:column;
+      gap:14px;
+    }
+
+    .historyPortraitFrame{
+      width:100%;
+      max-width: 520px;
+      background: transparent;
+      padding: 0;
+      border: none;
+    }
+
+    .historyPortrait{
+      display:block;
+      width:100%;
+      height:auto;
+      object-fit:cover;
+      clip-path: none;
+      border: none;
+      filter: grayscale(1) contrast(1.02);
+      background: transparent;
+    }
+
+    .historyCaption{
+      margin:0;
+      font-size: 13px;
+      letter-spacing:.08em;
+      text-transform: uppercase;
+      color: rgba(11,18,32,.60);
+    }
+    .historyCaption b{
+      color: var(--ink);
+      letter-spacing:.01em;
+      text-transform:none;
+      display:block;
+      margin-bottom:5px;
+      font-family: var(--font-serif);
+      font-size: 48px;
+      line-height:1.03;
+    }
+
+    .historyText{
+      padding-top:22px; /* NEW: shift right content down a bit */
+    }
+    .historyText h2{
+      margin:0 0 14px;
+      font-family: var(--font-serif);
+      font-size: 68px;
+      letter-spacing:-0.02em;
+      color: var(--ink);
+      line-height: .95;
+    }
+    .historyText p{
+      margin:0;
+      font-size: 18px;
+      line-height: 1.85;
+      color: rgba(11,18,32,.78);
+      max-width: 72ch;
+    }
+
+    @media (max-width: 920px){
+      .historySection{ padding: 42px 0 46px; }
+      .historyGrid{ grid-template-columns: 1fr; gap: 24px; align-items:start; }
+      .historyPortraitFrame{ max-width: 100%; }
+      .historyText{ padding-top:0; }
+      .historyText h2{ font-size: 48px; }
+      .historyText p{ font-size: 16px; line-height:1.8; }
+    }
+
     .whiteStrip{
       background: rgba(255,255,255,.98);
       color: var(--ink);
@@ -389,7 +474,7 @@
       border: 1px solid rgba(11,18,32,.10);
     }
 
-    #cluster-1, #cluster-2, #cluster-3, #cluster-4, #cluster-5, #cluster-n1, #cluster-n2, #cluster-n3, #cluster-a1, #theory, #pathway {
+    #history, #cluster-1, #cluster-2, #cluster-3, #cluster-4, #cluster-5, #cluster-n1, #cluster-n2, #cluster-n3, #cluster-a1, #theory, #pathway {
       scroll-margin-top: calc(var(--nav-h) + 18px);
     }
 
@@ -403,6 +488,13 @@
     }
     .row:first-of-type{ border-top:none; }
     .row.mirror{ grid-template-columns: .9fr 1.1fr; }
+
+    .goldFrameBox{
+      border: 4px solid var(--gold);
+      border-radius: 0;
+      padding: 10px;
+      background: transparent;
+    }
 
     .modelCard{
       border-radius: 20px;
@@ -662,6 +754,7 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 18px;
     }
+
     .pathCard{
       border-radius: 18px;
       border: 1px solid rgba(255,255,255,.14);
@@ -671,6 +764,7 @@
       min-height: 300px;
       position:relative;
     }
+
     .pathBar{
       padding: 14px 14px 0;
       display:flex;
@@ -707,25 +801,47 @@
     }
 
     footer{
-      padding: 22px 0 40px;
-      color: rgba(255,255,255,.62);
-      font-size: 13px;
+      padding: 24px 0 42px;
+      color: rgba(255,255,255,.70);
+      font-size: 16px;
+      line-height: 1.5;
       border-top: 1px solid rgba(255,255,255,.12);
       background: transparent;
     }
     .footRow{
       display:flex;
-      justify-content:space-between;
-      gap:16px;
+      flex-direction:column;
+      justify-content:center;
+      gap:18px;
       flex-wrap:wrap;
       align-items:center;
+      text-align:center;
+    }
+    .footProgram{
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color: rgba(255,255,255,.62);
+      font-size: 18px;
+      margin-bottom: 2px;
+    }
+    .footCredits{
+      font-size: 16px;
     }
     .toTop{
-      padding:11px 16px;
+      padding:11px 18px;
       border-radius:999px;
       border:1px solid rgba(255,255,255,.18);
       background: rgba(255,255,255,.06);
       font-weight:700;
+      font-size: 14px;
+    }
+
+    @media (max-width:760px){
+      .kicker{ font-size: 13px; gap: 11px; }
+      .kicker .dot{ width:12px; height:12px; box-shadow: 0 0 0 8px rgba(180,157,116,.14); }
+      footer{ font-size:14px; }
+      .footProgram{ font-size:16px; }
+      .footCredits{ font-size:14px; }
     }
 
     @media (prefers-reduced-motion: reduce){
@@ -778,24 +894,52 @@
       </div>
     </section>
 
+    <section class="historySection" id="history">
+      <div class="wrap">
+        <div class="historyGrid">
+          <div class="historyPortraitBlock">
+            <div class="historyPortraitFrame">
+              <img
+                class="historyPortrait"
+                src="./william_n_lipscomb_jr.jpg"
+                alt="Portrait of William Lipscomb"
+                loading="lazy"
+              />
+            </div>
+            <p class="historyCaption">
+              <b>William Lipscomb</b>
+              Nobel Prize laureate in Chemistry (1976)
+            </p>
+          </div>
+
+          <div class="historyText">
+            <h2>History</h2>
+            <p>
+              The structures of boron hydride clusters were determined starting in 1948 with decaborane’s characterization. William Lipscomb won the Nobel Prize in Chemistry in 1976 for this and subsequent crystallographic investigations. These revealed the prevalence of deltahedral structures, i.e., networks of triangular arrays of BH centers. The bonding of the clusters led to Polyhedral skeletal electron pair theory and Wade’s rules, which predict borane structures. These rules describe many cluster compounds.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="whiteStrip" id="clusters">
       <div class="whiteWrap">
         <div class="sectionHead">
           <div>
             <h2>Closo boranes</h2>
-            <p>Wade’s rule target: skeletal electron pairs (SEP) \(=\;n + 1\).</p>
+            <p>Wade’s rule target: skeletal electron pairs (SEP) = n + 1.</p>
           </div>
         </div>
 
         <div class="row" id="cluster-1">
-          <div class="modelCard">
+          <div class="goldFrameBox"><div class="modelCard">
             <div class="bar">
               <h3 class="title">[B<sub>4</sub>H<sub>4</sub>]<sup>2−</sup></h3>
               <span class="badge">closo • n=4</span>
             </div>
             <div class="viewerStage"><div class="viewer" id="viewerB4" aria-label="3D model of closo borane cluster B4H4 2 minus"></div></div>
             <div class="goldMark" aria-hidden="true"></div>
-          </div>
+          </div></div>
           <div class="count">
             <div class="eyebrow">e<sup>−</sup> counting (skeletal)</div>
             <h3>[B<sub>4</sub>H<sub>4</sub>]<sup>2−</sup></h3>
@@ -828,25 +972,25 @@
             </div>
             <div class="note">Conclusion: closo (trigonal bipyramidal).</div>
           </div>
-          <div class="modelCard">
+          <div class="goldFrameBox"><div class="modelCard">
             <div class="bar">
               <h3 class="title">[B<sub>5</sub>H<sub>5</sub>]<sup>2−</sup></h3>
               <span class="badge">closo • n=5</span>
             </div>
             <div class="viewerStage"><div class="viewer" id="viewerB5" aria-label="3D model of closo borane cluster B5H5 2 minus"></div></div>
             <div class="goldMark" aria-hidden="true"></div>
-          </div>
+          </div></div>
         </div>
 
         <div class="row" id="cluster-3">
-          <div class="modelCard">
+          <div class="goldFrameBox"><div class="modelCard">
             <div class="bar">
               <h3 class="title">[B<sub>6</sub>H<sub>6</sub>]<sup>2−</sup></h3>
               <span class="badge">closo • n=6</span>
             </div>
             <div class="viewerStage"><div class="viewer" id="viewerB6" aria-label="3D model of closo borane cluster B6H6 2 minus"></div></div>
             <div class="goldMark" aria-hidden="true"></div>
-          </div>
+          </div></div>
           <div class="count">
             <div class="eyebrow">e<sup>−</sup> counting (skeletal)</div>
             <h3>[B<sub>6</sub>H<sub>6</sub>]<sup>2−</sup></h3>
@@ -878,25 +1022,25 @@
             </div>
             <div class="note">Conclusion: closo (pentagonal bipyramidal).</div>
           </div>
-          <div class="modelCard">
+          <div class="goldFrameBox"><div class="modelCard">
             <div class="bar">
               <h3 class="title">[B<sub>7</sub>H<sub>7</sub>]<sup>2−</sup></h3>
               <span class="badge">closo • n=7</span>
             </div>
             <div class="viewerStage"><div class="viewer" id="viewerB7" aria-label="3D model of closo borane cluster B7H7 2 minus"></div></div>
             <div class="goldMark" aria-hidden="true"></div>
-          </div>
+          </div></div>
         </div>
 
         <div class="row" id="cluster-5">
-          <div class="modelCard">
+          <div class="goldFrameBox"><div class="modelCard">
             <div class="bar">
               <h3 class="title">[B<sub>12</sub>H<sub>12</sub>]<sup>2−</sup></h3>
               <span class="badge">closo • n=12</span>
             </div>
             <div class="viewerStage"><div class="viewer" id="viewerB12" aria-label="3D model of closo borane cluster B12H12 2 minus"></div></div>
             <div class="goldMark" aria-hidden="true"></div>
-          </div>
+          </div></div>
           <div class="count">
             <div class="eyebrow">e<sup>−</sup> counting (skeletal)</div>
             <h3>[B<sub>12</sub>H<sub>12</sub>]<sup>2−</sup></h3>
@@ -920,26 +1064,26 @@
           <div>
             <h3>Nido boranes</h3>
             <p style="margin:6px 0 0;max-width:72ch;color:var(--ink2);line-height:1.6;font-size:14px;">
-              Wade’s rule target: SEP \(=\;n + 2\) (one vertex missing from the parent closo deltahedron).
+              Wade’s rule target: SEP = n + 2 (one vertex missing from the parent closo deltahedron).
             </p>
           </div>
           <div class="pill" aria-label="Rule pill"><span class="pillDot" aria-hidden="true"></span> target <b>SEP = n + 2</b></div>
         </div>
 
         <div class="row" id="cluster-n1">
-          <div class="modelCard">
+          <div class="goldFrameBox"><div class="modelCard">
             <div class="bar">
               <h3 class="title">B<sub>5</sub>H<sub>9</sub></h3>
               <span class="badge">nido • n=5</span>
             </div>
             <div class="viewerStage"><div class="viewer" id="viewerNidoB5H9" aria-label="3D model of nido borane cluster B5H9"></div></div>
             <div class="goldMark" aria-hidden="true"></div>
-          </div>
+          </div></div>
           <div class="count">
             <div class="eyebrow">e<sup>−</sup> counting (skeletal)</div>
             <h3>B<sub>5</sub>H<sub>9</sub></h3>
             <p class="lede">
-              Quick Wade target method: nido clusters require SEP \(=\;n+2\), so the expected skeletal electron count is \(2(n+2)\).
+              Quick Wade target method: nido clusters require SEP = n + 2, so the expected skeletal electron count is 2(n + 2).
             </p>
             <div class="targetLine">Target nido: SEP = n + 2 (n = 5)</div>
             <div class="grid" role="list">
@@ -958,7 +1102,7 @@
             <div class="eyebrow">e<sup>−</sup> counting (skeletal)</div>
             <h3>B<sub>6</sub>H<sub>10</sub></h3>
             <p class="lede">
-              For nido boranes, use SEP \(=\;n+2\). Here \(n=6\), so target SEP \(=\;8\), corresponding to 16 skeletal e<sup>−</sup>.
+              For nido boranes, use SEP = n + 2. Here n = 6, so target SEP = 8, corresponding to 16 skeletal e<sup>−</sup>.
             </p>
             <div class="targetLine">Target nido: SEP = n + 2 (n = 6)</div>
             <div class="grid" role="list">
@@ -970,18 +1114,18 @@
               B<sub>6</sub>H<sub>10</sub> is displayed as an open-cage nido framework with bridging H added schematically.
             </div>
           </div>
-          <div class="modelCard">
+          <div class="goldFrameBox"><div class="modelCard">
             <div class="bar">
               <h3 class="title">B<sub>6</sub>H<sub>10</sub></h3>
               <span class="badge">nido • n=6</span>
             </div>
             <div class="viewerStage"><div class="viewer" id="viewerNidoB6H10" aria-label="3D model of nido borane cluster B6H10"></div></div>
             <div class="goldMark" aria-hidden="true"></div>
-          </div>
+          </div></div>
         </div>
 
         <div class="row" id="cluster-n3">
-          <div class="modelCard hasSwitch">
+          <div class="goldFrameBox"><div class="modelCard hasSwitch">
             <div class="bar">
               <h3 class="title">B<sub>11</sub>H<sub>15</sub></h3>
               <span class="badge">nido • n=11</span>
@@ -999,7 +1143,7 @@
               </div>
             </div>
             <div class="goldMark" aria-hidden="true"></div>
-          </div>
+          </div></div>
 
           <div class="count">
             <div class="eyebrow">nido from closo by removing one vertex</div>
@@ -1024,7 +1168,7 @@
           <div>
             <h3>Arachno boranes</h3>
             <p style="margin:6px 0 0;max-width:72ch;color:var(--ink2);line-height:1.6;font-size:14px;">
-              Wade’s rule target: SEP \(=\;n + 3\) (two vertices missing from the parent closo deltahedron).
+              Wade’s rule target: SEP = n + 3 (two vertices missing from the parent closo deltahedron).
             </p>
           </div>
           <div class="pill" aria-label="Rule pill"><span class="pillDot" aria-hidden="true"></span> target <b>SEP = n + 3</b></div>
@@ -1037,7 +1181,7 @@
 
             <p class="lede">
               B<sub>4</sub>H<sub>10</sub> is conventionally classified as an arachno borane. For arachno clusters, Wade’s rule gives
-              SEP \(=\;n+3\).
+              SEP = n + 3.
             </p>
 
             <div class="targetLine">Arachno target: SEP = n + 3 (n = 4)</div>
@@ -1055,14 +1199,14 @@
             </div>
           </div>
 
-          <div class="modelCard">
+          <div class="goldFrameBox"><div class="modelCard">
             <div class="bar">
               <h3 class="title">B<sub>4</sub>H<sub>10</sub></h3>
               <span class="badge">arachno • n=4</span>
             </div>
             <div class="viewerStage"><div class="viewer" id="viewerArachnoB4H10" aria-label="3D model of arachno borane cluster B4H10"></div></div>
             <div class="goldMark" aria-hidden="true"></div>
-          </div>
+          </div></div>
         </div>
 
       </div>
@@ -1078,15 +1222,15 @@
         <div class="theoryGrid">
           <div class="theoryCard">
             <h3>Wade’s rules</h3>
-            <div class="ruleLine">closo: \(n+1\) • nido: \(n+2\) • arachno: \(n+3\)</div>
+            <div class="ruleLine">closo: n + 1 • nido: n + 2 • arachno: n + 3</div>
             <p>
-              Here, \(n\) is the number of skeletal boron vertices in the cluster, and SEP means skeletal electron pairs. Closo clusters are closed deltahedra, nido clusters are derived by removing one vertex from the parent closo cage, and arachno clusters by removing two.
+              Here, n is the number of skeletal boron vertices in the cluster, and SEP means skeletal electron pairs. Closo clusters are closed deltahedra, nido clusters are derived by removing one vertex from the parent closo cage, and arachno clusters by removing two.
             </p>
           </div>
 
           <div class="theoryCard">
             <h3>Skeletal bonding</h3>
-            <div class="ruleLine">SEP \(=\;\dfrac{\text{skeletal e}^{-}}{2}\)</div>
+            <div class="ruleLine">SEP = skeletal e<sup>−</sup> / 2</div>
             <p>
               In borane chemistry, not all valence electrons belong to the cluster framework. Terminal B–H bonds are exohedral and are not counted as skeletal. The skeletal count refers only to the electrons participating in cage bonding between boron atoms and in delocalized cluster bonding.
             </p>
@@ -1096,7 +1240,7 @@
             <h3>Bridging H and 3c–2e bonds</h3>
             <div class="ruleLine">electron-deficient bonding</div>
             <p>
-              Many boranes contain bridging hydrogens and three-center two-electron (\(3c\text{–}2e\)) bonds. These are a hallmark of electron-deficient compounds and explain why simple localized two-center bond pictures do not fully describe borane structures.
+              Many boranes contain bridging hydrogens and three-center two-electron (3c–2e) bonds. These are a hallmark of electron-deficient compounds and explain why simple localized two-center bond pictures do not fully describe borane structures.
             </p>
           </div>
         </div>
@@ -1109,35 +1253,35 @@
 
           <div class="pathwayGrid">
             <div>
-              <div class="pathCard">
+              <div class="goldFrameBox"><div class="pathCard">
                 <div class="pathBar">
                   <h4 class="pathTitle">[B<sub>6</sub>H<sub>6</sub>]<sup>2−</sup></h4>
                   <span class="badge">closo</span>
                 </div>
                 <div class="pathViewer"><div class="viewer" id="viewerPathB6" aria-label="Pathway closo model B6H6 2 minus"></div></div>
-              </div>
+              </div></div>
               <div class="pathArrow">remove 1 vertex</div>
             </div>
 
             <div>
-              <div class="pathCard">
+              <div class="goldFrameBox"><div class="pathCard">
                 <div class="pathBar">
                   <h4 class="pathTitle">B<sub>5</sub>H<sub>9</sub></h4>
                   <span class="badge">nido</span>
                 </div>
                 <div class="pathViewer"><div class="viewer" id="viewerPathB5" aria-label="Pathway nido model B5H9"></div></div>
-              </div>
+              </div></div>
               <div class="pathArrow">remove 1 vertex</div>
             </div>
 
             <div>
-              <div class="pathCard">
+              <div class="goldFrameBox"><div class="pathCard">
                 <div class="pathBar">
                   <h4 class="pathTitle">B<sub>4</sub>H<sub>10</sub></h4>
                   <span class="badge">arachno</span>
                 </div>
                 <div class="pathViewer"><div class="viewer" id="viewerPathB4" aria-label="Pathway arachno model B4H10"></div></div>
-              </div>
+              </div></div>
               <div class="pathArrow">two vertices removed from parent closo total</div>
             </div>
           </div>
@@ -1148,11 +1292,11 @@
 
     <footer>
       <div class="wrap footRow">
-        <div>
-          <div style="letter-spacing:.08em;text-transform:uppercase;color: rgba(255,255,255,.55);">
-            CHEM2341 • Inorganic Chemistry
-          </div>
-          <div>© <span id="year"></span> HKU Chemistry.</div>
+        <div class="footCredits">
+          <div class="footProgram">CHEM2341 • INORGANIC CHEMISTRY I</div>
+          <div>© 2026 Department of Chemistry, The University of Hong Kong.</div>
+          <div>Borane Models by Dr. YUEN, Angela Mai Yan.</div>
+          <div>Website Designed and Synthesized by Thomas Poon Cheuk Hei in Hong Kong.</div>
         </div>
         <a class="toTop" href="#top">Back to top</a>
       </div>
@@ -1163,8 +1307,6 @@
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-
     (function(){
       const header = document.querySelector('header.nav');
       if (!header) return;
@@ -1678,6 +1820,8 @@
       const full = raw.map(([x,y,z]) => [x*scale/phi, y*scale/phi, z*scale/phi]);
 
       const removedIndex = 0;
+      const removedVertex = new THREE.Vector3(...full[removedIndex]);
+
       const keptOldIndices = full.map((_, i) => i).filter(i => i !== removedIndex);
       const oldToNew = new Map();
       keptOldIndices.forEach((oldI, newI) => oldToNew.set(oldI, newI));
@@ -1707,11 +1851,37 @@
 
       const removedNeighborsNew = removedNeighborsOld.map(i => oldToNew.get(i));
 
-      return { boronPositions, edges, removedNeighborsNew };
+      const rimVecs = removedNeighborsNew.map(idx => new THREE.Vector3(...boronPositions[idx]));
+      const centroid = rimVecs.reduce((acc, v) => acc.add(v), new THREE.Vector3()).multiplyScalar(1 / rimVecs.length);
+
+      let openingNormal = removedVertex.clone().normalize();
+      if (openingNormal.dot(centroid.clone().normalize()) < 0) openingNormal.negate();
+
+      let ref = new THREE.Vector3(1, 0, 0);
+      if (Math.abs(openingNormal.dot(ref)) > 0.9) ref = new THREE.Vector3(0, 1, 0);
+
+      const u = new THREE.Vector3().crossVectors(openingNormal, ref).normalize();
+      const v = new THREE.Vector3().crossVectors(openingNormal, u).normalize();
+
+      const rimOrdered = removedNeighborsNew
+        .map((idx) => {
+          const p = new THREE.Vector3(...boronPositions[idx]).sub(centroid);
+          const angle = Math.atan2(p.dot(v), p.dot(u));
+          return { idx, angle };
+        })
+        .sort((a, b) => a.angle - b.angle)
+        .map(o => o.idx);
+
+      return {
+        boronPositions,
+        edges,
+        rimOrdered,
+        openingNormal: [openingNormal.x, openingNormal.y, openingNormal.z]
+      };
     }
 
     function buildNidoB11H15(modelGroup, twoColour = false){
-      const { boronPositions, edges, removedNeighborsNew } = getB11Core(1.15);
+      const { boronPositions, edges, rimOrdered, openingNormal } = getB11Core(1.15);
 
       const terminalOut = 0.78;
       const hydrogenPositions = boronPositions.map((pos) => {
@@ -1719,7 +1889,7 @@
         return pos.map(c => c * ((len + terminalOut) / len));
       });
 
-      const highlightSet = new Set(removedNeighborsNew);
+      const highlightSet = new Set(rimOrdered);
 
       boronPositions.forEach((pos, i) => {
         const mat = twoColour && highlightSet.has(i) ? boronHighlightMaterial : boronMaterial;
@@ -1737,22 +1907,33 @@
       edges.forEach(([i,j]) => createCylinderBond(modelGroup, boronPositions[i], boronPositions[j]));
       boronPositions.forEach((pos, i) => createCylinderBond(modelGroup, pos, hydrogenPositions[i]));
 
-      for (let k = 0; k < 4; k++){
-        const i = removedNeighborsNew[k % removedNeighborsNew.length];
-        const j = removedNeighborsNew[(k + 1) % removedNeighborsNew.length];
-        const pi = boronPositions[i];
-        const pj = boronPositions[j];
-        const hPos = [
-          (pi[0] + pj[0]) / 2,
-          (pi[1] + pj[1]) / 2,
-          (pi[2] + pj[2]) / 2 + 0.22
-        ];
+      const n = new THREE.Vector3(openingNormal[0], openingNormal[1], openingNormal[2]).normalize();
+      const bridgePairs = [
+        [rimOrdered[0], rimOrdered[1]],
+        [rimOrdered[1], rimOrdered[2]],
+        [rimOrdered[2], rimOrdered[3]],
+        [rimOrdered[3], rimOrdered[4]]
+      ];
+
+      bridgePairs.forEach(([i, j]) => {
+        const pi = new THREE.Vector3(...boronPositions[i]);
+        const pj = new THREE.Vector3(...boronPositions[j]);
+        const mid = pi.clone().add(pj).multiplyScalar(0.5);
+        const radial = mid.clone().normalize();
+
+        const hVec = mid
+          .clone()
+          .add(n.clone().multiplyScalar(0.46))
+          .add(radial.multiplyScalar(0.08));
+
+        const hPos = [hVec.x, hVec.y, hVec.z];
         const h = new THREE.Mesh(hydrogenGeometry, hydrogenMaterial);
         h.position.set(hPos[0], hPos[1], hPos[2]);
         modelGroup.add(h);
-        createCylinderBond(modelGroup, pi, hPos);
-        createCylinderBond(modelGroup, pj, hPos);
-      }
+
+        createCylinderBond(modelGroup, boronPositions[i], hPos);
+        createCylinderBond(modelGroup, boronPositions[j], hPos);
+      });
     }
 
     function buildHeroB4H10(modelGroup){
