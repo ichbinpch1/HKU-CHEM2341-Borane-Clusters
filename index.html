@@ -324,88 +324,135 @@
       margin-left: 10px;
     }
 
-    /* ===== HISTORY SECTION (clean modern white) ===== */
+    /* ===== HISTORY SECTION ===== */
     .historySection{
-      padding: 56px 0 62px;
+      padding: 56px 0 64px;
       background: #ffffff;
+    }
+
+    .historyPrelude{
+      margin: 0 0 28px;
+      text-align:center;
+      font-family: var(--font-serif);
+      font-size: clamp(36px, 4vw, 64px);
+      line-height: 1.08;
+      letter-spacing: 0;
+      color: var(--ink);
+      font-weight: 500;
     }
 
     .historyGrid{
       display:grid;
       grid-template-columns: 0.9fr 1.1fr;
-      gap: 34px;
-      align-items:center; /* changed from start */
+      gap: 44px;
+      align-items:center;
     }
 
     .historyPortraitBlock{
       display:flex;
       flex-direction:column;
+      align-items:center;
       gap:14px;
     }
 
     .historyPortraitFrame{
       width:100%;
-      max-width: 520px;
+      max-width: 430px;
+      overflow:hidden;
+      border-radius: 220px 220px 0 0;
       background: transparent;
-      padding: 0;
-      border: none;
+      padding:0;
+      border:none;
     }
 
     .historyPortrait{
       display:block;
       width:100%;
       height:auto;
+      aspect-ratio: 4 / 5;
       object-fit:cover;
-      clip-path: none;
-      border: none;
+      object-position: center top;
       filter: grayscale(1) contrast(1.02);
       background: transparent;
     }
 
     .historyCaption{
       margin:0;
-      font-size: 13px;
+      text-align:center;
+      color: rgba(11,18,32,.62);
       letter-spacing:.08em;
       text-transform: uppercase;
-      color: rgba(11,18,32,.60);
+      font-size: 12px;
+      line-height:1.45;
     }
-    .historyCaption b{
+    .historyName{
+      display:inline-block;
+      white-space:nowrap;
+      margin-bottom:5px;
       color: var(--ink);
       letter-spacing:.01em;
       text-transform:none;
-      display:block;
-      margin-bottom:5px;
       font-family: var(--font-serif);
-      font-size: 48px;
-      line-height:1.03;
+      font-size: clamp(34px, 3.3vw, 52px);
+      line-height:1.06;
+    }
+    .historyMeta{
+      display:block;
     }
 
     .historyText{
-      padding-top:22px; /* NEW: shift right content down a bit */
+      text-align:center;
+      padding-top: 4px;
     }
     .historyText h2{
-      margin:0 0 14px;
+      margin:0 0 12px;
       font-family: var(--font-serif);
-      font-size: 68px;
-      letter-spacing:-0.02em;
-      color: var(--ink);
-      line-height: .95;
+      font-size: clamp(34px, 3.2vw, 52px);
+      letter-spacing:.12em;
+      text-transform: uppercase;
+      color: var(--gold);
+      line-height: 1;
     }
-    .historyText p{
-      margin:0;
-      font-size: 18px;
-      line-height: 1.85;
-      color: rgba(11,18,32,.78);
-      max-width: 72ch;
+    .historyQuote{
+      margin:0 auto;
+      max-width: 24ch;
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: clamp(22px, 2vw, 34px);
+      line-height: 1.35;
+      color: var(--ink);
+      text-align: justify;
+      text-align-last: center;
+      text-justify: inter-word;
+    }
+    .historyRule{
+      width: min(500px, 86%);
+      height: 1px;
+      margin: 24px auto 24px;
+      background: rgba(180,157,116,.74);
+    }
+    .historyBio{
+      margin:0 auto;
+      max-width: 62ch;
+      font-size: 14px;
+      line-height: 1.9;
+      color: rgba(11,18,32,.55);
+      letter-spacing: .01em;
+      text-align: justify;
+      text-align-last: center;
+      text-justify: inter-word;
     }
 
     @media (max-width: 920px){
-      .historySection{ padding: 42px 0 46px; }
-      .historyGrid{ grid-template-columns: 1fr; gap: 24px; align-items:start; }
-      .historyPortraitFrame{ max-width: 100%; }
+      .historySection{ padding: 42px 0 48px; }
+      .historyPrelude{ margin-bottom: 22px; font-size: 40px; }
+      .historyGrid{ grid-template-columns: 1fr; gap: 26px; align-items:start; }
+      .historyPortraitFrame{ max-width: 360px; border-radius: 180px 180px 0 0; }
       .historyText{ padding-top:0; }
-      .historyText h2{ font-size: 48px; }
-      .historyText p{ font-size: 16px; line-height:1.8; }
+      .historyText h2{ font-size: 38px; letter-spacing:.10em; }
+      .historyQuote{ font-size: 26px; line-height:1.4; }
+      .historyRule{ margin: 20px auto 20px; }
+      .historyBio{ font-size: 14px; line-height:1.82; max-width: 66ch; }
     }
 
     .whiteStrip{
@@ -896,6 +943,8 @@
 
     <section class="historySection" id="history">
       <div class="wrap">
+        <h2 class="historyPrelude">Sculpting the Three-Center Symphony</h2>
+
         <div class="historyGrid">
           <div class="historyPortraitBlock">
             <div class="historyPortraitFrame">
@@ -907,15 +956,17 @@
               />
             </div>
             <p class="historyCaption">
-              <b>William Lipscomb</b>
-              Nobel Prize laureate in Chemistry (1976)
+              <span class="historyName">William Lipscomb</span>
+              <span class="historyMeta">NOBEL PRIZE LAUREATE IN CHEMISTRY (1976)</span>
             </p>
           </div>
 
           <div class="historyText">
             <h2>History</h2>
-            <p>
-              The structures of boron hydride clusters were determined starting in 1948 with decaborane’s characterization. William Lipscomb won the Nobel Prize in Chemistry in 1976 for this and subsequent crystallographic investigations. These revealed the prevalence of deltahedral structures, i.e., networks of triangular arrays of BH centers. The bonding of the clusters led to Polyhedral skeletal electron pair theory and Wade’s rules, which predict borane structures. These rules describe many cluster compounds.
+            <p class="historyQuote">“I think the intuitive processes of discovery are the same, very much the same, in the arts as in the sciences.”</p>
+            <div class="historyRule" aria-hidden="true"></div>
+            <p class="historyBio">
+              Boron hydride cluster structures began to be determined in 1948 with the characterization of decaborane. William Lipscomb won the 1976 Nobel Prize in Chemistry for this and later crystallographic studies, which revealed the prevalence of deltahedral borane structures. This work led to polyhedral skeletal electron pair theory and Wade’s rules for predicting many cluster structures.
             </p>
           </div>
         </div>
