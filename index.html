@@ -326,12 +326,12 @@
 
     /* ===== HISTORY SECTION ===== */
     .historySection{
-      padding: 72px 0 72px;
+      padding: 88px 0 84px;
       background: #ffffff;
     }
 
     .historyPrelude{
-      margin: 0 0 44px;
+      margin: 0 0 64px;
       text-align:center;
       font-family: var(--font-serif);
       font-size: clamp(36px, 4vw, 64px);
@@ -2075,5 +2075,37 @@
       setMode('same');
     })();
   </script>
+<script>
+  (function () {
+    // 1) add CSS (so you don't touch <style>)
+    const css = `
+      .footLogo{
+        display:block;
+        margin: 0 auto 14px;
+        width: 92px;
+        height: auto;
+        opacity: .95;
+      }
+      @media (max-width:760px){
+        .footLogo{ width:80px; margin-bottom:10px; }
+      }
+    `;
+    const style = document.createElement('style');
+    style.textContent = css;
+    document.head.appendChild(style);
+
+    // 2) insert logo above .footProgram
+    const footProgram = document.querySelector('.footCredits .footProgram');
+    if (!footProgram) return;
+
+    const img = document.createElement('img');
+    img.className = 'footLogo';
+    img.src = './hku-logo.png';
+    img.alt = 'The University of Hong Kong logo';
+    img.loading = 'lazy';
+
+    footProgram.parentNode.insertBefore(img, footProgram);
+  })();
+</script>
 </body>
 </html>
