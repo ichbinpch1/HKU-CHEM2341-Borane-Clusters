@@ -2080,17 +2080,41 @@
   </script>
 
   <script>
-    (function () {
-      const music = document.getElementById('bgMusic');
-      if (!music) return;
+  (function () {
+    const music = document.getElementById('bgMusic');
+    if (!music) return;
 
-      function startMusic() {
-        music.play().catch(() => {});
-        document.removeEventListener('click', startMusic);
-      }
+    let started = false;
 
-      document.addEventListener('click', startMusic);
-    })();
+    function tryPlay() {
+      if (started) return;
+      music.play().then(() => {
+        started = true;
+        removeListeners();
+      }).catch(() => {});
+    }
+
+    function startFromInteraction() {
+      tryPlay();
+    }
+
+    function removeListeners() {
+      document.removeEventListener('click', startFromInteraction);
+      document.removeEventListener('scroll', startFromInteraction);
+      document.removeEventListener('keydown', startFromInteraction);
+      document.removeEventListener('touchstart', startFromInteraction);
+      document.removeEventListener('pointerdown', startFromInteraction);
+    }
+
+    music.volume = 1;
+    tryPlay();
+
+    document.addEventListener('click', startFromInteraction, { passive: true });
+    document.addEventListener('scroll', startFromInteraction, { passive: true });
+    document.addEventListener('keydown', startFromInteraction, { passive: true });
+    document.addEventListener('touchstart', startFromInteraction, { passive: true });
+    document.addEventListener('pointerdown', startFromInteraction, { passive: true });
+  })();
   </script>
 
 <script>
