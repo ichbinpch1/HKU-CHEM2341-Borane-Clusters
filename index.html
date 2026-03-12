@@ -324,6 +324,78 @@
       margin-left: 10px;
     }
 
+    .editorialSection{
+      padding: 70px 0 64px;
+      background: rgba(255,255,255,.98);
+      color: var(--ink);
+      isolation: isolate;
+    }
+    .editorialWrap{ max-width: var(--page-w); margin:0 auto; padding:0 22px; }
+    .editorialGrid{
+      display:grid;
+      grid-template-columns: minmax(220px, 0.6fr) 1fr;
+      gap: 28px;
+      align-items:center;
+    }
+    .editorialMedia{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+    .editorialImg{
+      width: min(320px, 100%);
+      height:auto;
+      filter: grayscale(1) brightness(0.35) contrast(1.2) sepia(1) hue-rotate(170deg) saturate(2.2);
+      opacity: 0.9;
+    }
+    .editorialText{ width:100%; }
+    .editorialTitle{
+      margin:0 0 14px;
+      font-family: var(--font-serif);
+      font-size: clamp(34px, 4vw, 56px);
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-align:center;
+      font-weight: 400;
+    }
+    .editorialRule{
+      width: min(220px, 72%);
+      height: 2px;
+      background: linear-gradient(90deg, rgba(180,157,116,.95), rgba(180,157,116,.35));
+      margin: 18px auto 18px;
+    }
+    .editorialIntro{
+      margin: 0 auto 18px;
+      font-size: clamp(14px, 1.3vw, 16px);
+      line-height: 1.9;
+      color: rgba(11,18,32,.70);
+      text-align: justify;
+      text-align-last: center;
+      max-width: 62ch;
+      font-weight: 300;
+      text-wrap: balance;
+      hyphens: auto;
+    }
+    .editorialLead{
+      margin:0 auto;
+      font-size: clamp(14px, 1.3vw, 16px);
+      line-height: 1.9;
+      color: rgba(11,18,32,.74);
+      text-align: justify;
+      text-align-last: center;
+      max-width: 60ch;
+      font-weight: 300;
+      text-wrap: balance;
+      hyphens: auto;
+    }
+    .editorialLead .line{
+      display:block;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(180,157,116,.28);
+    }
+    .editorialLead .line:last-child{ border-bottom:none; }
+
     .historySection{
       padding: 88px 0 84px;
       background: #ffffff;
@@ -441,8 +513,22 @@
       text-align-last: center;
       text-justify: inter-word;
     }
+    .historyLink{
+      display:inline-block;
+      margin-top: 12px;
+      color: var(--gold);
+      font-weight: 600;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      font-size: 12px;
+    }
 
     @media (max-width: 920px){
+      .editorialSection{ padding: 46px 0 48px; }
+      .editorialTitle{ font-size: 38px; }
+      .editorialLead{ font-size: 18px; line-height:1.75; }
+      .editorialGrid{ grid-template-columns: 1fr; }
+      .editorialMedia{ order: 2; }
       .historySection{ padding: 52px 0 56px; }
       .historyPrelude{ margin-bottom: 32px; font-size: 40px; }
       .historyGrid{ grid-template-columns: 1fr; gap: 26px; align-items:start; }
@@ -921,8 +1007,9 @@
         <h1>Borane <span class="accent">Clusters</span></h1>
         <div class="sub">From Memorization to Understanding</div>
         <p class="desc">
-          Explore the three-dimensional world of electron-deficient boron hydrides. From Wade’s rules to 3c–2e bonding,
-          this page introduces how cluster geometry and skeletal electron counting work together in borane chemistry.
+          Borane clusters are polyhedral compounds made of boron and hydrogen in which the boron atoms form a cage-like
+          framework with multicentre bonding. They are often described as electron-deficient and show bonding patterns
+          very different from normal 2-centre, 2-electron covalent bonds seen in simple hydrides.
         </p>
 
         <div class="ctaRow">
@@ -936,7 +1023,37 @@
           <div><div class="statNum">&infin;</div><div class="statLbl">POSSIBILITIES</div></div>
         </div>
 
-        <div class="scrollHint">SCROLL TO EXPLORE <span class="chev" aria-hidden="true"></span></div>
+        <div class="scrollHint">SCROLL TO EXPLORE THE BORANE CLUSTERS <span class="chev" aria-hidden="true"></span></div>
+      </div>
+    </section>
+
+    <section class="editorialSection" id="structure-types">
+      <div class="editorialWrap">
+        <div class="editorialGrid">
+          <div class="editorialMedia">
+            <img
+              class="editorialImg"
+              src="./Deltahedral-borane-cluster-array-numbered-3D-bs-17.png"
+              alt="Deltahedral borane cluster array"
+              loading="lazy"
+            />
+          </div>
+          <div class="editorialText">
+            <h2 class="editorialTitle">The main structural types of borane clusters</h2>
+            <p class="editorialIntro">
+              The structure of borane clusters and their derivatives, such as carboranes and metallaboranes, can be predicted
+              with using Polyhedral Skeletal Electron Pair Theory (PSEPT), more widely known as the Wade's rules. It relates
+              the number of skeletal electron pairs (SEPs) to the geometry of the cluster. This allows us to classify boron
+              clusters according to how many vertices of a parent closed deltahedron are occupied by boron or other heteroatoms.
+            </p>
+            <div class="editorialRule" aria-hidden="true"></div>
+            <p class="editorialLead">
+              <span class="line">Closo clusters, which have complete deltahedral frameworks with n vertices, contain n+1 SEPs;</span>
+              <span class="line">Nido clusters, derived from a closo deltahedron with one vertex removed, and contain n+2 SEPs;</span>
+              <span class="line">Arachno clusters, derived from a closo deltahedron with two vertices removed, follow the general and contain n+3 SEPs.</span>
+            </p>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -962,11 +1079,11 @@
 
           <div class="historyText">
             <h2>History</h2>
-            <p class="historyQuote">“I think the intuitive processes of discovery are the same, very much the same, in the arts as in the sciences.”</p>
-            <div class="historyRule" aria-hidden="true"></div>
             <p class="historyBio">
               Boron hydride cluster structures began to be determined in 1948 with the characterization of decaborane. William Lipscomb won the 1976 Nobel Prize in Chemistry for this and later crystallographic studies, which revealed the prevalence of deltahedral borane structures. This work led to polyhedral skeletal electron pair theory and Wade’s rules for predicting many cluster structures.
+              The Nobel Prize in Chemistry 1976 was awarded to William N. Lipscomb "for his studies on the structure of boranes illuminating problems of chemical bonding".
             </p>
+            <a class="historyLink" href="https://www.nobelprize.org/prizes/chemistry/1976/summary/" target="_blank" rel="noopener">Nobel Prize 1976 summary</a>
           </div>
         </div>
       </div>
@@ -1297,7 +1414,10 @@
 
         <div class="pathwayWrap" id="pathway">
           <div class="pathwayHead">
-            <h3>Vertex-removal pathway (same family)</h3>
+            <h3>Cluster Opening Sequence: Maintaining the same number of SEP with Fewer Borons atoms</h3>
+            <p style="margin:6px 0 0;max-width:72ch;color:rgba(255,255,255,.72);line-height:1.6;font-size:14px;">
+              These are examples with the number of skeletal pair of electron but with different number of borane atoms.
+            </p>
             <div class="ruleLine">[B<sub>6</sub>H<sub>6</sub>]<sup>2−</sup> → B<sub>5</sub>H<sub>9</sub> → B<sub>4</sub>H<sub>10</sub></div>
           </div>
 
@@ -1353,9 +1473,6 @@
     </footer>
   </main>
 
-  <audio id="bgMusic" loop>
-    <source src="music.mp3" type="audio/mpeg">
-  </audio>
 
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/build/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
@@ -2079,43 +2196,6 @@
     })();
   </script>
 
-  <script>
-  (function () {
-    const music = document.getElementById('bgMusic');
-    if (!music) return;
-
-    let started = false;
-
-    function tryPlay() {
-      if (started) return;
-      music.play().then(() => {
-        started = true;
-        removeListeners();
-      }).catch(() => {});
-    }
-
-    function startFromInteraction() {
-      tryPlay();
-    }
-
-    function removeListeners() {
-      document.removeEventListener('click', startFromInteraction);
-      document.removeEventListener('scroll', startFromInteraction);
-      document.removeEventListener('keydown', startFromInteraction);
-      document.removeEventListener('touchstart', startFromInteraction);
-      document.removeEventListener('pointerdown', startFromInteraction);
-    }
-
-    music.volume = 1;
-    tryPlay();
-
-    document.addEventListener('click', startFromInteraction, { passive: true });
-    document.addEventListener('scroll', startFromInteraction, { passive: true });
-    document.addEventListener('keydown', startFromInteraction, { passive: true });
-    document.addEventListener('touchstart', startFromInteraction, { passive: true });
-    document.addEventListener('pointerdown', startFromInteraction, { passive: true });
-  })();
-  </script>
 
 <script>
   (function () {
